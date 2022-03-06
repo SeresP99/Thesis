@@ -76,7 +76,7 @@ function LogIn() {
             </form>
             <br/>
             <div>
-                <button onClick={() => CheckIfAuthenticated()}>check auth</button>
+
             </div>
         </StyledLogin>
     )
