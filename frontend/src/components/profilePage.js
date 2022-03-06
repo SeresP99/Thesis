@@ -1,50 +1,25 @@
-import React, {useState, useMemo} from "react";
-import {useTable} from "react-table";
-import StyledProfile, {DataDiv, DataParagraph} from "./styles/profilePageStyle"
+import React, {useState} from "react";
+import StyledProfile, {DataDiv, DataParagraph, DataGrid, DataRow, DataColumn} from "./styles/profilePageStyle"
 
 function ProfilePage() {
 
     const [profileData, setProfileData] = useState({
-        email: "asd",
-        password: "asd"
+        email: "Sample username",
+        password: "Sample password"
     });
-
-    const COLUMNS = [
-        {
-            Header: Username,
-            accessor: "email"
-        },
-        {
-            Header: Password,
-            accessor: "password"
-        }
-    ]
-
-    const Table = () => {
-        const columns = useMemo(() => COLUMNS, []);
-        const data = useMemo(() => profileData, []);
-
-        const tableInstance = useTable({
-            columns,
-            data
-        })
-    }
 
     return (
         <StyledProfile>
             <DataDiv>
-                <table>
-                    <thead>
-                    <tr>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <DataGrid>
+                    <DataRow>
+                        <DataColumn size={2}>asd</DataColumn>
+                        <DataColumn size={1}>asd</DataColumn>
+                    </DataRow>
+                    <DataRow>
+                        <DataColumn size = {1}>asd</DataColumn>
+                    </DataRow>
+                </DataGrid>
             </DataDiv>
         </StyledProfile>
     );
