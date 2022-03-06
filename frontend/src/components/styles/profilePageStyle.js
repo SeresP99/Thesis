@@ -28,4 +28,19 @@ export const DataParagraph = styled.p`
   font-size: medium;
 `;
 
+
+export const DataGrid = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+
+export const DataRow = styled.div`
+  display: flex;
+`;
+
+export const DataColumn = styled.div`
+  flex: ${(props) => props.size};
+`;
+
+
 export default ProfilePage;
