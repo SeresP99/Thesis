@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import StyledLogin, {LoginButton, TextInput} from "./styles/Login.styled";
+import StyledLogin, {LoginButton, TakeToSignupButton, TextInput, ElevatedDiv, StyledForm} from "./styles/Login.styled";
 import Axios from "axios";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 
 function LogIn() {
+    const navigate = useNavigate();
     const [data, setData] = useState({
         email: "",
         password: ""
@@ -16,7 +17,7 @@ function LogIn() {
         e.preventDefault();
         console.log(data);
         Axios.post("http://localhost:4000/login", {
-            username: data.email,
+            username: data.username,
             password: data.password
         })
             .then(
@@ -57,23 +58,35 @@ function LogIn() {
     if (loginStatus) {
         return <Navigate to={"/profile"} replace={true}/>
     }
+
+    function takeToSignup() {
+        navigate("/register");
+    }
+
     return (
         <StyledLogin>
-            <form onSubmit={SignIn}>
-                <div>
-                    <h1>Plum</h1>
-                    <sub>Created by Peter Seres</sub>
-                </div>
-                <div>
-                    <TextInput onChange={(e) => handleChange(e)} id="email" type="text" placeholder={"Email"}/>
-                    <br/>
-                    <TextInput onChange={(e) => handleChange(e)} id="password" type="password"
-                               placeholder={"Password"}/>
-                </div>
-                <LoginButton>
-                    <p>Log in</p>
-                </LoginButton>
-            </form>
+            <ElevatedDiv>
+                <StyledForm onSubmit={SignIn}>
+                    <div>
+                        <h1>Plum</h1>
+                        <sub>Created by Peter Seres</sub>
+                    </div>
+                    <div>
+                        <TextInput onChange={(e) => handleChange(e)} id="username" type="text"
+                                   placeholder={"Username"}/>
+                        <br/>
+                        <TextInput onChange={(e) => handleChange(e)} id="password" type="password"
+                                   placeholder={"Password"}/>
+                    </div>
+                    <LoginButton type="submit">
+                        <p>Log in</p>
+                    </LoginButton>
+
+                </StyledForm>
+                <TakeToSignupButton onClick={() => takeToSignup()}>
+                    <p>Sign Up</p>
+                </TakeToSignupButton>
+            </ElevatedDiv>
             <br/>
             <div>
 
