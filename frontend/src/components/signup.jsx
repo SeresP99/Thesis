@@ -1,8 +1,10 @@
 import React, {useState} from "react";
-import StyledSignup, {SignupButton, TextInput} from "./styles/Signup.styled"
+import StyledSignup, {SignupButton, TextInput, StyledForm, ElevatedDiv, TakeToLoginButton} from "./styles/Signup.styled"
 import Axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const Signup = () => {
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         email: "",
@@ -21,9 +23,9 @@ const Signup = () => {
             res => {
                 console.log(res.data);
                 if (res.data.success === true)
-                    return (<p>Successful sign up!</p>)
+                    navigate("/login");
                 else
-                    return (<p>Unsuccessful sign up!</p>)
+                    alert(res.data.message);
             }
         )
     };
@@ -34,25 +36,35 @@ const Signup = () => {
         setData(newData);
     }
 
+    function takeToLogin(){
+        navigate("/")
+    }
+
     return (
         <StyledSignup>
-            <form onSubmit={CreateAccount}>
-                <div>
-                    <h1>Plum</h1>
-                    <sub>Created by Peter Seres</sub>
-                </div>
-                <div>
-                    <TextInput onChange={(e) => handleChange(e)} id="email" type="text" placeholder={"Email"}/>
-                    <br/>
-                    <TextInput onChange={(e) => handleChange(e)} id="username" type="text" placeholder={"Username"}/>
-                    <br/>
-                    <TextInput onChange={(e) => handleChange(e)} id="password" type="password"
-                               placeholder={"Password"}/>
-                </div>
-                <SignupButton>
-                    <p>Create account</p>
-                </SignupButton>
-            </form>
+            <ElevatedDiv>
+                <StyledForm onSubmit={CreateAccount}>
+                    <div>
+                        <h1>Plum</h1>
+                        <sub>Created by Peter Seres</sub>
+                    </div>
+                    <div>
+                        <TextInput onChange={(e) => handleChange(e)} id="email" type="text" placeholder={"Email"}/>
+                        <br/>
+                        <TextInput onChange={(e) => handleChange(e)} id="username" type="text"
+                                   placeholder={"Username"}/>
+                        <br/>
+                        <TextInput onChange={(e) => handleChange(e)} id="password" type="password"
+                                   placeholder={"Password"}/>
+                    </div>
+                    <SignupButton>
+                        <p>Create account</p>
+                    </SignupButton>
+                </StyledForm>
+                <TakeToLoginButton onClick={() => takeToLogin()}>
+                    Have An Account?
+                </TakeToLoginButton>
+            </ElevatedDiv>
         </StyledSignup>
     )
 }
