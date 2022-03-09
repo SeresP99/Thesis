@@ -77,6 +77,10 @@ router.post("/register", async (req, res) => {
     }
 });
 
+router.get("/getUserProfile", verifyJWT, async (req, res) => {
+    const profile = await user_model.getUserProfile(req.userId);
+    res.json({auth: true, profile})
+});
 
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
