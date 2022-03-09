@@ -8,6 +8,11 @@ class user_model {
             return credentials.rows[0];
     }
 
+    static async getUserProfile(id){
+        const credentials = await pool.query("SELECT id, email, username, password FROM users WHERE id = $1", [id])
+        return credentials.rows[0];
+    }
+
     static async createUser(username, password, email) {
             const creation = await pool.query("INSERT INTO users (username, password, email) VALUES ($1, $2, $3)",
                 [username, email, password]);
