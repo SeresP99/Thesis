@@ -6,5 +6,7 @@ export const darkTheme = {
     text: "#f1f1f1",
     primary: "#6500ad",
     primaryHover: "#500089",
+    secondary: "#00b7b7",
+    secondaryHover: "#008080",
     shadow: "0 2px 5px 1px #111",
   };
