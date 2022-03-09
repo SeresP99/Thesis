@@ -4,6 +4,7 @@ require("dotenv").config();
 const user_model = require("../model/user")
 const jwt = require("jsonwebtoken");
 const {verify} = require("jsonwebtoken");
+const {stringify} = require("nodemon/lib/utils");
 
 router.use(express.json());
 
@@ -39,7 +40,7 @@ router.post("/login", async (req, res) => {
         const user = await user_model.getUserId(username, password);
         console.log("User's credentials: " + JSON.stringify(user));
         const id = user.id;
-        const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '60s'});
+        const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '900s'});
         res.json({auth: true, token: token, user: user});
     } catch (e) {
         res.json({auth: false, message: "Wrong email or password!"})
