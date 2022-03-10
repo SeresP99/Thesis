@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from "react";
 import StyledProfile, {DataColumn, DataDiv, DataGrid, DataRow} from "./styles/profilePageStyle"
+import {Scrollbars} from "react-custom-scrollbars-2"
 import {useNavigate} from "react-router-dom";
 import Axios from "axios";
 import PollList from "./ProfilePageComponents/PollList"
 
 function ProfilePage() {
+
+    //region Program Logic
+
     const navigate = useNavigate();
 
     const [loginStatus, setLoginStatus] = useState(true);
@@ -65,9 +69,10 @@ function ProfilePage() {
         console.log(profileData);
     }, []);
 
+    //endregion
+
     return (
         <StyledProfile>
-            <h1></h1>
             <DataDiv>
                 <DataGrid>
                     <DataRow>
