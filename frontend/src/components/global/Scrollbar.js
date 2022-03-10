@@ -37,6 +37,7 @@ class CustomScrollbars extends Component {
         const {top} = this.state;
         const thumbStyle = {
             backgroundColor: `#6500ad`,
+            borderRadius: `5px`
         };
         return (
             <div
@@ -48,7 +49,7 @@ class CustomScrollbars extends Component {
     render() {
         return (
             <Scrollbars
-                autohide
+                autoHide
                 renderView={this.renderView}
                 renderThumbHorizontal={this.renderThumb}
                 renderThumbVertical={this.renderThumb}
