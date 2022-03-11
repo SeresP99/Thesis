@@ -14,6 +14,7 @@ export const DataDiv = styled.div`
   border-radius: 5px;
   min-height: 500px;
   width: 90%;
+  min-width: 500px;
   max-width: 1400px;
   display: flex;
   justify-content: space-evenly;

@@ -1,5 +1,6 @@
 import {Scrollbars} from 'react-custom-scrollbars-2';
-import {Component} from "react";
+import {Component} from 'react';
+import {darkTheme} from '../../themes.js'
 import styled from "styled-components";
 import Axios from "axios";
 
@@ -22,7 +23,7 @@ class CustomScrollbars extends Component {
         const {top} = this.state;
         const viewStyle = {
             padding: 15,
-            backgroundColor: `#2f2f2f`,
+            backgroundColor: darkTheme.elevation_2, //`#2f2f2f`,
             color: `#f1f1f1`
         };
         return (
@@ -50,10 +51,10 @@ class CustomScrollbars extends Component {
         return (
             <Scrollbars
                 autoHide
-                renderView={this.renderView}
                 renderThumbHorizontal={this.renderThumb}
                 renderThumbVertical={this.renderThumb}
                 onUpdate={this.handleUpdate}
+                renderView={this.renderView}
                 {...this.props}/>
         );
     }
