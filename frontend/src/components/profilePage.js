@@ -75,16 +75,16 @@ function ProfilePage() {
             <DataDiv>
                 <DataGrid>
                     <DataRow>
-                        <DataColumn size={1}>Your Username:</DataColumn>
-                        <DataColumn size={2}>{profileData.username}</DataColumn>
+                        <DataColumn size={2}>Your Username:</DataColumn>
+                        <DataColumn size={3}>{profileData.username}</DataColumn>
                     </DataRow>
                     <DataRow>
-                        <DataColumn size={1}>Your email:</DataColumn>
-                        <DataColumn size={2}>{profileData.email}</DataColumn>
+                        <DataColumn size={2}>Your email:</DataColumn>
+                        <DataColumn size={3}>{profileData.email}</DataColumn>
                     </DataRow>
                     <DataRow>
-                        <DataColumn size={1}>Your ID:</DataColumn>
-                        <DataColumn size={2}>{profileData.id}</DataColumn>
+                        <DataColumn size={2}>Your ID:</DataColumn>
+                        <DataColumn size={3}>{profileData.id}</DataColumn>
                     </DataRow>
                 </DataGrid>
                 <PollList/>
