@@ -32,10 +32,13 @@ export const DataParagraph = styled.p`
 export const DataGrid = styled.div`
   height: 100%;
   width: 100%;
+  
 `;
 
 export const DataRow = styled.div`
   display: flex;
+  margin-bottom: 10px;
+  font-size: 25px;
 `;
 
 export const DataColumn = styled.div`
