@@ -15,8 +15,6 @@ function ProfilePage() {
 
     const [profileData, setProfileData] = useState('');
 
-    const [seconds, setSeconds] = useState(0);
-
     const CheckIfAuthenticated = () => {
         Axios.get("http://localhost:4000/checkAuth", {
             headers: {
@@ -24,15 +22,16 @@ function ProfilePage() {
             },
         }).then(
             res => {
-                console.log(localStorage.getItem("token"));
-                console.log(res.data.auth);
                 setLoginStatus(res.data.auth);
             })
     }
 
 
-    if (localStorage.getItem("token") === undefined)
-        console.log("you have no token");
+    useEffect(() => {
+            if (localStorage.getItem("token") === undefined)
+                navigate('/login');
+        }
+    );
 
     //navigate("/login");
 

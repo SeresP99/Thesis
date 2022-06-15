@@ -1,33 +1,48 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import ScrollableList from 'react-scrollable-list';
 import {Scrollbars} from "react-custom-scrollbars-2";
 import CustomScrollbars from "../global/Scrollbar";
 import {AddButton, PollListElement, PollButtonPanel, PollNameTag} from "./PollListStyle";
-
+import Axios from "axios";
 
 const PollList = () => {
 
-    let PollList = [];
-    /*for (let i = 0; i < 20; i++) {
-        PollList.push({id: i, content: i});
-    }*/
+    const [pollList, setPollList] = useState([]);
+
+    const getPollList = () => {
+        Axios.get("http://localhost:4000/getCreatedPolls", {
+            headers: {
+                'x-access-token': localStorage.getItem('token')
+            }
+            ,
+        }).then(
+            res => {
+                setPollList(res.data.polls);
+                console.log(res.data.polls);
+            })
+    }
+
+    useEffect(() => {
+        getPollList();
+    }, [])
+
 
     function Poll(props) {
         return <PollListElement>
-            <PollNameTag>Poll number: {props.content}</PollNameTag>
+            <PollNameTag>{props.title}</PollNameTag>
             <PollButtonPanel>
-                <AddButton>Add</AddButton>
+                <AddButton Key="props.id">Add</AddButton>
             </PollButtonPanel>
         </PollListElement>
     }
 
-    const mainList = PollList.map(poll => <p>{poll}</p>);
+    //const mainList = PollList.map(poll => <p>{poll}</p>);
 
 
     return (
         <div style={{width: '80%'}}>
             <CustomScrollbars style={{borderRadius: '5px', height: 300}}>
-                {PollList.map((poll) => <Poll key={poll.id} content={poll.content}/>)}
+                {pollList.map((poll) => <Poll key={poll.poll_id} title={poll.title}/>)}
             </CustomScrollbars>
         </div>
     )

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const ProfilePage = styled.div`
-
   height: 100vh;
   width: 100%;
   display: flex;

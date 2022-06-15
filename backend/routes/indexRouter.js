@@ -5,6 +5,7 @@ const user_model = require("../model/user")
 const jwt = require("jsonwebtoken");
 const {verify} = require("jsonwebtoken");
 const {stringify} = require("nodemon/lib/utils");
+const users_polls_model = require("../model/users_polls");
 
 router.use(express.json());
 
@@ -67,7 +68,7 @@ router.post("/register", async (req, res) => {
         else
             try {
                 const creation = await user_model.createUser(username, email, password);
-                res.json({success: true, message:"Account created successfully, you can log in soon!"})
+                res.json({success: true, message: "Account created successfully, you can log in soon!"})
             } catch (e) {
                 res.json({success: false, message: "Internal server error."})
             }
@@ -81,6 +82,12 @@ router.get("/getUserProfile", verifyJWT, async (req, res) => {
     const profile = await user_model.getUserProfile(req.userId);
     res.json({auth: true, profile})
 });
+
+router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
+    const polls = await users_polls_model.getCreatedPolls(req.userId);
+    console.log(polls);
+    res.json({auth: true, polls})
+})
 
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});

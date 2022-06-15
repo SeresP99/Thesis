@@ -15,6 +15,14 @@ app.use(
     })
 );
 
+/*app.use(
+    cors({
+        credentials: true,
+        origin: process.env.EXTERNAL_CLIENT_URL,
+    })
+)*/
+
+
 app.use(
     session({
         secret: process.env.COOKIE_SECRET,
