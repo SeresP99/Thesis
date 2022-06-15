@@ -12,12 +12,13 @@ router.use(express.json());
 const verifyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"];
     if (!token) {
-        res.send("We need a token, please give it to us next time! - server")
+        console.log("we got no token");
+        res.send("We need a token, please give it to us next time! - server");
     } else {
         jwt.verify(token, process.env.COOKIE_SECRET, (err, decoded) => {
             if (err) {
                 console.log("bad token");
-                res.json({auth: false, message: "You failed to authenticate! - server"})
+                res.json({auth: false, message: "You failed to authenticate! - server"});
             } else {
                 console.log("correct token");
                 req.userId = decoded.id;
@@ -87,7 +88,15 @@ router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
     const polls = await users_polls_model.getCreatedPolls(req.userId);
     console.log(polls);
     res.json({auth: true, polls})
-})
+});
+
+router.post("/getPollDetails", verifyJWT, async (req, res) => {
+    console.log("FETCHING POLL DETAILS");
+    const pollId = req.body.pollId;
+    const pollDetails = await users_polls_model.getPollDetails(pollId);
+    console.log(pollDetails);
+    res.json({auth: true, pollDetails});
+});
 
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
