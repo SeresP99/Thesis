@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from "react";
-import StyledProfile, {DataColumn, DataDiv, DataGrid, DataRow} from "./styles/profilePageStyle"
+import StyledProfile, {
+    ButtonDiv,
+    CreatePollButton,
+    DataColumn,
+    DataDiv,
+    DataGrid,
+    DataRow
+} from "./styles/profilePageStyle"
 import {Scrollbars} from "react-custom-scrollbars-2"
 import {useNavigate} from "react-router-dom";
 import Axios from "axios";
@@ -32,8 +39,6 @@ function ProfilePage() {
                 navigate('/login');
         }
     );
-
-    //navigate("/login");
 
     const getAllData = () => {
         Axios.get("http://localhost:4000/getUserProfile", {
@@ -70,24 +75,33 @@ function ProfilePage() {
 
     //endregion
 
+    const NavToCreatePoll = () => {
+        navigate("/create");
+    };
+
+
     return (
         <StyledProfile>
             <DataDiv>
                 <DataGrid>
                     <DataRow>
-                        <DataColumn size={2}>Your Username:</DataColumn>
-                        <DataColumn size={3}>{profileData.username}</DataColumn>
+                        <DataColumn size={1}>Your Username:</DataColumn>
+                        <DataColumn size={1}>{profileData.username}</DataColumn>
                     </DataRow>
                     <DataRow>
-                        <DataColumn size={2}>Your email:</DataColumn>
-                        <DataColumn size={3}>{profileData.email}</DataColumn>
+                        <DataColumn size={1}>Your email:</DataColumn>
+                        <DataColumn size={1}>{profileData.email}</DataColumn>
                     </DataRow>
                     <DataRow>
-                        <DataColumn size={2}>Your ID:</DataColumn>
-                        <DataColumn size={3}>{profileData.id}</DataColumn>
+                        <DataColumn size={1}>Your ID:</DataColumn>
+                        <DataColumn size={1}>{profileData.id}</DataColumn>
                     </DataRow>
                 </DataGrid>
                 <PollList/>
+                <ButtonDiv style={{width: "80%"}}>
+                    <CreatePollButton style={{flex: 1}} onClick={NavToCreatePoll}>Create Poll</CreatePollButton>
+                    <button style={{background: "red", height: 40, flex: 2}}></button>
+                </ButtonDiv>
             </DataDiv>
         </StyledProfile>
     );
