@@ -12,6 +12,9 @@ import DateTimePicker from 'react-datetime-picker';
 
 function CreatePoll() {
 
+    require("./datetimepicker/calendar.css");
+    require("./datetimepicker/DateTimePicker.css");
+
     const navigate = useNavigate();
 
     const [startDate, onChangeStart] = useState();
