@@ -7,10 +7,15 @@ import CreatePollPage, {
     TextInputFieldName
 } from "./styles/CreatePollStyle"
 import {useNavigate} from "react-router-dom";
+import React, { useState } from 'react';
+import DateTimePicker from 'react-datetime-picker';
 
 function CreatePoll() {
 
     const navigate = useNavigate();
+
+    const [startDate, onChangeStart] = useState();
+    const [endDate, onChangeEnd] = useState();
 
     const BackToProfile = () => {
         navigate("/profile");
@@ -32,7 +37,8 @@ function CreatePoll() {
                     </CreateFormColumn>
 
                     <CreateFormColumn>
-                        <TextInput type="text"></TextInput>
+                        <DateTimePicker onChange={onChangeStart} value={startDate}></DateTimePicker>
+                        <DateTimePicker onChange={onChangeEnd} value={endDate}></DateTimePicker>
                         <TextInput type="text"></TextInput>
                         <TextInput type="text"></TextInput>
                         <CreatePollButton type="submit"> Create Poll</CreatePollButton>
