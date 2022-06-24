@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ScrollableList from 'react-scrollable-list';
 import {Scrollbars} from "react-custom-scrollbars-2";
 import CustomScrollbars from "../global/Scrollbar";
-import {AddButton, PollListElement, PollButtonPanel, PollNameTag} from "./PollListStyle";
+import {ViewPollButton, PollListElement, PollButtonPanel, PollNameTag, EditButton} from "./PollListStyle";
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -23,6 +23,10 @@ const PollList = () => {
             })
     }
 
+    function goToVoteOptionsEditor(key){
+        navigate("/profile/poll/editVoteOptions", {state: {pollId: key}});
+    }
+
     function goToPollDetails(key) {
         navigate("/profile/poll", {state: {pollId: key}})
     }
@@ -36,7 +40,8 @@ const PollList = () => {
         return <PollListElement>
             <PollNameTag>{props.title}</PollNameTag>
             <PollButtonPanel>
-                <AddButton onClick={() => goToPollDetails(props.id)}>View</AddButton>
+                <ViewPollButton onClick={() => goToPollDetails(props.id)}>View</ViewPollButton>
+                <EditButton onClick={() => goToVoteOptionsEditor(props.id)}>Edit Vote Options</EditButton>
             </PollButtonPanel>
         </PollListElement>
     }
