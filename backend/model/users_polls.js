@@ -20,6 +20,20 @@ class users_polls_model {
         )
         return query.rows[0];
     }
+
+    static async createPoll(poll, authorId){
+        const query = await pool.query(
+            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date) VALUES ($1, $2, $3, $4, $5)", [poll.title, poll.description, authorId, poll.startDate, poll.endDate]
+        )
+        return query.rows[0];
+    }
+
+    static async getPollOptions(pollId){
+        const query = await pool.query(
+            "SELECT * FROM public.poll_options WHERE poll_id = $1", [pollId]
+        );
+        return query.rows;
+    }
 }
 
 module.exports = users_polls_model;
