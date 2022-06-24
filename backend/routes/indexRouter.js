@@ -102,5 +102,21 @@ router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
 });
 
+router.post("/createPoll", verifyJWT, async (req, res) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
+    const authorId = decoded.id;
+    const poll = req.body;
+    console.log(req.body);
+    const creation = await users_polls_model.createPoll(poll, authorId);
+    console.log(creation);
+});
+
+router.post("/getPollOptions", verifyJWT, async (req, res) => {
+    const pollId = req.body.pollId;
+    const options = await users_polls_model.getPollOptions(pollId);
+    console.log(options);
+    res.json({auth:true, options});
+})
 
 module.exports = router;
