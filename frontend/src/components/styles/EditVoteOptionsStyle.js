@@ -31,18 +31,22 @@ export const OptionListElement = styled.div`
   height: 50px;
   width: 150px;
   border-radius: 5px;
-  &:hover{
+  margin: 1px;
+  background-color: #333333;
+
+  &:hover {
     background-color: ${({theme}) => theme.elevation_3};
   }
 `;
 
 export const ButtonRow = styled.div`
-  display:flex;
+  display: flex;
   width: 80%;
   max-width: 1200px;
 `;
 
 export const AddButton = styled.button`
+  flex: 1;
   font-family: "Montserrat", sans-serif;
   justify-content: space-evenly;
   height: 40px;
