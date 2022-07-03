@@ -1,19 +1,25 @@
-import {AddButton, BaseCard, ButtonRow, GenericPage, OptionListElement} from "./styles/EditVoteOptionsStyle";
+import {
+    BaseCard,
+    ButtonRow,
+    GenericPage,
+    OptionListElement
+} from "./styles/EditVoteOptionsStyle";
 import CustomScrollbars from "./global/Scrollbar"
 import Axios from "axios";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CreatePopup from "./popups/CreateVoteOptionPopup";
+import UpdatePopup from "./popups/UpdateVoteOptionPopup";
 
 
 function EditVoteOptions() {
 
-    //const state = useLocation();
-    //const {pollId} = state.state;
+    const state = useLocation();
+    const {pollId} = state.state;
 
     const [optionList, setOptionList] = useState([]);
     const GetVoteOptions = () => {
-        Axios.post("http://localhost:4000/getPollOptions", {"pollId": 1}, {
+        Axios.post("http://localhost:4000/getPollOptions", {"pollId": pollId}, {
             headers:
                 {"x-access-token": localStorage.getItem("token")}
         })
@@ -32,9 +38,7 @@ function EditVoteOptions() {
 
     function VoteOption(props) {
         return (
-            <OptionListElement>
-                <p>{props.title}</p>
-            </OptionListElement>
+            UpdatePopup(props)
         )
     }
 
@@ -50,7 +54,7 @@ function EditVoteOptions() {
         flexWrap: "wrap",
         justifyContent: "space-evenly",
         alignContent: "space-around",
-        height:290
+        height: 290
     }
 
     return (
@@ -59,13 +63,14 @@ function EditVoteOptions() {
 
                 <CustomScrollbars style={scrollStyle}>
                     <div style={divStyle}>
-                        {optionList.map((option) => <VoteOption key={option.id} title={option.name} id={option.id}
+                        {optionList.map((option) => <VoteOption key={option.id} title={option.title} id={option.id}
                                                                 description={option.description}/>)}
                     </div>
                 </CustomScrollbars>
                 <ButtonRow>
-                    <CreatePopup></CreatePopup>
+                    <CreatePopup/>
                 </ButtonRow>
+
 
             </BaseCard>
         </GenericPage>
