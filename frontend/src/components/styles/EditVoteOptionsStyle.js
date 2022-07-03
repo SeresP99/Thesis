@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import CreatePoll from "../CreatePoll";
+import CreatePopup from "../popups/CreateVoteOptionPopup";
 
 export const GenericPage = styled.div`
   height: 100vh;
@@ -22,9 +24,15 @@ export const BaseCard = styled.div`
   text-align: center;
 `;
 
-export const OptionListElement = styled.div`
+export const OptionListElement = styled.button`
   display: flex;
   justify-content: center;
+  appearance: none;
+  --moz-appearance: none;
+  --webkit-appearance: none;
+  --edge-appearance: none;
+  border: none;
+  outline: 0;
   align-items: center;
   align-content: center;
   text-align: center;
@@ -33,6 +41,7 @@ export const OptionListElement = styled.div`
   border-radius: 5px;
   margin: 1px;
   background-color: #333333;
+  color: white;
 
   &:hover {
     background-color: ${({theme}) => theme.elevation_3};
