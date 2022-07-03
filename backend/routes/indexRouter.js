@@ -114,9 +114,32 @@ router.post("/createPoll", verifyJWT, async (req, res) => {
 
 router.post("/getPollOptions", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
+    console.log("poll ID: " + pollId);
     const options = await users_polls_model.getPollOptions(pollId);
     console.log(options);
-    res.json({auth:true, options});
+    res.json({auth: true, options});
+})
+
+router.post("/addPollOption", verifyJWT, async (req, res) => {
+    const pollId = req.body.pollId;
+    const title = req.body.title;
+    const description = req.body.description;
+    const insertion = await users_polls_model.addPollOption(pollId, title, description);
+    console.log(insertion);
+})
+
+router.post("/updatePollOption", verifyJWT, async (req, res) => {
+    const id = req.body.id;
+    const title = req.body.title;
+    const description = req.body.description;
+    const update = await users_polls_model.updatePollOption(id, title, description);
+    console.log(update);
+})
+
+router.post("/deletePollOption", verifyJWT, async (req, res) => {
+    const id = req.body.id;
+    const deletion = await users_polls_model.deletePollOption(id);
+    console.log(deletion);
 })
 
 module.exports = router;
