@@ -5,18 +5,20 @@ const user_model = require("../model/user")
 const jwt = require("jsonwebtoken");
 const {verify} = require("jsonwebtoken");
 const {stringify} = require("nodemon/lib/utils");
+const users_polls_model = require("../model/users_polls");
 
 router.use(express.json());
 
 const verifyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"];
     if (!token) {
-        res.send("We need a token, please give it to us next time! - server")
+        console.log("we got no token");
+        res.send("We need a token, please give it to us next time! - server");
     } else {
         jwt.verify(token, process.env.COOKIE_SECRET, (err, decoded) => {
             if (err) {
                 console.log("bad token");
-                res.json({auth: false, message: "You failed to authenticate! - server"})
+                res.json({auth: false, message: "You failed to authenticate! - server"});
             } else {
                 console.log("correct token");
                 req.userId = decoded.id;
@@ -67,7 +69,7 @@ router.post("/register", async (req, res) => {
         else
             try {
                 const creation = await user_model.createUser(username, email, password);
-                res.json({success: true, message:"Account created successfully, you can log in soon!"})
+                res.json({success: true, message: "Account created successfully, you can log in soon!"})
             } catch (e) {
                 res.json({success: false, message: "Internal server error."})
             }
@@ -82,9 +84,62 @@ router.get("/getUserProfile", verifyJWT, async (req, res) => {
     res.json({auth: true, profile})
 });
 
+router.get("/getParticipatingPolls", verifyJWT, async (req, res) => {
+    const polls = await users_polls_model.getParticipatingPolls(req.userId);
+    console.log(polls);
+    res.json({auth: true, polls})
+});
+
+router.post("/getPollDetails", verifyJWT, async (req, res) => {
+    console.log("FETCHING POLL DETAILS");
+    const pollId = req.body.pollId;
+    const pollDetails = await users_polls_model.getPollDetails(pollId);
+    console.log(pollDetails);
+    res.json({auth: true, pollDetails});
+});
+
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
 });
 
+router.post("/createPoll", verifyJWT, async (req, res) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
+    const authorId = decoded.id;
+    const poll = req.body;
+    console.log(req.body);
+    const creation = await users_polls_model.createPoll(poll, authorId);
+    console.log(creation);
+});
+
+router.post("/getPollOptions", verifyJWT, async (req, res) => {
+    const pollId = req.body.pollId;
+    console.log("poll ID: " + pollId);
+    const options = await users_polls_model.getPollOptions(pollId);
+    console.log(options);
+    res.json({auth: true, options});
+})
+
+router.post("/addPollOption", verifyJWT, async (req, res) => {
+    const pollId = req.body.pollId;
+    const title = req.body.title;
+    const description = req.body.description;
+    const insertion = await users_polls_model.addPollOption(pollId, title, description);
+    console.log(insertion);
+})
+
+router.post("/updatePollOption", verifyJWT, async (req, res) => {
+    const id = req.body.id;
+    const title = req.body.title;
+    const description = req.body.description;
+    const update = await users_polls_model.updatePollOption(id, title, description);
+    console.log(update);
+})
+
+router.post("/deletePollOption", verifyJWT, async (req, res) => {
+    const id = req.body.id;
+    const deletion = await users_polls_model.deletePollOption(id);
+    console.log(deletion);
+})
 
 module.exports = router;

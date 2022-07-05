@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from "react";
-import StyledProfile, {DataColumn, DataDiv, DataGrid, DataRow} from "./styles/profilePageStyle"
+import StyledProfile, {
+    ButtonDiv,
+    CreatePollButton,
+    DataColumn,
+    DataDiv,
+    DataGrid,
+    DataRow
+} from "./styles/profilePageStyle"
 import {Scrollbars} from "react-custom-scrollbars-2"
 import {useNavigate} from "react-router-dom";
 import Axios from "axios";
@@ -15,8 +22,6 @@ function ProfilePage() {
 
     const [profileData, setProfileData] = useState('');
 
-    const [seconds, setSeconds] = useState(0);
-
     const CheckIfAuthenticated = () => {
         Axios.get("http://localhost:4000/checkAuth", {
             headers: {
@@ -24,17 +29,16 @@ function ProfilePage() {
             },
         }).then(
             res => {
-                console.log(localStorage.getItem("token"));
-                console.log(res.data.auth);
                 setLoginStatus(res.data.auth);
             })
     }
 
 
-    if (localStorage.getItem("token") === undefined)
-        console.log("you have no token");
-
-    //navigate("/login");
+    useEffect(() => {
+            if (localStorage.getItem("token") === undefined)
+                navigate('/login');
+        }
+    );
 
     const getAllData = () => {
         Axios.get("http://localhost:4000/getUserProfile", {
@@ -71,24 +75,33 @@ function ProfilePage() {
 
     //endregion
 
+    const NavToCreatePoll = () => {
+        navigate("/create");
+    };
+
+
     return (
         <StyledProfile>
             <DataDiv>
                 <DataGrid>
                     <DataRow>
                         <DataColumn size={1}>Your Username:</DataColumn>
-                        <DataColumn size={2}>{profileData.username}</DataColumn>
+                        <DataColumn size={1}>{profileData.username}</DataColumn>
                     </DataRow>
                     <DataRow>
                         <DataColumn size={1}>Your email:</DataColumn>
-                        <DataColumn size={2}>{profileData.email}</DataColumn>
+                        <DataColumn size={1}>{profileData.email}</DataColumn>
                     </DataRow>
                     <DataRow>
                         <DataColumn size={1}>Your ID:</DataColumn>
-                        <DataColumn size={2}>{profileData.id}</DataColumn>
+                        <DataColumn size={1}>{profileData.id}</DataColumn>
                     </DataRow>
                 </DataGrid>
                 <PollList/>
+                <ButtonDiv style={{width: "80%"}}>
+                    <CreatePollButton style={{flex: 1}} onClick={NavToCreatePoll}>Create Poll</CreatePollButton>
+                    <button style={{background: "red", height: 40, flex: 2}}></button>
+                </ButtonDiv>
             </DataDiv>
         </StyledProfile>
     );

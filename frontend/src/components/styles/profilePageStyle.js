@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const ProfilePage = styled.div`
-
   height: 100vh;
   width: 100%;
   display: flex;
@@ -33,15 +32,61 @@ export const DataParagraph = styled.p`
 export const DataGrid = styled.div`
   height: 100%;
   width: 100%;
+  
 `;
 
 export const DataRow = styled.div`
   display: flex;
+  margin-bottom: 10px;
+  font-size: 25px;
 `;
 
 export const DataColumn = styled.div`
   flex: ${(props) => props.size};
 `;
 
+export const ButtonDiv = styled.div`
+    display: flex;
+    
+`;
+
+export const CreatePollButton = styled.button`
+    font-family: "Montserrat", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1.5em;
+  width: 80%;
+  max-width: 600px;
+  height: 40px;
+  border: 3px;
+  appearance: none;
+  --moz-appearance: none;
+  --webkit-appearance: none;
+  --edge-appearance: none;
+  border: none;
+  outline: 0;
+  background-color: ${({theme}) => theme.primary};
+  color: white;
+  margin-bottom: 31px;
+
+  &:focus,
+  &:hover {
+    appearance: none;
+    --moz-appearance: none;
+    --webkit-appearance: none;
+    --edge-appearance: none;
+    border: none;
+    outline: 0;
+  }
+
+  &:hover {
+    background-color: ${({theme}) => theme.primaryHover};
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`;
 
 export default ProfilePage;

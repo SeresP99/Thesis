@@ -1,33 +1,58 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import ScrollableList from 'react-scrollable-list';
 import {Scrollbars} from "react-custom-scrollbars-2";
 import CustomScrollbars from "../global/Scrollbar";
-import {AddButton, PollListElement, PollButtonPanel, PollNameTag} from "./PollListStyle";
-
+import {ViewPollButton, PollListElement, PollButtonPanel, PollNameTag, EditButton} from "./PollListStyle";
+import Axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const PollList = () => {
 
-    let PollList = [];
-    /*for (let i = 0; i < 20; i++) {
-        PollList.push({id: i, content: i});
-    }*/
+    const navigate = useNavigate();
+
+    const [pollList, setPollList] = useState([]);
+
+    const getPollList = () => {
+        Axios.get("http://localhost:4000/getParticipatingPolls", {
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+            }
+        }).then(
+            res => {
+                setPollList(res.data.polls);
+            })
+    }
+
+    function goToVoteOptionsEditor(key){
+        navigate("/profile/poll/editVoteOptions", {state: {pollId: key}});
+    }
+
+    function goToPollDetails(key) {
+        navigate("/profile/poll", {state: {pollId: key}})
+    }
+
+    useEffect(() => {
+        getPollList();
+    }, [])
+
 
     function Poll(props) {
         return <PollListElement>
-            <PollNameTag>Poll number: {props.content}</PollNameTag>
+            <PollNameTag>{props.title}</PollNameTag>
             <PollButtonPanel>
-                <AddButton>Add</AddButton>
+                <ViewPollButton onClick={() => goToPollDetails(props.id)}>View</ViewPollButton>
+                <EditButton onClick={() => goToVoteOptionsEditor(props.id)}>Edit Vote Options</EditButton>
             </PollButtonPanel>
         </PollListElement>
     }
 
-    const mainList = PollList.map(poll => <p>{poll}</p>);
+    //const mainList = PollList.map(poll => <p>{poll}</p>);
 
 
     return (
         <div style={{width: '80%'}}>
             <CustomScrollbars style={{borderRadius: '5px', height: 300}}>
-                {PollList.map((poll) => <Poll key={poll.id} content={poll.content}/>)}
+                {pollList.map((poll) => <Poll key={poll.poll_id} title={poll.title} id={poll.poll_id}/>)}
             </CustomScrollbars>
         </div>
     )

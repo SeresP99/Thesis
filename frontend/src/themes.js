@@ -8,5 +8,7 @@ export const darkTheme = {
     primaryHover: "#500089",
     secondary: "#00b7b7",
     secondaryHover: "#008080",
+    back: "rgba(206,0,0,0.83)",
+    backHover: "#980000",
     shadow: "0 2px 5px 1px #111",
   };
