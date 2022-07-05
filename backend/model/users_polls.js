@@ -7,7 +7,7 @@ class users_polls_model {
         return query.rows[0];
     }
 
-    static async getCreatedPolls(userId){
+    static async getParticipatingPolls(userId){
         const query = await pool.query(
             "SELECT users.username as participant, polls.title, polls.id as poll_id FROM users JOIN participants_polls_relationship ON users.id = participants_polls_relationship.user_id JOIN polls ON participants_polls_relationship.poll_id = polls.id WHERE user_id = $1",
             [userId])

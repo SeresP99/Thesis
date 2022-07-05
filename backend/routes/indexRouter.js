@@ -84,8 +84,8 @@ router.get("/getUserProfile", verifyJWT, async (req, res) => {
     res.json({auth: true, profile})
 });
 
-router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
-    const polls = await users_polls_model.getCreatedPolls(req.userId);
+router.get("/getParticipatingPolls", verifyJWT, async (req, res) => {
+    const polls = await users_polls_model.getParticipatingPolls(req.userId);
     console.log(polls);
     res.json({auth: true, polls})
 });

@@ -13,7 +13,7 @@ const PollList = () => {
     const [pollList, setPollList] = useState([]);
 
     const getPollList = () => {
-        Axios.get("http://localhost:4000/getCreatedPolls", {
+        Axios.get("http://localhost:4000/getParticipatingPolls", {
             headers: {
                 'x-access-token': localStorage.getItem('token'),
             }
