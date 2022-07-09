@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import StyledProfile, {
     ButtonDiv,
     CreatePollButton,
+    SwitchListButton,
     DataColumn,
     DataDiv,
     DataGrid,
@@ -10,7 +11,8 @@ import StyledProfile, {
 import {Scrollbars} from "react-custom-scrollbars-2"
 import {useNavigate} from "react-router-dom";
 import Axios from "axios";
-import PollList from "./ProfilePageComponents/PollList"
+import ParticipatedPollList from "./ProfilePageComponents/ParticipatedPollList"
+import CreatedPollList from "./ProfilePageComponents/CreatedPollList";
 
 function ProfilePage() {
 
@@ -21,6 +23,9 @@ function ProfilePage() {
     const [loginStatus, setLoginStatus] = useState(true);
 
     const [profileData, setProfileData] = useState('');
+
+    const [displayedList, setDisplayedList] = useState(0);
+    const [switchButtonText, setSwitchButtonText] = useState("Show Your Own Polls");
 
     const CheckIfAuthenticated = () => {
         Axios.get("http://localhost:4000/checkAuth", {
@@ -79,6 +84,24 @@ function ProfilePage() {
         navigate("/create");
     };
 
+    const SwitchList = () => {
+        if (displayedList === 0)
+            setDisplayedList(1);
+
+        else
+            setDisplayedList(0);
+    };
+
+    const List = () => {
+        if(displayedList === 0) {
+            setSwitchButtonText("Created Polls");
+            return (<ParticipatedPollList/>);
+        }
+        else {
+            setSwitchButtonText("Joined Polls");
+            return (<CreatedPollList/>);
+        }
+    }
 
     return (
         <StyledProfile>
@@ -97,10 +120,11 @@ function ProfilePage() {
                         <DataColumn size={1}>{profileData.id}</DataColumn>
                     </DataRow>
                 </DataGrid>
-                <PollList/>
+                <List/>
                 <ButtonDiv style={{width: "80%"}}>
                     <CreatePollButton style={{flex: 1}} onClick={NavToCreatePoll}>Create Poll</CreatePollButton>
-                    <button style={{background: "red", height: 40, flex: 2}}></button>
+                    <SwitchListButton style={{flex: 1}} onClick={SwitchList}>{switchButtonText}</SwitchListButton>
+                    <button style={{background: "red", height: 40, flex: 1}}></button>
                 </ButtonDiv>
             </DataDiv>
         </StyledProfile>
