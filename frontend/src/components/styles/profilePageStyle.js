@@ -58,7 +58,7 @@ export const CreatePollButton = styled.button`
   font-size: 1.5em;
   width: 80%;
   max-width: 600px;
-  height: 40px;
+  height: 60px;
   border: 3px;
   appearance: none;
   --moz-appearance: none;
@@ -82,6 +82,45 @@ export const CreatePollButton = styled.button`
 
   &:hover {
     background-color: ${({theme}) => theme.primaryHover};
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
+export const SwitchListButton = styled.button`
+    font-family: "Montserrat", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1.5em;
+  width: 80%;
+  max-width: 600px;
+  height: 60px;
+  border: 3px;
+  appearance: none;
+  --moz-appearance: none;
+  --webkit-appearance: none;
+  --edge-appearance: none;
+  border: none;
+  outline: 0;
+  background-color: ${({theme}) => theme.secondary};
+  color: white;
+  margin-bottom: 31px;
+
+  &:focus,
+  &:hover {
+    appearance: none;
+    --moz-appearance: none;
+    --webkit-appearance: none;
+    --edge-appearance: none;
+    border: none;
+    outline: 0;
+  }
+
+  &:hover {
+    background-color: ${({theme}) => theme.secondaryHover};
   }
 
   &:active {
