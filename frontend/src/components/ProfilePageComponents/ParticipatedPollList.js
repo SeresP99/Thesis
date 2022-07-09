@@ -6,7 +6,7 @@ import {ViewPollButton, PollListElement, PollButtonPanel, PollNameTag, EditButto
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-const PollList = () => {
+const ParticipatedPollList = () => {
 
     const navigate = useNavigate();
 
@@ -23,8 +23,10 @@ const PollList = () => {
             })
     }
 
-    function goToVoteOptionsEditor(key){
-        navigate("/profile/poll/editVoteOptions", {state: {pollId: key}});
+
+
+    function goToVote(key){
+        navigate("/profile/poll/vote", {state: {pollId: key}});
     }
 
     function goToPollDetails(key) {
@@ -40,8 +42,7 @@ const PollList = () => {
         return <PollListElement>
             <PollNameTag>{props.title}</PollNameTag>
             <PollButtonPanel>
-                <ViewPollButton onClick={() => goToPollDetails(props.id)}>View</ViewPollButton>
-                <EditButton onClick={() => goToVoteOptionsEditor(props.id)}>Edit Vote Options</EditButton>
+                <ViewPollButton onClick={() => goToVote(props.id)}>Vote</ViewPollButton>
             </PollButtonPanel>
         </PollListElement>
     }
@@ -58,4 +59,4 @@ const PollList = () => {
     )
 }
 
-export default PollList;
+export default ParticipatedPollList;
