@@ -5,6 +5,7 @@ import ProfilePage from "./profilePage"
 import PollDetails from "./pollDetails";
 import CreatePoll from "./CreatePoll";
 import EditVoteOptions from "./EditVoteOptions";
+import VotePage from "./VotePage";
 
 
 const Views = () => {
@@ -14,6 +15,7 @@ const Views = () => {
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/profile/poll" element={<PollDetails/>}/>
             <Route path="/profile/poll/editVoteOptions" element={<EditVoteOptions/>}/>
+            <Route path="/profile/poll/vote" element={<VotePage/>}/>
             <Route path="/register" element={<SignUp/>}/>
             <Route path="/create" element={<CreatePoll/>}></Route>
             <Route path="*" element={<LogIn/>}/>
