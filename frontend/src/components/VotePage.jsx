@@ -1,7 +1,7 @@
-import {Page, ContentPanel, OptionListElement} from "./styles/VotePageSyle"
+import {Page, ContentPanel, OptionListElement, ButtonRow, LockInButton} from "./styles/VotePageSyle"
 import CustomScrollbars from "./global/Scrollbar";
 import Axios from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef, createRef} from "react";
 import {useLocation} from "react-router-dom";
 import UpdatePopup from "./popups/UpdateVoteOptionPopup";
 
@@ -11,6 +11,7 @@ function VotePage() {
     const {pollId} = state.state;
 
     const [optionList, setOptionList] = useState([]);
+    const [selectedOption, setSelectedOption] = useState();
 
     const GetVoteOptions = () => {
         Axios.post("http://localhost:4000/getPollOptions", {"pollId": pollId}, {
@@ -22,6 +23,16 @@ function VotePage() {
                     setOptionList(res.data.options);
                 }
             )
+    };
+
+    const Vote = () => {
+        const pollOptionId = selectedOption;
+        const obj = {pollOptionId, pollId};
+
+        Axios.post("http://localhost:4000/vote", obj, {
+            headers:
+                {"x-access-token": localStorage.getItem("token")}
+        })
     };
 
     useEffect(() => {
@@ -36,6 +47,7 @@ function VotePage() {
         width: "80%",
         minWidth: "300px"
     }
+
     const divStyle = {
         display: "flex",
         flexDirection: "row",
@@ -47,7 +59,9 @@ function VotePage() {
 
     function VoteOption(props) {
         return (
-            <OptionListElement>props.title</OptionListElement>
+            <OptionListElement
+                style={{backgroundColor: selectedOption === props.id ? '#6500ad' : '#333333'}}
+                onClick={() => setSelectedOption(props.id)}>{props.title}</OptionListElement>
         )
     }
 
@@ -60,6 +74,9 @@ function VotePage() {
                                                                 description={option.description}/>)}
                     </div>
                 </CustomScrollbars>
+                <ButtonRow>
+                    <LockInButton onClick={Vote} disabled={!selectedOption}>Lock In</LockInButton>
+                </ButtonRow>
             </ContentPanel>
         </Page>
     )
