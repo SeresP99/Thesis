@@ -151,4 +151,16 @@ router.post("/deletePollOption", verifyJWT, async (req, res) => {
     console.log(deletion);
 })
 
+router.post("/vote", verifyJWT, async (req, res) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
+    const userId = decoded.id;
+
+    const chosenOptionId = req.body.pollOptionId;
+    const pollId = req.body.pollId;
+
+    const castVote = await users_polls_model.castVote(userId, chosenOptionId, pollId);
+    console.log(castVote);
+});
+
 module.exports = router;

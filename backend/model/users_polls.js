@@ -65,6 +65,18 @@ class users_polls_model {
         );
         return query.rows[0];
     }
+
+    static async castVote(userId, chosenOptionId, pollId) {
+        const querySetVoted = await pool.query(
+            "UPDATE participants_polls_relationship SET has_voted = true WHERE poll_id = $1 AND user_id = $2", [pollId, userId]
+        )
+
+        const queryAddVote = await pool.query(
+            "UPDATE poll_options SET vote_count = vote_count + 1 WHERE id = $1 AND poll_id = $2", [chosenOptionId, pollId]
+        )
+
+        return !querySetVoted && !queryAddVote;
+    }
 }
 
 module.exports = users_polls_model;
