@@ -16,3 +16,5 @@
 `DATABASE_HOST="localhost"`  
 `DATABASE_USER="postgres"`  
 `DATABASE_PASSWORD="postgres"`
+
+`BUTTON ANIMATIONS:` https://dev.to/webdeasy/top-20-css-buttons-animations-f41
