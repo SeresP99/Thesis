@@ -25,6 +25,6 @@ export function CheckLoginStatus() {
         },
     }).then(
         (res) => {
-            return res
+            return res.data.auth;
         });
 }
