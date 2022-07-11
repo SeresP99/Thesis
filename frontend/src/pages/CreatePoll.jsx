@@ -5,7 +5,7 @@ import CreatePollPage, {
     ElevatedCard, MultiLineTextInput,
     TextInput,
     TextInputFieldName
-} from "./styles/CreatePollStyle"
+} from "../components/styles/CreatePollStyle"
 import {useNavigate} from "react-router-dom";
 import React, { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
@@ -13,8 +13,8 @@ import Axios from 'axios'
 
 function CreatePoll() {
 
-    require("./datetimepicker/calendar.css");
-    require("./datetimepicker/DateTimePicker.css");
+    require("../components/datetimepicker/calendar.css");
+    require("../components/datetimepicker/DateTimePicker.css");
 
     const navigate = useNavigate();
 

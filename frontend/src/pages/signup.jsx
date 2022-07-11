@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import StyledSignup, {SignupButton, TextInput, StyledForm, ElevatedDiv, TakeToLoginButton} from "./styles/Signup.styled"
+import StyledSignup, {SignupButton, TextInput, StyledForm, ElevatedDiv, TakeToLoginButton} from "../components/styles/Signup.styled"
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
 

@@ -7,12 +7,12 @@ import StyledProfile, {
     DataDiv,
     DataGrid,
     DataRow
-} from "./styles/profilePageStyle"
+} from "../components/styles/profilePageStyle"
 import {Scrollbars} from "react-custom-scrollbars-2"
 import {useNavigate} from "react-router-dom";
 import Axios from "axios";
-import ParticipatedPollList from "./ProfilePageComponents/ParticipatedPollList"
-import CreatedPollList from "./ProfilePageComponents/CreatedPollList";
+import ParticipatedPollList from "../components/ProfilePageComponents/ParticipatedPollList"
+import CreatedPollList from "../components/ProfilePageComponents/CreatedPollList";
 
 function ProfilePage() {
 

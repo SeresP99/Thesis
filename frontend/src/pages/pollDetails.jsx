@@ -1,5 +1,5 @@
-import {BaseCard, GenericPage} from "./styles/BaseCardStyle";
-import {DataDiv, DataParagraph, DataGrid, DataRow, DataColumn} from "./styles/profilePageStyle";
+import {BaseCard, GenericPage} from "../components/styles/BaseCardStyle";
+import {DataDiv, DataParagraph, DataGrid, DataRow, DataColumn} from "../components/styles/profilePageStyle";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import Axios from "axios";

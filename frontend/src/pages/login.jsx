@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {CheckLoginStatus, SendCredentials} from "../assets/login";
-import StyledLogin, {LoginButton, TakeToSignupButton, TextInput, ElevatedDiv, StyledForm} from "./styles/Login.styled";
+import StyledLogin, {LoginButton, TakeToSignupButton, TextInput, ElevatedDiv, StyledForm} from "../components/styles/LoginStyle";
 import Axios from "axios";
 import {Navigate, useNavigate} from "react-router-dom";
 
@@ -11,25 +11,22 @@ function LogIn() {
     const [password, setPassword] = useState();
     const [error, setError] = useState(false);
 
-    const [loginStatus, setLoginStatus] = useState(false);
-
     const SignIn = async (e) => {
         e.preventDefault();
         const data = {username, password};
         const tryLogin = await SendCredentials(data);
 
-        /*if (tryLogin)
-            navigate("/profile");
+        if (tryLogin)
+            navigate("/dashboard");
         else
-            setError(true);*/
+            setError(true);
     }
 
-
-
     useEffect(async () => {
-        let state = await CheckLoginStatus();
-        console.log("useEffect just ran once")
-        console.log("state: " + JSON.stringify(state));
+        const auth = await CheckLoginStatus();
+        if (auth)
+            navigate("/profile");
+
     }, [])
 
     const NavToSignup = () => {
@@ -67,12 +64,9 @@ function LogIn() {
                 <TakeToSignupButton onClick={NavToSignup}>
                     <p>Sign Up</p>
                 </TakeToSignupButton>
-
             </ElevatedDiv>
-
             <br/>
             <div>
-
             </div>
         </StyledLogin>
     )

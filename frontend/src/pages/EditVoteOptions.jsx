@@ -1,18 +1,23 @@
-import {Page, ContentPanel, OptionListElement, ButtonRow, LockInButton} from "./styles/VotePageSyle"
-import CustomScrollbars from "./global/Scrollbar";
+import {
+    BaseCard,
+    ButtonRow,
+    GenericPage,
+    OptionListElement
+} from "../components/styles/EditVoteOptionsStyle";
+import CustomScrollbars from "../components/global/Scrollbar"
 import Axios from "axios";
-import {useEffect, useState, useRef, createRef} from "react";
 import {useLocation} from "react-router-dom";
-import UpdatePopup from "./popups/UpdateVoteOptionPopup";
+import {useEffect, useState} from "react";
+import CreatePopup from "../components/popups/CreateVoteOptionPopup";
+import UpdatePopup from "../components/popups/UpdateVoteOptionPopup";
 
-function VotePage() {
+
+function EditVoteOptions() {
 
     const state = useLocation();
     const {pollId} = state.state;
 
     const [optionList, setOptionList] = useState([]);
-    const [selectedOption, setSelectedOption] = useState();
-
     const GetVoteOptions = () => {
         Axios.post("http://localhost:4000/getPollOptions", {"pollId": pollId}, {
             headers:
@@ -25,21 +30,17 @@ function VotePage() {
             )
     };
 
-    const Vote = () => {
-        const pollOptionId = selectedOption;
-        const obj = {pollOptionId, pollId};
-
-        Axios.post("http://localhost:4000/vote", obj, {
-            headers:
-                {"x-access-token": localStorage.getItem("token")}
-        })
-    };
-
     useEffect(() => {
             GetVoteOptions();
         },
         []
     );
+
+    function VoteOption(props) {
+        return (
+            UpdatePopup(props)
+        )
+    }
 
     const scrollStyle = {
         borderRadius: '5px',
@@ -47,7 +48,6 @@ function VotePage() {
         width: "80%",
         minWidth: "300px"
     }
-
     const divStyle = {
         display: "flex",
         flexDirection: "row",
@@ -57,17 +57,10 @@ function VotePage() {
         height: 290
     }
 
-    function VoteOption(props) {
-        return (
-            <OptionListElement
-                style={{backgroundColor: selectedOption === props.id ? '#6500ad' : '#333333'}}
-                onClick={() => setSelectedOption(props.id)}>{props.title}</OptionListElement>
-        )
-    }
-
     return (
-        <Page>
-            <ContentPanel>
+        <GenericPage>
+            <BaseCard>
+
                 <CustomScrollbars style={scrollStyle}>
                     <div style={divStyle}>
                         {optionList.map((option) => <VoteOption key={option.id} title={option.title} id={option.id}
@@ -75,11 +68,13 @@ function VotePage() {
                     </div>
                 </CustomScrollbars>
                 <ButtonRow>
-                    <LockInButton onClick={Vote} disabled={!selectedOption}>Lock In</LockInButton>
+                    <CreatePopup/>
                 </ButtonRow>
-            </ContentPanel>
-        </Page>
-    )
+
+
+            </BaseCard>
+        </GenericPage>
+    );
 }
 
-export default VotePage;
+export default EditVoteOptions;

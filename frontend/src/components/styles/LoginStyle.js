@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Button} from "./Button/Button";
 
 const Login = styled.div`
 
@@ -65,42 +66,8 @@ export const TextInput = styled.input`
   border-radius: 3px;
 `;
 
-export const LoginButton = styled.button`
-  font-family: "Montserrat", sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  font-size: 1.3rem;
-  width: 90%;
-  max-width: 300px;
-  height: 15%;
-  border: 3px;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
-  background-color: ${({theme}) => theme.primary};
-  color: white;
-
-  &:focus,
-  &:hover {
-    appearance: none;
-    --moz-appearance: none;
-    --webkit-appearance: none;
-    --edge-appearance: none;
-    border: none;
-    outline: 0;
-  }
-
-  &:hover {
-    background-color: ${({theme}) => theme.primaryHover};
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+export const LoginButton = styled(Button)`
+  
 `;
 
 export const TakeToSignupButton = styled.button`
