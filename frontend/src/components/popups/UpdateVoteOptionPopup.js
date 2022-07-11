@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Popup from 'reactjs-popup';
-import CreatePoll from "../CreatePoll";
+import CreatePoll from "../../pages/CreatePoll";
 import PopupForm, {
     BackButton, ButtonRow,
     PopupSubmitButton,
