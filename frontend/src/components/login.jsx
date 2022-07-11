@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {CheckLoginStatus, SendCredentials} from "../assets/login";
 import StyledLogin, {LoginButton, TakeToSignupButton, TextInput, ElevatedDiv, StyledForm} from "./styles/Login.styled";
 import Axios from "axios";
 import {Navigate, useNavigate} from "react-router-dom";
@@ -6,60 +7,32 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 function LogIn() {
     const navigate = useNavigate();
-    const [data, setData] = useState({
-        email: "",
-        password: ""
-    });
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [error, setError] = useState(false);
 
     const [loginStatus, setLoginStatus] = useState(false);
 
-    const SignIn = (e) => {
+    const SignIn = async (e) => {
         e.preventDefault();
-        console.log(data);
-        Axios.post("http://localhost:4000/login", {
-            username: data.username,
-            password: data.password
-        })
-            .then(
-                res => {
-                    console.log(res.data);
-                    if (res.data.auth === true) {
-                        setLoginStatus(true);
-                        localStorage.setItem("token", res.data.token);
-                    } else
-                        setLoginStatus(false);
-                    console.log(loginStatus);
-                })
+        const data = {username, password};
+        const tryLogin = await SendCredentials(data);
+
+        /*if (tryLogin)
+            navigate("/profile");
+        else
+            setError(true);*/
     }
 
-    const CheckIfAuthenticated = () => {
-        Axios.get("http://localhost:4000/checkAuth", {
-            headers: {
-                'x-access-token': localStorage.getItem("token")
-            },
-        }).then(
-            res => {
-                console.log(localStorage.getItem("token"));
-                console.log(res.data.auth);
-                setLoginStatus(res.data.auth);
-            })
-    };
 
-    function handleChange(e) {
-        const newData = {...data};
-        newData[e.target.id] = e.target.value;
-        setData(newData);
-    }
 
-    useEffect(() => {
-        CheckIfAuthenticated();
+    useEffect(async () => {
+        let state = await CheckLoginStatus();
+        console.log("useEffect just ran once")
+        console.log("state: " + JSON.stringify(state));
     }, [])
 
-    if (loginStatus) {
-        return <Navigate to={"/profile"} replace={true}/>
-    }
-
-    function takeToSignup() {
+    const NavToSignup = () => {
         navigate("/register");
     }
 
@@ -68,25 +41,35 @@ function LogIn() {
             <ElevatedDiv>
                 <StyledForm onSubmit={SignIn}>
                     <div>
-                        <h1>Plum</h1>
+                        <h1 style={{fontSize: '50px'}}>Plum</h1>
                         <sub>Created by Peter Seres</sub>
+                        <p style={{
+                            visibility: error ? "visible" : "hidden",
+                            marginTop: "20px",
+                            marginBottom: "-20px",
+                            color: "#ff4b4b"
+                        }}>Wrong username/password combination!</p>
                     </div>
+
                     <div>
-                        <TextInput onChange={(e) => handleChange(e)} id="username" type="text"
+                        <TextInput onChange={(e) => setUsername(e.target.value)} id="username" type="text"
                                    placeholder={"Username"}/>
                         <br/>
-                        <TextInput onChange={(e) => handleChange(e)} id="password" type="password"
+                        <TextInput onChange={(e) => setPassword(e.target.value)} id="password" type="password"
                                    placeholder={"Password"}/>
+
                     </div>
                     <LoginButton type="submit">
                         <p>Log in</p>
                     </LoginButton>
 
                 </StyledForm>
-                <TakeToSignupButton onClick={() => takeToSignup()}>
+                <TakeToSignupButton onClick={NavToSignup}>
                     <p>Sign Up</p>
                 </TakeToSignupButton>
+
             </ElevatedDiv>
+
             <br/>
             <div>
 
