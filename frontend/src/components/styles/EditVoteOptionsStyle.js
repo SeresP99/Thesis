@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CreatePoll from "../CreatePoll";
+import CreatePoll from "../../pages/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
 
 export const GenericPage = styled.div`
