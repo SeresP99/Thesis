@@ -25,7 +25,7 @@ function Dashboard() {
         const interval = setInterval(() => {
             if (!CheckIfAuthenticated())
                 navigate("/login");
-        }, 5000);
+        }, 2000);
         return () => clearInterval(interval);
     }, [])
 
@@ -63,8 +63,26 @@ function Dashboard() {
 
                 </ButtonColumn>
                 <ButtonColumn>
-                    <DashboardButton></DashboardButton>
-                    <DashboardButton></DashboardButton>
+
+                    <DashboardButton>
+                        <DashboardButtonTitle>
+                            <h1>Participate</h1>
+                        </DashboardButtonTitle>
+                        <DashboardButtonDescription>
+                            <p>Take part in polls and cast your vote!</p>
+                        </DashboardButtonDescription>
+                    </DashboardButton>
+
+                    <DashboardButton>
+                        <DashboardButtonTitle>
+                            <h1>Placeholder</h1>
+                        </DashboardButtonTitle>
+                        <DashboardButtonDescription>
+                            <p>Placeholder</p>
+                        </DashboardButtonDescription>
+                    </DashboardButton>
+
+
                 </ButtonColumn>
             </DashboardCard>
         </BasicPage>
