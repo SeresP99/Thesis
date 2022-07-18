@@ -1,6 +1,6 @@
 import {Route, Routes} from "react-router-dom";
 import SignUp from "../pages/signup";
-import LogIn from "../pages/login";
+import Login from "../pages/Login";
 import ProfilePage from "../pages/profilePage"
 import PollDetails from "../pages/pollDetails";
 import CreatePoll from "../pages/CreatePoll";
@@ -12,7 +12,7 @@ import VotePage from "../pages/VotePage";
 const Views = () => {
     return (
         <Routes>
-            <Route path="/" element={<LogIn/>}/>
+            <Route path="/" element={<Login/>}/>
             <Route path="/dashboard" element={<Dashboard/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/profile/poll" element={<PollDetails/>}/>
@@ -20,7 +20,7 @@ const Views = () => {
             <Route path="/profile/poll/vote" element={<VotePage/>}/>
             <Route path="/register" element={<SignUp/>}/>
             <Route path="/create" element={<CreatePoll/>}/>
-            <Route path="*" element={<LogIn/>}/>
+            <Route path="*" element={<Login/>}/>
         </Routes>
     );
 };
