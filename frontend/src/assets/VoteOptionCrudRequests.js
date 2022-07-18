@@ -11,3 +11,20 @@ export function GetOptions(pollId){
             }
         )
 }
+
+export function DeleteOption(id){
+    Axios.post("http://localhost:4000/deletePollOption", {id : id}, {
+        headers: {
+            "x-access-token": localStorage.getItem("token")
+        }
+    });
+}
+
+export function UpdateOption(id, title, description){
+    const obj = {id, title, description};
+    Axios.post("http://localhost:4000/updatePollOption", obj, {
+        headers: {
+            "x-access-token": localStorage.getItem("token")
+        }
+    })
+}
