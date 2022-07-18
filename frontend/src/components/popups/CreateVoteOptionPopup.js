@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Popup from 'reactjs-popup';
-import CreatePoll from "../../pages/CreatePoll";
 import PopupForm, {
     BackButton, ButtonRow,
     PopupSubmitButton,
@@ -9,8 +8,8 @@ import PopupForm, {
     TextInputFieldName
 } from './PopupFormStyle'
 import {AddButton} from "../styles/EditVoteOptionsStyle";
-import Axios from "axios";
 import {useLocation} from "react-router-dom";
+import {CreateOption} from "../../assets/VoteOptionCrudRequests";
 
 function CreatePopup() {
 
@@ -32,12 +31,7 @@ function CreatePopup() {
 
     const FormSubmit = (e) => {
         e.preventDefault();
-        const obj = {title, description, pollId};
-        Axios.post("http://localhost:4000/addPollOption", obj, {
-            headers: {
-                "x-access-token": localStorage.getItem("token")
-            }
-        })
+        CreateOption(pollId, title, description);
         window.location.reload();
     }
 

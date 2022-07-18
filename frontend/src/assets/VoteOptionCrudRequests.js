@@ -12,6 +12,15 @@ export function GetOptions(pollId){
         )
 }
 
+export function CreateOption(pollId, title, description){
+    const obj = {pollId, title, description};
+    Axios.post("http://localhost:4000/addPollOption", obj, {
+        headers: {
+            "x-access-token": localStorage.getItem("token")
+        }
+    })
+}
+
 export function DeleteOption(id){
     Axios.post("http://localhost:4000/deletePollOption", {id : id}, {
         headers: {
