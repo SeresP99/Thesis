@@ -86,7 +86,6 @@ router.get("/getUserProfile", verifyJWT, async (req, res) => {
 
 router.get("/getParticipatingPolls", verifyJWT, async (req, res) => {
     const polls = await users_polls_model.getParticipatingPolls(req.userId);
-    console.log(polls);
     res.json({auth: true, polls})
 });
 
@@ -99,6 +98,7 @@ router.post("/getPollDetails", verifyJWT, async (req, res) => {
     res.json({auth: true, pollDetails});
 });
 
+
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
 });
@@ -108,9 +108,9 @@ router.post("/createPoll", verifyJWT, async (req, res) => {
     const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
     const authorId = decoded.id;
     const poll = req.body;
-    console.log(req.body);
-    const creation = await users_polls_model.createPoll(poll, authorId);
-    console.log(creation);
+    const query = await users_polls_model.createPoll(poll, authorId);
+    const pollId = query.id;
+    res.json({auth: true, pollId});
 });
 
 router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
@@ -125,7 +125,6 @@ router.post("/getPollOptions", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
     console.log("poll ID: " + pollId);
     const options = await users_polls_model.getPollOptions(pollId);
-    console.log(options);
     res.json({auth: true, options});
 })
 
