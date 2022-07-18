@@ -10,6 +10,7 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CreatePopup from "../components/popups/CreateVoteOptionPopup";
 import UpdatePopup from "../components/popups/UpdateVoteOptionPopup";
+import {GetOptions} from "../assets/VoteOptionCrudRequests";
 
 
 function EditVoteOptions() {
@@ -18,20 +19,10 @@ function EditVoteOptions() {
     const {pollId} = state.state;
 
     const [optionList, setOptionList] = useState([]);
-    const GetVoteOptions = () => {
-        Axios.post("http://localhost:4000/getPollOptions", {"pollId": pollId}, {
-            headers:
-                {"x-access-token": localStorage.getItem("token")}
-        })
-            .then(
-                res => {
-                    setOptionList(res.data.options);
-                }
-            )
-    };
 
-    useEffect(() => {
-            GetVoteOptions();
+    useEffect(async () => {
+        console.log(state.state);
+            setOptionList(await GetOptions(pollId));
         },
         []
     );
