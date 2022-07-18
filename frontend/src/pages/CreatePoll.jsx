@@ -7,8 +7,9 @@ import CreatePollPage, {
     TextInputFieldName
 } from "../components/styles/CreatePollStyle"
 import {useNavigate} from "react-router-dom";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import DateTimePicker from 'react-datetime-picker';
+import {PostCreatePoll} from '../assets/PollCrudRequests'
 import Axios from 'axios'
 
 function CreatePoll() {
@@ -23,14 +24,11 @@ function CreatePoll() {
     const [startDate, onChangeStart] = useState();
     const [endDate, onChangeEnd] = useState();
 
-    const FormSubmit = (e) => {
+    const FormSubmit = async (e) => {
         e.preventDefault();
-        const obj = {title, description, startDate, endDate};
-        Axios.post("http://localhost:4000/createPoll", obj, {
-            headers: {
-                "x-access-token": localStorage.getItem("token")
-            }
-        })
+        const poll = {title, description, startDate, endDate};
+        const createdId = await PostCreatePoll(poll);
+        navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId}});
     }
 
     const BackToProfile = () => {
@@ -46,7 +44,8 @@ function CreatePoll() {
                         <TextInputFieldName style={{fontSize: "25px"}}>Title:</TextInputFieldName>
                         <TextInput type="text" onChange={e => onChangeTitle(e.target.value)} value={title}></TextInput>
                         <TextInputFieldName>Description:</TextInputFieldName>
-                        <MultiLineTextInput onChange={e => onChangeDescription(e.target.value)} value={description}></MultiLineTextInput>
+                        <MultiLineTextInput onChange={e => onChangeDescription(e.target.value)}
+                                            value={description}></MultiLineTextInput>
                         <TextInputFieldName>sample</TextInputFieldName>
                         <TextInput type="text"></TextInput>
                         <BackButton onClick={BackToProfile}>Back</BackButton>
