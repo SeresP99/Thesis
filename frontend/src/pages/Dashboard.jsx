@@ -45,7 +45,7 @@ function Dashboard() {
 
                     <DashboardButton>
                         <DashboardButtonTitle>
-                            <h1>View My Own</h1>
+                            <h1>My Own</h1>
                         </DashboardButtonTitle>
                         <DashboardButtonDescription>
                             <p>Check how your polls are standing or edit them!</p>
