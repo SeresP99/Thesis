@@ -11,3 +11,13 @@ export function PostCreatePoll(poll) {
         return res.data.pollId;
     })
 }
+
+export function GetAllCreatedPolls() {
+    return Axios.get(backend+"/getCreatedPolls", {
+        headers: {
+            'x-access-token': localStorage.getItem("token")
+        }
+    }).then(res => {
+        return res.data.polls;
+    })
+}
