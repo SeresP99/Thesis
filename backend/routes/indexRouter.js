@@ -20,7 +20,6 @@ const verifyJWT = (req, res, next) => {
                 console.log("bad token");
                 res.json({auth: false, message: "You failed to authenticate! - server"});
             } else {
-                console.log("correct token");
                 req.userId = decoded.id;
                 next();
             }
@@ -42,7 +41,7 @@ router.post("/login", async (req, res) => {
         const user = await user_model.getUserId(username, password);
         console.log("User's credentials: " + JSON.stringify(user));
         const id = user.id;
-        const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '900s'});
+        const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '1h'});
         res.json({auth: true, token: token, user: user});
     } catch (e) {
         res.json({auth: false, message: "Wrong email or password!"})
