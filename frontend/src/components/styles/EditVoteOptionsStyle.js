@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import CreatePoll from "../../pages/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
+import {Button} from "./Button/Button";
+import {BackButton} from "./CreatePollStyle";
 
 export const GenericPage = styled.div`
   height: 100vh;
@@ -51,41 +53,34 @@ export const OptionListElement = styled.button`
 export const ButtonRow = styled.div`
   display: flex;
   width: 80%;
+  margin-top: -18px;
+  height:60px;
   max-width: 1200px;
 `;
 
-export const AddButton = styled.button`
-  flex: 1;
-  font-family: "Montserrat", sans-serif;
+export const AddButton = styled(Button)`
+  flex: 2;
+  margin-left: 0.5%;
+  font-family: Courgette, sans-serif;
   justify-content: space-evenly;
-  height: 40px;
-  font-size: 1em;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
-  background-color: #47ab47;
+  height: 60px;
+  font-size: 40px;
+  background-color: ${({theme}) => theme.elevation_2};
   color: white;
-
-  &:focus,
-  &:hover {
-    appearance: none;
-    --moz-appearance: none;
-    --webkit-appearance: none;
-    --edge-appearance: none;
-    border: none;
-    outline: 0;
-  }
+  border-radius: 5px;
 
   &:hover {
-    background-color: green;
-  }
-
-  &:active {
-    transform: scale(0.98);
+    background-color: rgba(0, 128, 0, 0.4);
   }
 `
+
+export const BackFromEditingButton = styled(BackButton)`
+  flex: 1;
+  margin-right: 0.5%;
+  height: 60px;
+  font-family: Courgette, sans-serif;
+  font-size: 40px;
+  border-radius: 5px;
+`;
 
 export default BaseCard;

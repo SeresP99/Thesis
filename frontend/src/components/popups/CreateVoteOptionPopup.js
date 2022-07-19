@@ -36,7 +36,7 @@ function CreatePopup() {
     }
 
     return (
-        <Popup trigger={<AddButton>+</AddButton>} modal nested>
+        <Popup trigger={<AddButton>Add Option</AddButton>} modal nested>
             {close => (
                 <div className="modal">
 
