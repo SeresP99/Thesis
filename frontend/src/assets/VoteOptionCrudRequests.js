@@ -1,7 +1,9 @@
 import Axios from "axios";
 
+const backend = process.env.REACT_APP_SERVER;
+
 export function GetOptions(pollId){
-    return Axios.post("http://localhost:4000/getPollOptions", {"pollId": pollId}, {
+    return Axios.post(backend + "/getPollOptions", {"pollId": pollId}, {
         headers:
             {"x-access-token": localStorage.getItem("token")}
     })
@@ -14,7 +16,7 @@ export function GetOptions(pollId){
 
 export function CreateOption(pollId, title, description){
     const obj = {pollId, title, description};
-    Axios.post("http://localhost:4000/addPollOption", obj, {
+    Axios.post(backend + "/addPollOption", obj, {
         headers: {
             "x-access-token": localStorage.getItem("token")
         }
@@ -22,7 +24,7 @@ export function CreateOption(pollId, title, description){
 }
 
 export function DeleteOption(id){
-    Axios.post("http://localhost:4000/deletePollOption", {id : id}, {
+    Axios.post(backend + "/deletePollOption", {id : id}, {
         headers: {
             "x-access-token": localStorage.getItem("token")
         }
@@ -31,7 +33,7 @@ export function DeleteOption(id){
 
 export function UpdateOption(id, title, description){
     const obj = {id, title, description};
-    Axios.post("http://localhost:4000/updatePollOption", obj, {
+    Axios.post(backend + "/updatePollOption", obj, {
         headers: {
             "x-access-token": localStorage.getItem("token")
         }

@@ -1,4 +1,3 @@
-import {useEffect} from "react";
 import Axios from "axios";
 
 const backend = process.env.REACT_APP_SERVER;
