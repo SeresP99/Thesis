@@ -1,4 +1,4 @@
-import {BaseCard, GenericPage} from "../components/styles/BaseCardStyle";
+import {BasicPage, BasicContentCard} from "../components/styles/Page/PageStyle"
 import {DataDiv, DataParagraph, DataGrid, DataRow, DataColumn} from "../components/styles/profilePageStyle";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -66,8 +66,8 @@ function PollDetails() {
     }, [])
 
     return (
-        <GenericPage>
-                <DataDiv>
+        <BasicPage>
+                <BasicContentCard>
                     <DataGrid>
                         <DataRow>
                             <DataColumn size={3}> {pollDetails.title}</DataColumn>
@@ -77,8 +77,8 @@ function PollDetails() {
                             <DataColumn size={3}> {pollDetails.description}</DataColumn>
                         </DataRow>
                     </DataGrid>
-                </DataDiv>
-        </GenericPage>
+                </BasicContentCard>
+        </BasicPage>
     )
 }
 

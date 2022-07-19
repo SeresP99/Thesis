@@ -1,107 +1,34 @@
 import React, {useEffect, useState} from "react";
 import StyledProfile, {
     ButtonDiv,
-    CreatePollButton,
-    SwitchListButton,
     DataColumn,
     DataDiv,
     DataGrid,
     DataRow
 } from "../components/styles/profilePageStyle"
-import {Scrollbars} from "react-custom-scrollbars-2"
+import {CheckIfAuthenticated} from "../assets/loginSessionChecker"
 import {useNavigate} from "react-router-dom";
-import Axios from "axios";
-import ParticipatedPollList from "../components/ProfilePageComponents/ParticipatedPollList"
-import CreatedPollList from "../components/ProfilePageComponents/CreatedPollList";
+import {getAllUserData} from "../assets/ProfileDataRequests";
+import {BackButton} from "../components/popups/PopupFormStyle";
 
 function ProfilePage() {
 
-    //region Program Logic
-
     const navigate = useNavigate();
-
-    const [loginStatus, setLoginStatus] = useState(true);
-
-    const [profileData, setProfileData] = useState('');
-
-    const [displayedList, setDisplayedList] = useState(0);
-    const [switchButtonText, setSwitchButtonText] = useState("Show Your Own Polls");
-
-    const CheckIfAuthenticated = () => {
-        Axios.get("http://localhost:4000/checkAuth", {
-            headers: {
-                'x-access-token': localStorage.getItem("token")
-            },
-        }).then(
-            res => {
-                setLoginStatus(res.data.auth);
-            })
-    }
-
+    const [profileData, setProfileData] = useState({});
 
     useEffect(() => {
-            if (localStorage.getItem("token") === undefined)
+            if (!CheckIfAuthenticated())
                 navigate('/login');
         }
     );
 
-    const getAllData = () => {
-        Axios.get("http://localhost:4000/getUserProfile", {
-            headers: {
-                'x-access-token': localStorage.getItem("token"),
-            },
-        }).then(res => {
-                console.log(res.data)
-                setProfileData(res.data.profile);
-            }
-        );
-    }
-
-
-    useEffect(() => {
-        CheckIfAuthenticated();
-        if (loginStatus === false)
-            navigate("/login");
+    useEffect(async () => {
+        setProfileData(await getAllUserData())
     }, []);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            CheckIfAuthenticated();
-            if (loginStatus === false)
-                navigate("/login");
-        }, 5000);
-        return () => clearInterval(interval);
-    },);
-
-    useEffect(() => {
-        getAllData();
-        console.log(profileData);
-    }, []);
-
-    //endregion
-
-    const NavToCreatePoll = () => {
-        navigate("/create");
+    const NavToDash = () => {
+        navigate('/dashboard');
     };
-
-    const SwitchList = () => {
-        if (displayedList === 0)
-            setDisplayedList(1);
-
-        else
-            setDisplayedList(0);
-    };
-
-    const List = () => {
-        if(displayedList === 0) {
-            setSwitchButtonText("Created Polls");
-            return (<ParticipatedPollList/>);
-        }
-        else {
-            setSwitchButtonText("Joined Polls");
-            return (<CreatedPollList/>);
-        }
-    }
 
     return (
         <StyledProfile>
@@ -120,10 +47,8 @@ function ProfilePage() {
                         <DataColumn size={1}>{profileData.id}</DataColumn>
                     </DataRow>
                 </DataGrid>
-                <List/>
                 <ButtonDiv style={{width: "80%"}}>
-                    <CreatePollButton style={{flex: 1}} onClick={NavToCreatePoll}>Create Poll</CreatePollButton>
-                    <SwitchListButton style={{flex: 1}} onClick={SwitchList}>{switchButtonText}</SwitchListButton>
+                    <BackButton onClick={NavToDash}>Back</BackButton>
                     <button style={{background: "red", height: 40, flex: 1}}></button>
                 </ButtonDiv>
             </DataDiv>
