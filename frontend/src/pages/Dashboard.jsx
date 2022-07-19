@@ -1,24 +1,28 @@
 import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import {ButtonColumn, DashboardCard} from "../components/styles/Page/DashboardStyle";
+import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
 import {
     DashboardButton,
     DashboardButtonDescription,
     DashboardButtonTitle
 } from "../components/styles/Button/DashboardButton";
-import {ButtonColumn, DashboardCard} from "../components/styles/Page/DashboardStyle";
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
 
 function Dashboard() {
 
     const navigate = useNavigate();
 
     const NavToCreatePoll = () => {
-        navigate("/create")
+        navigate("/create");
     };
 
+    const NavToCreatedPolls = () => {
+        navigate("/createdPolls");
+    }
+
     const NavToProfile = () => {
-        navigate("/profile")
+        navigate("/profile");
     };
 
     useEffect(() => {
@@ -43,7 +47,7 @@ function Dashboard() {
                         </DashboardButtonDescription>
                     </DashboardButton>
 
-                    <DashboardButton>
+                    <DashboardButton onClick={NavToCreatedPolls}>
                         <DashboardButtonTitle>
                             <h1>My Own</h1>
                         </DashboardButtonTitle>
