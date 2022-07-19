@@ -25,7 +25,7 @@ function Login() {
     useEffect(async () => {
         const auth = await CheckLoginStatus();
         if (auth)
-            navigate("/profile");
+            navigate("/dashboard");
 
     }, [])
 
