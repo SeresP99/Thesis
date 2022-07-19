@@ -8,7 +8,8 @@ export const BackButton = styled(Button)`
   width: 40%;
   max-width: 600px;
   height: 80px;
-
+  background-color: ${({theme}) => theme.back};
+  
   &:hover {
     background-color: ${({theme}) => theme.backHover};
   }

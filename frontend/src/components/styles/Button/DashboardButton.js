@@ -9,7 +9,7 @@ export const DashboardButton = styled(Button)`
   background-color: ${({theme}) => theme.elevation_2};
 
   &:hover {
-    background-color: rgba(101, 0, 173, 0.4);
+    background-color: #6500AD66;
   }
 `;
 
