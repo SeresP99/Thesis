@@ -1,29 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import ScrollableList from 'react-scrollable-list';
-import {Scrollbars} from "react-custom-scrollbars-2";
 import CustomScrollbars from "../global/Scrollbar";
 import {ViewPollButton, PollListElement, PollButtonPanel, PollNameTag, EditButton} from "./PollListStyle";
-import Axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {GetAllCreatedPolls} from "../../assets/PollCrudRequests";
 
 const CreatedPollList = () => {
 
     const navigate = useNavigate();
 
-    const [pollList, setPollList] = useState([]);
+    const [pollList, setPollList] = useState({});
 
-    const getPollList = () => {
-        Axios.get("http://localhost:4000/getCreatedPolls", {
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-            }
-        }).then(
-            res => {
-                setPollList(res.data.polls);
-            })
-    }
+    useEffect(async () => {
+        await setPollList(await GetAllCreatedPolls());
+    }, [])
 
-    function goToVoteOptionsEditor(key){
+    function goToVoteOptionsEditor(key) {
         navigate("/profile/poll/editVoteOptions", {state: {pollId: key}});
     }
 
@@ -31,10 +22,13 @@ const CreatedPollList = () => {
         navigate("/profile/poll", {state: {pollId: key}})
     }
 
-    useEffect(() => {
-        getPollList();
-    }, [])
-
+    const PollListElements = () => {
+        try {
+            return (pollList.map((poll) => <Poll key={poll.id} title={poll.title} id={poll.id}/>));
+        } catch (e) {
+            return null;
+        }
+    }
 
     function Poll(props) {
         return <PollListElement>
@@ -46,13 +40,10 @@ const CreatedPollList = () => {
         </PollListElement>
     }
 
-    //const mainList = PollList.map(poll => <p>{poll}</p>);
-
-
     return (
         <div style={{width: '80%'}}>
-            <CustomScrollbars style={{borderRadius: '5px', height: 300}}>
-                {pollList.map((poll) => <Poll key={poll.id} title={poll.title} id={poll.id}/>)}
+            <CustomScrollbars style={{borderRadius: '5px', height: 400}}>
+                <PollListElements/>
             </CustomScrollbars>
         </div>
     )
