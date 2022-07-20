@@ -1,7 +1,7 @@
 import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {ButtonColumn, DashboardCard} from "../components/styles/Page/DashboardStyle";
+import {ButtonFlexbox, DashboardCard, Scrollbar} from "../components/styles/Page/DashboardStyle";
 import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
 import {
     DashboardButton,
@@ -35,59 +35,58 @@ function Dashboard() {
 
     return (
         <BasicPage>
-            <DashboardCard>
-                <ButtonColumn>
+            <DashboardCard name={'card'}>
+                <Scrollbar name={'sb_container'} backgroundColor={'transparent'}>
+                    <ButtonFlexbox name={'button flexbox'}>
 
-                    <DashboardButton onClick={NavToCreatePoll}>
-                        <DashboardButtonTitle>
-                            <h1>Create</h1>
-                        </DashboardButtonTitle>
-                        <DashboardButtonDescription>
-                            <p>Create your own polls and invite others to participate!</p>
-                        </DashboardButtonDescription>
-                    </DashboardButton>
+                        <DashboardButton onClick={NavToCreatePoll}>
+                            <DashboardButtonTitle>
+                                <h1>Create</h1>
+                            </DashboardButtonTitle>
+                            <DashboardButtonDescription>
+                                <p>Create your own polls and invite others to participate!</p>
+                            </DashboardButtonDescription>
+                        </DashboardButton>
 
-                    <DashboardButton onClick={NavToCreatedPolls}>
-                        <DashboardButtonTitle>
-                            <h1>My Own</h1>
-                        </DashboardButtonTitle>
-                        <DashboardButtonDescription>
-                            <p>Check how your polls are standing or edit them!</p>
-                        </DashboardButtonDescription>
-                    </DashboardButton>
+                        <DashboardButton onClick={NavToCreatedPolls}>
+                            <DashboardButtonTitle>
+                                <h1>My Own</h1>
+                            </DashboardButtonTitle>
+                            <DashboardButtonDescription>
+                                <p>Check how your polls are standing or edit them!</p>
+                            </DashboardButtonDescription>
+                        </DashboardButton>
 
-                    <DashboardButton onClick={NavToProfile}>
-                        <DashboardButtonTitle>
-                            <h1>Profile</h1>
-                        </DashboardButtonTitle>
-                        <DashboardButtonDescription>
-                            <p>Look over your profile details.</p>
-                        </DashboardButtonDescription>
-                    </DashboardButton>
+                        <DashboardButton onClick={NavToProfile}>
+                            <DashboardButtonTitle>
+                                <h1>Profile</h1>
+                            </DashboardButtonTitle>
+                            <DashboardButtonDescription>
+                                <p>Look over your profile details.</p>
+                            </DashboardButtonDescription>
+                        </DashboardButton>
 
-                </ButtonColumn>
-                <ButtonColumn>
+                        <DashboardButton>
+                            <DashboardButtonTitle>
+                                <h1>Participate</h1>
+                            </DashboardButtonTitle>
+                            <DashboardButtonDescription>
+                                <p>Take part in polls and cast your vote!</p>
+                            </DashboardButtonDescription>
+                        </DashboardButton>
 
-                    <DashboardButton>
-                        <DashboardButtonTitle>
-                            <h1>Participate</h1>
-                        </DashboardButtonTitle>
-                        <DashboardButtonDescription>
-                            <p>Take part in polls and cast your vote!</p>
-                        </DashboardButtonDescription>
-                    </DashboardButton>
-
-                    <DashboardButton>
-                        <DashboardButtonTitle>
-                            <h1>Placeholder</h1>
-                        </DashboardButtonTitle>
-                        <DashboardButtonDescription>
-                            <p>Placeholder</p>
-                        </DashboardButtonDescription>
-                    </DashboardButton>
+                        <DashboardButton>
+                            <DashboardButtonTitle>
+                                <h1>Placeholder</h1>
+                            </DashboardButtonTitle>
+                            <DashboardButtonDescription>
+                                <p>Placeholder</p>
+                            </DashboardButtonDescription>
+                        </DashboardButton>
 
 
-                </ButtonColumn>
+                    </ButtonFlexbox>
+                </Scrollbar>
             </DashboardCard>
         </BasicPage>
     )
