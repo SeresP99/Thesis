@@ -3,10 +3,12 @@ import styled from "styled-components";
 
 export const DashboardButton = styled(Button)`
   text-align: left;
-  width: 95%;
-  height: 30%;
+  width: 45%;
+  min-width: 300px;
+  height: 25%;
   padding: 25px;
   background-color: ${({theme}) => theme.elevation_2};
+  margin: 5px;
 
   &:hover {
     background-color: #6500AD66;
