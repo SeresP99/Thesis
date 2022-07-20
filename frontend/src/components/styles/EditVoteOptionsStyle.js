@@ -3,41 +3,28 @@ import CreatePoll from "../../pages/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
 import {Button} from "./Button/Button";
 import {BackButton} from "./CreatePollStyle";
+import CustomScrollbars from "../global/Scrollbar";
 
-export const GenericPage = styled.div`
-  height: 100vh;
+export const OptionListContainer = styled.div`
+  width: 80%;
+`;
+
+export const Scrollbar = styled(CustomScrollbars)`
+  height: 350px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const BaseCard = styled.div`
-  background-color: ${({theme}) => theme.elevation_1};
   border-radius: 5px;
-  height: 500px;
-  width: 90%;
-  max-width: 1400px;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: ${({theme}) => theme.shadow};
-  text-align: center;
 `;
 
-export const OptionListElement = styled.button`
+export const FlexboxToScrollThrough = styled.div`
   display: flex;
-  justify-content: center;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
+  min-height: min-content;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  align-content: center;
-  text-align: center;
+  justify-content: center;
+`;
+
+export const OptionListElement = styled(Button)`
   height: 50px;
   width: 150px;
   border-radius: 5px;
@@ -82,5 +69,3 @@ export const BackFromEditingButton = styled(BackButton)`
   font-size: 40px;
   border-radius: 5px;
 `;
-
-export default BaseCard;
