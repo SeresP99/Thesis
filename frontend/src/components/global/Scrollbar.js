@@ -21,7 +21,6 @@ class CustomScrollbars extends Component {
 
 
     renderView({style, ...props}) {
-        console.log(props);
         const {top} = this.state;
         const viewStyle = {
             padding: 15,
