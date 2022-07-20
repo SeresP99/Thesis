@@ -11,9 +11,10 @@ export const BasicPage = styled.div`
 export const BasicContentCard = styled.div`
   background-color: ${({theme}) => theme.elevation_1};
   border-radius: 5px;
-  min-height: 500px;
+  min-height: 300px;
+  height: min-content + 3%;
   width: 90%;
-  min-width: 500px;
+  min-width: 250px;
   max-width: 1400px;
   display: flex;
   justify-content: space-evenly;
