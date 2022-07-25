@@ -2,7 +2,7 @@ import styled from "styled-components";
 import CreatePoll from "../../pages/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
 import {Button} from "./Button/Button";
-import {BackButton} from "./CreatePollStyle";
+import {BackButton} from "./Button/BackButton";
 import CustomScrollbars from "../global/Scrollbar";
 
 export const OptionListContainer = styled.div`

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   font-family: "Montserrat", sans-serif;
+  font-size: 40px;
   width: 60px;
   height: 60px;
   border: 3px;

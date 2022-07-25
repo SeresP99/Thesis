@@ -1,16 +1,16 @@
-import CreatePollPage, {
-    BackButton,
-    CreateFormColumn, CreatePollButton,
+import {
+    CreatePageButtonRow,
+    BackToDashButton, CreatePollButton,
     CreatePollForm,
-    ElevatedCard, MultiLineTextInput,
+    MultiLineTextInput,
     TextInput,
-    TextInputFieldName
+    TextInputFieldName, FormTextElement, FormBodyDiv, FormSpecialElement, InputContainerByType
 } from "../components/styles/CreatePollStyle"
+import {BasicPage, BasicContentCard} from "../components/styles/Page/PageStyle"
 import {useNavigate} from "react-router-dom";
 import React, {useState} from 'react';
 import DateTimePicker from 'react-datetime-picker';
-import {PostCreatePoll} from '../assets/PollCrudRequests'
-import Axios from 'axios'
+import Switch from 'react-switch';
 
 function CreatePoll() {
 
@@ -23,45 +23,70 @@ function CreatePoll() {
     const [description, onChangeDescription] = useState("");
     const [startDate, onChangeStart] = useState();
     const [endDate, onChangeEnd] = useState();
+    const [officiality, onChangeOfficiality] = useState(false);
 
     const FormSubmit = async (e) => {
         e.preventDefault();
-        const poll = {title, description, startDate, endDate};
+        /*const poll = {title, description, startDate, endDate};
         const createdId = await PostCreatePoll(poll);
-        navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId}});
+        navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId}});*/
+        console.log("form submitted");
     }
 
-    const BackToProfile = () => {
-        navigate("/profile");
+    const BackToDash = () => {
+        navigate("/dashboard");
     }
 
     return (
-        <CreatePollPage>
-            <ElevatedCard>
+        <BasicPage>
+            <BasicContentCard>
                 <CreatePollForm onSubmit={FormSubmit}>
+                    <FormBodyDiv>
 
-                    <CreateFormColumn>
-                        <TextInputFieldName style={{fontSize: "25px"}}>Title:</TextInputFieldName>
-                        <TextInput type="text" onChange={e => onChangeTitle(e.target.value)} value={title}></TextInput>
-                        <TextInputFieldName>Description:</TextInputFieldName>
-                        <MultiLineTextInput onChange={e => onChangeDescription(e.target.value)}
-                                            value={description}></MultiLineTextInput>
-                        <TextInputFieldName>sample</TextInputFieldName>
-                        <TextInput type="text"></TextInput>
-                        <BackButton onClick={BackToProfile}>Back</BackButton>
-                    </CreateFormColumn>
+                        <InputContainerByType>
+                            <FormTextElement>
+                                <TextInputFieldName style={{fontSize: "25px", marginTop:'5px'}}>Title:</TextInputFieldName>
+                                <TextInput type="text" onChange={e => onChangeTitle(e.target.value)}
+                                           value={title}></TextInput>
+                            </FormTextElement>
 
-                    <CreateFormColumn>
-                        <DateTimePicker onChange={onChangeStart} value={startDate}></DateTimePicker>
-                        <DateTimePicker onChange={onChangeEnd} value={endDate}></DateTimePicker>
-                        <TextInput type="text"></TextInput>
-                        <TextInput type="text"></TextInput>
-                        <CreatePollButton type="submit">Create Poll</CreatePollButton>
-                    </CreateFormColumn>
+                            <FormTextElement>
+                                <TextInputFieldName>Description:</TextInputFieldName>
+                                <MultiLineTextInput onChange={e => onChangeDescription(e.target.value)}
+                                                    value={description}></MultiLineTextInput>
+                            </FormTextElement>
+                        </InputContainerByType>
+                        <InputContainerByType>
 
+                            <FormTextElement>
+                                <TextInputFieldName>Opening date:</TextInputFieldName>
+                                <DateTimePicker onChange={onChangeStart} value={startDate}></DateTimePicker>
+                            </FormTextElement>
+
+                            <FormTextElement>
+                                <TextInputFieldName>Closure date:</TextInputFieldName>
+                                <DateTimePicker onChange={onChangeEnd} value={endDate}></DateTimePicker>
+                            </FormTextElement>
+
+                        </InputContainerByType>
+
+                        <FormSpecialElement style={{marginBottom: '5px'}}>
+                            <TextInputFieldName>Requires Verification:</TextInputFieldName>
+                            <div style={{marginTop: -1}}>
+                                <Switch onChange={e => onChangeOfficiality(e)} checked={officiality}
+                                        uncheckedIcon={false} checkedIcon={false} handleDiameter={20} height={26}/>
+                            </div>
+                        </FormSpecialElement>
+
+                    </FormBodyDiv>
+
+                    <CreatePageButtonRow>
+                        <BackToDashButton onClick={BackToDash}>Back</BackToDashButton>
+                        <CreatePollButton type="submit">Create</CreatePollButton>
+                    </CreatePageButtonRow>
                 </CreatePollForm>
-            </ElevatedCard>
-        </CreatePollPage>
+            </BasicContentCard>
+        </BasicPage>
     );
 
 }

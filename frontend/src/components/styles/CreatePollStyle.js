@@ -1,156 +1,107 @@
 import styled from "styled-components";
+import {BackButton} from "./Button/BackButton"
+import {Button} from "./Button/Button";
+import {ButtonRow} from "./Button/ButtonRow";
 
 const CreatePollPage = styled.div`
-    height: 100vh;
-    width: 100%;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    `;
+  height: 100vh;
+  width: 100%;
 
-export const ElevatedCard = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    background-color: ${({theme}) => theme.elevation_1};
-    border-radius: 5px;
-    height: 500px;
-    min-height: 400px;
-    width: 90%;
-    min-width: 500px;
-    max-width: 1400px
-    box-shadow: ${({theme}) => theme.shadow}
-    
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const CreatePollForm = styled.form`
-    display: flex;
-    width: 90%;
-    min-width: 400px
-    height: 45%;
-    min-height: 400px;
-    justify-content: center;
-    align-items: center;
-    align-content: space-around;
-    flex-wrap: wrap;
-    flex-direction: row;
-    `;
 
-export const CreateFormColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 50%;
-    height: 400px;
+export const CreatePollForm = styled.div`
+  width: 90%;
+  min-width: 275px;
+  height: 475px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const FormBodyDiv = styled.div`
+  background-color: ${({theme}) => theme.elevation_2};
+  display: flex;
+  border-radius: 5px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 407px;
+`;
+
+export const InputContainerByType = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const FormTextElement = styled.div`
+  width: 100%;
+  min-width: 300px;
+  max-width: 750px;
+  margin-bottom: 20px;
+`;
+
+export const FormSpecialElement = styled.div`
+  width: 40%;
+  min-width: 260px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const TextInputFieldName = styled.p`
-    width: 81%;
-    font-size: large;
+  font-size: large;
 `;
 
 export const MultiLineTextInput = styled.textarea`
-    maxlength: 255;
-    font-family: "Montserrat", sans-serif;
-    font-size: medium;
-    box-sizing: border-box;
-    width: 81%;
-    rows: 3;
-    height: 100px;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    resize: none;
+  maxlength: 255;
+  font-family: "Montserrat", sans-serif;
+  font-size: medium;
+  box-sizing: border-box;
+  width: 81%;
+  rows: 3;
+  height: 100px;
+  border-radius: 3px;
+  resize: none;
 `;
 
 export const TextInput = styled.input`
-    font-family: "Montserrat", sans-serif;
-    font-size: large;
-    height: 30px;
-    width: 80%;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    `
-;
-
-export const CreatePollButton = styled.button`
-    font-family: "Montserrat", sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  font-size: 2em;
+  font-family: "Montserrat", sans-serif;
+  font-size: large;
+  height: 30px;
   width: 80%;
-  max-width: 600px;
-  height: 25%;
-  border: 3px;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
-  background-color: ${({theme}) => theme.secondary};
-  color: white;
-  margin-bottom: 31px;
-
-  &:focus,
-  &:hover {
-    appearance: none;
-    --moz-appearance: none;
-    --webkit-appearance: none;
-    --edge-appearance: none;
-    border: none;
-    outline: 0;
-  }
-
-  &:hover {
-    background-color: ${({theme}) => theme.secondaryHover};
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+  border-radius: 3px;
 `;
 
-export const BackButton = styled.button`
-    font-family: "Montserrat", sans-serif;
+export const CreatePageButtonRow = styled(ButtonRow)`
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  font-size: 2em;
-  width: 80%;
-  max-width: 600px;
-  height: 25%;
-  border: 3px;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
-  background-color: ${({theme}) => theme.back};
-  color: white;
-  margin-bottom: 31px;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: none;
+`;
 
-  &:focus,
-  &:hover {
-    appearance: none;
-    --moz-appearance: none;
-    --webkit-appearance: none;
-    --edge-appearance: none;
-    border: none;
-    outline: 0;
-  }
+export const CreatePollButton = styled(Button)`
+  font-family: Courgette, sans-serif;
+  background-color: ${({theme}) => theme.elevation_2};
+  border-radius: 5px;
+  height: 100%;
+  flex: 2;
+  margin-left: 1%
+`;
 
-  &:hover {
-    background-color: ${({theme}) => theme.backHover};
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+export const BackToDashButton = styled(BackButton)`
+  height: 100%;
+  border-radius: 5px;
+  font-family: Courgette, sans-serif;
+  flex: 1;
+  margin-right: 1%
 `;
 
 export default CreatePollPage;
