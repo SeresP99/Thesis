@@ -35,9 +35,9 @@ function Dashboard() {
 
     return (
         <BasicPage>
-            <DashboardCard name={'card'}>
-                <Scrollbar name={'sb_container'} backgroundColor={'transparent'}>
-                    <ButtonFlexbox name={'button flexbox'}>
+            <DashboardCard>
+                <Scrollbar backgroundcolor={'transparent'}>
+                    <ButtonFlexbox>
 
                         <DashboardButton onClick={NavToCreatePoll}>
                             <DashboardButtonTitle>

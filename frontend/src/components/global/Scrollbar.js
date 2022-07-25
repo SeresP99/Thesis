@@ -26,7 +26,7 @@ class CustomScrollbars extends Component {
             padding: 15,
             //backgroundColor: darkTheme.elevation_2, //`#2f2f2f`,
             //color: `#f1f1f1`,
-            backgroundColor: props.backgroundColor === undefined ? darkTheme.elevation_2 : props.backgroundColor,
+            backgroundColor: props.backgroundcolor === undefined ? darkTheme.elevation_2 : props.backgroundcolor,
             overflowY: `auto`
         };
         return (

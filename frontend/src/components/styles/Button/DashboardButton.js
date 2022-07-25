@@ -11,7 +11,7 @@ export const DashboardButton = styled(Button)`
   margin: 5px;
 
   &:hover {
-    background-color: #6500AD66;
+    background-color: ${({theme}) => theme.primaryHover};
   }
 `;
 
