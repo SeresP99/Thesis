@@ -12,10 +12,3 @@ export const CheckIfAuthenticated = () => {
             return res.data.auth;
         })
 };
-
-export const RegularAuthCheck = () => {
-    const interval = setInterval(() => {
-        CheckIfAuthenticated();
-    }, 5000);
-    return () => clearInterval(interval);
-};
