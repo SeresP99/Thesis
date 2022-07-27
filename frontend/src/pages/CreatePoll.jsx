@@ -54,7 +54,7 @@ function CreatePoll() {
         if (formIsValid) {
             const poll = {title, description, startDate, endDate, verifiedOnly};
             const createdId = await PostCreatePoll(poll);
-            navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId}});
+            navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId, freshPoll: true}});
         }
     }
 
