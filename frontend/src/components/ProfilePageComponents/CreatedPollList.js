@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import CustomScrollbars from "../global/Scrollbar";
 import {
-    ViewPollButton,
     PollListElement,
-    PollButtonPanel,
-    PollNameTag,
-    EditButton,
     ViewDetails,
-    BackToDash, ButtonRow, ListUIContainer
+    BackToDash, ButtonRow, Scrollbar, PollListContainer, EditOptions
 } from "./PollListStyle";
 import {useNavigate} from "react-router-dom";
 import {GetAllCreatedPolls} from "../../assets/PollCrudRequests";
@@ -48,25 +44,22 @@ const CreatedPollList = () => {
         return (
             <PollListElement onClick={() => setHighlightedPoll(props.id)}
                              style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
-                <PollNameTag>{props.title}</PollNameTag>
-                <PollButtonPanel>
-                    <ViewPollButton onClick={() => goToPollDetails(props.id)}>View</ViewPollButton>
-                    <EditButton onClick={() => goToVoteOptionsEditor(props.id)}>Edit Vote Options</EditButton>
-                </PollButtonPanel>
+                {props.title}
             </PollListElement>
         )
     }
 
     return (
-        <ListUIContainer>
-            <CustomScrollbars style={{borderRadius: '5px', height: 394, marginTop: '10px'}}>
+        <PollListContainer>
+            <Scrollbar>
                 <PollListElements/>
-            </CustomScrollbars>
+            </Scrollbar>
             <ButtonRow>
                 <BackToDash onClick={NavToDash}>Back</BackToDash>
                 <ViewDetails onClick={() => goToPollDetails(highlightedPoll)}>View</ViewDetails>
+                <EditOptions onClick={()=>goToVoteOptionsEditor(highlightedPoll)}>Edit Options</EditOptions>
             </ButtonRow>
-        </ListUIContainer>
+        </PollListContainer>
     )
 }
 
