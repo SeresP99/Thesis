@@ -29,9 +29,9 @@ function CreatePopup() {
             setIsFormValid(true);
     }, [title])
 
-    const FormSubmit = (e) => {
+    const FormSubmit = async (e) => {
         e.preventDefault();
-        CreateOption(pollId, title, description);
+        await CreateOption(pollId, title, description);
         window.location.reload();
     }
 
@@ -53,25 +53,12 @@ function CreatePopup() {
                             <TextInputFieldName>Description:</TextInputFieldName>
                             <MultiLineTextInput onChange={e => setDescription(e.target.value)}></MultiLineTextInput>
                             <ButtonRow>
-                                <BackButton onClick={() => {
-                                    console.log('modal closed ');
-                                    close();
-                                }}>Back</BackButton>
-                                <PopupSubmitButton type="submit" disabled={!isFormValid}>Create Option</PopupSubmitButton>
+                                <BackButton onClick={close}>Back</BackButton>
+                                <PopupSubmitButton type="submit" disabled={!isFormValid}>Create
+                                    Option</PopupSubmitButton>
                             </ButtonRow>
                         </PopupForm>
                     </div>
-                    {/*<div className="actions" style={{visibility: 'hidden'}}>
-                        <button
-                            className="button"
-                            onClick={() => {
-                                console.log('modal closed ');
-                                close();
-                            }}
-                        >
-                            close modal
-                        </button>
-                    </div>*/}
                 </div>
             )}
         </Popup>
