@@ -7,6 +7,7 @@ import CustomScrollbars from "../global/Scrollbar";
 
 export const OptionListContainer = styled.div`
   width: 80%;
+  margin-bottom: 10px;
 `;
 
 export const Scrollbar = styled(CustomScrollbars)`
