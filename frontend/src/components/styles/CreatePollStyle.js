@@ -13,7 +13,7 @@ const CreatePollPage = styled.div`
 `;
 
 
-export const CreatePollForm = styled.div`
+export const CreatePollForm = styled.form`
   width: 90%;
   min-width: 275px;
   height: 475px;
@@ -47,8 +47,19 @@ export const FormTextElement = styled.div`
   margin-bottom: 20px;
 `;
 
+export const FormDateElement = styled(FormTextElement)`
+  width: 25%;
+  max-width: 360px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+`;
+
+
 export const FormSpecialElement = styled.div`
-  width: 40%;
+  width: 25%;
   min-width: 260px;
   display: flex;
   flex-direction: row;
@@ -57,6 +68,10 @@ export const FormSpecialElement = styled.div`
 
 export const TextInputFieldName = styled.p`
   font-size: large;
+`;
+
+export const DateInputFieldName = styled(TextInputFieldName)`
+  margin-right: 10px;
 `;
 
 export const MultiLineTextInput = styled.textarea`
@@ -69,6 +84,7 @@ export const MultiLineTextInput = styled.textarea`
   height: 100px;
   border-radius: 3px;
   resize: none;
+  margin-bottom: -10px;
 `;
 
 export const TextInput = styled.input`
@@ -77,6 +93,7 @@ export const TextInput = styled.input`
   height: 30px;
   width: 80%;
   border-radius: 3px;
+  margin-bottom: -10px;
 `;
 
 export const CreatePageButtonRow = styled(ButtonRow)`

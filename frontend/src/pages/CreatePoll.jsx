@@ -1,16 +1,26 @@
 import {
     CreatePageButtonRow,
-    BackToDashButton, CreatePollButton,
+    BackToDashButton,
+    CreatePollButton,
     CreatePollForm,
     MultiLineTextInput,
     TextInput,
-    TextInputFieldName, FormTextElement, FormBodyDiv, FormSpecialElement, InputContainerByType
-} from "../components/styles/CreatePollStyle"
-import {BasicPage, BasicContentCard} from "../components/styles/Page/PageStyle"
+    TextInputFieldName,
+    FormTextElement,
+    FormBodyDiv,
+    FormSpecialElement,
+    InputContainerByType,
+    FormDateElement,
+    DateInputFieldName
+} from "../components/styles/CreatePollStyle";
+import {BasicPage, BasicContentCard} from "../components/styles/Page/PageStyle";
 import {useNavigate} from "react-router-dom";
 import React, {useState} from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import Switch from 'react-switch';
+import {PostCreatePoll} from "../assets/PollCrudRequests";
+import {ToastContainer, toast} from 'react-toastify'
+import '../components/notification/ToastStyle.css';
 
 function CreatePoll() {
 
@@ -21,16 +31,31 @@ function CreatePoll() {
 
     const [title, onChangeTitle] = useState("");
     const [description, onChangeDescription] = useState("");
+
+    const [openingDateEnabled, onChangeOpeningDateEnabled] = useState(false);
     const [startDate, onChangeStart] = useState();
+
+    const [closureDateEnabled, onChangeClosureDateEnabled] = useState(false);
     const [endDate, onChangeEnd] = useState();
-    const [officiality, onChangeOfficiality] = useState(false);
+
+    const [verifiedOnly, onChangeVerifiedOnly] = useState(false);
 
     const FormSubmit = async (e) => {
         e.preventDefault();
-        /*const poll = {title, description, startDate, endDate};
-        const createdId = await PostCreatePoll(poll);
-        navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId}});*/
-        console.log("form submitted");
+        let formIsValid = true;
+        if (startDate > endDate) {
+            formIsValid = false;
+            toast.error("The opening date must be before the closure date.", {position: toast.POSITION.TOP_CENTER});
+        }
+        if (title === "") {
+            formIsValid = false;
+            toast.error("Title must not be left empty.", {position: toast.POSITION.TOP_CENTER});
+        }
+        if (formIsValid) {
+            const poll = {title, description, startDate, endDate, verifiedOnly};
+            const createdId = await PostCreatePoll(poll);
+            navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId}});
+        }
     }
 
     const BackToDash = () => {
@@ -45,7 +70,8 @@ function CreatePoll() {
 
                         <InputContainerByType>
                             <FormTextElement>
-                                <TextInputFieldName style={{fontSize: "25px", marginTop:'5px'}}>Title:</TextInputFieldName>
+                                <TextInputFieldName
+                                    style={{fontSize: "25px", marginTop: '5px'}}>Title:</TextInputFieldName>
                                 <TextInput type="text" onChange={e => onChangeTitle(e.target.value)}
                                            value={title}></TextInput>
                             </FormTextElement>
@@ -58,22 +84,38 @@ function CreatePoll() {
                         </InputContainerByType>
                         <InputContainerByType>
 
-                            <FormTextElement>
-                                <TextInputFieldName>Opening date:</TextInputFieldName>
-                                <DateTimePicker onChange={onChangeStart} value={startDate}></DateTimePicker>
-                            </FormTextElement>
+                            <FormDateElement>
+                                <DateInputFieldName>Opening date:</DateInputFieldName>
+                                <Switch checked={openingDateEnabled}
+                                        onChange={e => {
+                                            onChangeOpeningDateEnabled(e);
+                                            onChangeStart(undefined)
+                                        }}
+                                        uncheckedIcon={false} checkedIcon={false} handleDiameter={20}
+                                        height={26}/>
+                                <DateTimePicker onChange={onChangeStart} value={startDate}
+                                                disabled={!openingDateEnabled}></DateTimePicker>
+                            </FormDateElement>
 
-                            <FormTextElement>
-                                <TextInputFieldName>Closure date:</TextInputFieldName>
-                                <DateTimePicker onChange={onChangeEnd} value={endDate}></DateTimePicker>
-                            </FormTextElement>
+                            <FormDateElement>
+                                <DateInputFieldName>Closure date:</DateInputFieldName>
+                                <Switch checked={closureDateEnabled}
+                                        onChange={e => {
+                                            onChangeClosureDateEnabled(e);
+                                            onChangeEnd(undefined)
+                                        }}
+                                        uncheckedIcon={false} checkedIcon={false} handleDiameter={20}
+                                        height={26}/>
+                                <DateTimePicker onChange={onChangeEnd} value={endDate}
+                                                disabled={!closureDateEnabled}></DateTimePicker>
+                            </FormDateElement>
 
                         </InputContainerByType>
 
                         <FormSpecialElement style={{marginBottom: '5px'}}>
                             <TextInputFieldName>Requires Verification:</TextInputFieldName>
                             <div style={{marginTop: -1}}>
-                                <Switch onChange={e => onChangeOfficiality(e)} checked={officiality}
+                                <Switch onChange={e => onChangeVerifiedOnly(e)} checked={verifiedOnly}
                                         uncheckedIcon={false} checkedIcon={false} handleDiameter={20} height={26}/>
                             </div>
                         </FormSpecialElement>
@@ -85,6 +127,7 @@ function CreatePoll() {
                         <CreatePollButton type="submit">Create</CreatePollButton>
                     </CreatePageButtonRow>
                 </CreatePollForm>
+                <ToastContainer theme="dark"/>
             </BasicContentCard>
         </BasicPage>
     );
