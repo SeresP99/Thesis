@@ -91,9 +91,7 @@ router.get("/getParticipatingPolls", verifyJWT, async (req, res) => {
 router.post("/getPollDetails", verifyJWT, async (req, res) => {
     console.log("FETCHING POLL DETAILS");
     const pollId = req.body.pollId;
-    console.log(pollId);
     const pollDetails = await users_polls_model.getPollDetails(pollId);
-    console.log(pollDetails);
     res.json({auth: true, pollDetails});
 });
 
@@ -122,7 +120,6 @@ router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
 
 router.post("/getPollOptions", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
-    console.log("poll ID: " + pollId);
     const options = await users_polls_model.getPollOptions(pollId);
     res.json({auth: true, options});
 })
@@ -131,8 +128,9 @@ router.post("/addPollOption", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
     const title = req.body.title;
     const description = req.body.description;
+    console.log("poll ID: " + pollId + "\ntitle: " + title + "\n description: " + description);
     const insertion = await users_polls_model.addPollOption(pollId, title, description);
-    console.log(insertion);
+    res.json({auth: true, success: true});
 })
 
 router.post("/updatePollOption", verifyJWT, async (req, res) => {
