@@ -15,9 +15,10 @@ class users_polls_model {
     }
 
     static async getPollDetails(pollId) {
+        console.log("our id: " + pollId);
         const query = await pool.query(
             "SELECT * FROM polls WHERE id = $1", [pollId]
-        )
+        );
         return query.rows[0];
     }
 
