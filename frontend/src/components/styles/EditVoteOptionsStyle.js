@@ -17,18 +17,23 @@ export const Scrollbar = styled(CustomScrollbars)`
 
 export const FlexboxToScrollThrough = styled.div`
   display: flex;
+  position: relative;
+  right: 10px;
   min-height: min-content;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 export const OptionListElement = styled(Button)`
-  height: 50px;
-  width: 150px;
+  min-height: 50px;
+  height: fit-content;
+  min-width: 150px;
+  width: fit-content;
+  font-size: 30px;
   border-radius: 5px;
-  margin: 1px;
+  margin: 10px;
   background-color: #333333;
   color: white;
 

@@ -24,7 +24,8 @@
 
 .modal {
     font-size: 12px;
-    background-color: #606060;
+    background-color: #414141;
+    min-width: 260px;
     width: 75%;
     height: 420px;
     border-radius: 5px;
@@ -33,14 +34,15 @@
 .modal > .header {
     font-size: 30px;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 .modal > .content {
-    padding: 10px 5px;
+    position: relative;
+    right: 3px;
 }
 .modal > .actions {
     width: 100%;
-    padding: 10px 5px;
+
     margin: auto;
     text-align: center;
 }
