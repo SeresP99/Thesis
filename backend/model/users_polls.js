@@ -36,6 +36,21 @@ class users_polls_model {
         return query.rows[0];
     }
 
+    static async getPollInvitation(pollId) {
+        const query = await pool.query(
+            "SELECT invitation FROM polls WHERE polls.id = $1", [pollId]
+        );
+
+        return query.rows[0];
+    }
+
+    static async setPollInvitation(invitation, pollId) {
+        const query = await pool.query(
+            "UPDATE polls SET invitation = $1 WHERE id = $2 RETURNING invitation", [invitation, pollId]
+        );
+        return query.rows[0];
+    }
+
     static async getPollOptions(pollId) {
         const query = await pool.query(
             "SELECT * FROM public.poll_options WHERE poll_id = $1", [pollId]
