@@ -67,7 +67,9 @@ export const TextInput = styled.input`
 `;
 
 export const LoginButton = styled(Button)`
-  
+  width: 200px;
+  height: 75px;
+  margin-bottom: 10px;
 `;
 
 export const TakeToSignupButton = styled.button`
