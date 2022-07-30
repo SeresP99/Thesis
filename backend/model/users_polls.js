@@ -51,6 +51,13 @@ class users_polls_model {
         return query.rows[0];
     }
 
+    static async getPollFromInvitation(invitation){
+        const query = await pool.query(
+            "SELECT title, description FROM polls WHERE invitation = $1", [invitation]
+        );
+        return query.rows[0];
+    }
+
     static async getPollOptions(pollId) {
         const query = await pool.query(
             "SELECT * FROM public.poll_options WHERE poll_id = $1", [pollId]

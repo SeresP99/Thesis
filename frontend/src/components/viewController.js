@@ -8,6 +8,7 @@ import CreatePoll from "../pages/CreatePoll";
 import EditVoteOptions from "../pages/EditVoteOptions";
 import Dashboard from "../pages/Dashboard"
 import VotePage from "../pages/VotePage";
+import InvitationAcceptPage from "../pages/InvitationAcceptPage";
 
 
 const Views = () => {
@@ -22,6 +23,7 @@ const Views = () => {
             <Route path="/profile/poll/vote" element={<VotePage/>}/>
             <Route path="/register" element={<SignUp/>}/>
             <Route path="/create" element={<CreatePoll/>}/>
+            <Route path="/invite/:invitation" element={<InvitationAcceptPage/>}/>
             <Route path="*" element={<Login/>}/>
         </Routes>
     );

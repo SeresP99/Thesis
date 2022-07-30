@@ -41,3 +41,11 @@ export function GetPollInvitation(pollId) {
         return res.data.invitation;
     })
 }
+
+export function GetPollFromInvitation(invitation) {
+    return Axios.post(backend + "/getPollFromInvitation", {invitation}, {
+        headers: {'x-access-token': localStorage.getItem("token")}
+    }).then(res => {
+        return res.data.poll;
+    })
+};

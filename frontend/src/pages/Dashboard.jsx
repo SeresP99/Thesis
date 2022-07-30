@@ -77,10 +77,10 @@ function Dashboard() {
 
                         <DashboardButton>
                             <DashboardButtonTitle>
-                                <h1>Placeholder</h1>
+                                <h1>Log out</h1>
                             </DashboardButtonTitle>
                             <DashboardButtonDescription>
-                                <p>Placeholder</p>
+                                <p>Log out</p>
                             </DashboardButtonDescription>
                         </DashboardButton>
 

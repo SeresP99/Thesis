@@ -42,6 +42,7 @@ export const DataRow = styled.div`
 `;
 
 export const DataColumn = styled.div`
+  justify-content: space-between;
   flex: ${(props) => props.size};
 `;
 

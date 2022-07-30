@@ -124,6 +124,12 @@ router.post("/getPollInvitation", verifyJWT, async (req, res) => {
     }
 });
 
+router.post("/getPollFromInvitation", verifyJWT, async (req, res) => {
+    const invitation = req.body.invitation;
+    const query = await users_polls_model.getPollFromInvitation(invitation);
+        res.json({auth: true, poll: query});
+});
+
 router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
     const token = req.headers["x-access-token"];
     const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
