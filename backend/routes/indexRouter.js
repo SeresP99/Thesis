@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const {verify} = require("jsonwebtoken");
 const {stringify} = require("nodemon/lib/utils");
 const users_polls_model = require("../model/users_polls");
+const {nanoid} = require("nanoid");
+//import { nanoid } from 'nanoid'
 
 router.use(express.json());
 
@@ -108,6 +110,18 @@ router.post("/createPoll", verifyJWT, async (req, res) => {
     const query = await users_polls_model.createPoll(poll, authorId);
     const pollId = query.id;
     res.json({auth: true, pollId});
+});
+
+router.post("/getPollInvitation", verifyJWT, async (req, res) => {
+    const pollId = req.body.pollId;
+    const query = await users_polls_model.getPollInvitation(pollId);
+    if (query.invitation === null) {
+        const freshInv = nanoid(10);
+        const insertInv = await users_polls_model.setPollInvitation(freshInv, pollId);
+        res.json({auth: true, invitation: insertInv.invitation});
+    } else {
+        res.json({auth: true, invitation: query.invitation});
+    }
 });
 
 router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
