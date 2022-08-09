@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {Button} from "../styles/Button/Button";
 
 const PopupForm = styled.form`
   height: 350px;
@@ -42,9 +43,8 @@ export const PopupSubmitButton = styled.button`
   align-items: center;
   justify-content: space-evenly;
   font-size: 2em;
-  width: 40%;
+  min-width: fit-content;
   flex: 1;
-  max-width: 600px;
   height: 80px;
   border: 3px;
   appearance: none;
@@ -80,42 +80,21 @@ export const PopupSubmitButton = styled.button`
   }
 `;
 
-export const BackButton = styled.button`
+export const BackButton = styled(Button)`
   font-family: "Montserrat", sans-serif;
   display: inline;
   align-items: center;
   justify-content: space-evenly;
   font-size: 2em;
-  width: 40%;
+  min-width: fit-content;
   flex: 1;
   max-width: 600px;
   height: 80px;
   border: 3px;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
   background-color: ${({theme}) => theme.back};
-  color: white;
 
-  &:focus,
-  &:hover {
-    appearance: none;
-    --moz-appearance: none;
-    --webkit-appearance: none;
-    --edge-appearance: none;
-    border: none;
-    outline: 0;
-  }
-
-  &:hover {
+  &:hover {é
     background-color: ${({theme}) => theme.backHover};
-  }
-
-  &:active {
-    transform: scale(0.98);
   }
 `;
 
@@ -125,7 +104,7 @@ export const DeleteButton = styled.button`
   align-items: center;
   justify-content: space-evenly;
   font-size: 2em;
-  width: 40%;
+  min-width: fit-content;
   flex: 1;
   max-width: 600px;
   height: 80px;
@@ -159,10 +138,9 @@ export const DeleteButton = styled.button`
 `;
 
 export const ButtonRow = styled.div`
-  width: 100%;
+  width: 97%;
   display: flex;
   flex-direction: row;
-  
 `;
 
 export default PopupForm;

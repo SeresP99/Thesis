@@ -7,13 +7,16 @@ const session = require("express-session");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
+app.use(cors());
+const options = {origin: ['http://localhost:3000', "http://89.134.232.32:3000"]};
+app.use(cors(options));
 
-app.use(
+/*app.use(
     cors({
         credentials: true,
         origin: process.env.CLIENT_URL,
     })
-);
+);*/
 
 /*app.use(
     cors({

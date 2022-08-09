@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Popup from 'reactjs-popup';
-import CreatePoll from "../CreatePoll";
 import PopupForm, {
     BackButton, ButtonRow,
     PopupSubmitButton,
@@ -9,8 +8,8 @@ import PopupForm, {
     TextInputFieldName
 } from './PopupFormStyle'
 import {AddButton} from "../styles/EditVoteOptionsStyle";
-import Axios from "axios";
 import {useLocation} from "react-router-dom";
+import {CreateOption} from "../../assets/VoteOptionCrudRequests";
 
 function CreatePopup() {
 
@@ -30,19 +29,14 @@ function CreatePopup() {
             setIsFormValid(true);
     }, [title])
 
-    const FormSubmit = (e) => {
+    const FormSubmit = async (e) => {
         e.preventDefault();
-        const obj = {title, description, pollId};
-        Axios.post("http://localhost:4000/addPollOption", obj, {
-            headers: {
-                "x-access-token": localStorage.getItem("token")
-            }
-        })
+        await CreateOption(pollId, title, description);
         window.location.reload();
     }
 
     return (
-        <Popup trigger={<AddButton>+</AddButton>} modal nested>
+        <Popup trigger={<AddButton>Add Option</AddButton>} modal nested>
             {close => (
                 <div className="modal">
 
@@ -59,25 +53,12 @@ function CreatePopup() {
                             <TextInputFieldName>Description:</TextInputFieldName>
                             <MultiLineTextInput onChange={e => setDescription(e.target.value)}></MultiLineTextInput>
                             <ButtonRow>
-                                <BackButton onClick={() => {
-                                    console.log('modal closed ');
-                                    close();
-                                }}>Back</BackButton>
-                                <PopupSubmitButton type="submit" disabled={!isFormValid}>Create Option</PopupSubmitButton>
+                                <BackButton onClick={close}>Back</BackButton>
+                                <PopupSubmitButton type="submit" disabled={!isFormValid}>Create
+                                    Option</PopupSubmitButton>
                             </ButtonRow>
                         </PopupForm>
                     </div>
-                    {/*<div className="actions" style={{visibility: 'hidden'}}>
-                        <button
-                            className="button"
-                            onClick={() => {
-                                console.log('modal closed ');
-                                close();
-                            }}
-                        >
-                            close modal
-                        </button>
-                    </div>*/}
                 </div>
             )}
         </Popup>

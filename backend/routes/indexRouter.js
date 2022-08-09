@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const {verify} = require("jsonwebtoken");
 const {stringify} = require("nodemon/lib/utils");
 const users_polls_model = require("../model/users_polls");
+const {nanoid} = require("nanoid");
+//import { nanoid } from 'nanoid'
 
 router.use(express.json());
 
@@ -20,12 +22,17 @@ const verifyJWT = (req, res, next) => {
                 console.log("bad token");
                 res.json({auth: false, message: "You failed to authenticate! - server"});
             } else {
-                console.log("correct token");
                 req.userId = decoded.id;
                 next();
             }
         });
     }
+}
+
+const GetUserId = (req) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
+    return decoded.id;
 }
 
 router.get("/", (req, res) => {
@@ -42,7 +49,7 @@ router.post("/login", async (req, res) => {
         const user = await user_model.getUserId(username, password);
         console.log("User's credentials: " + JSON.stringify(user));
         const id = user.id;
-        const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '900s'});
+        const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '1h'});
         res.json({auth: true, token: token, user: user});
     } catch (e) {
         res.json({auth: false, message: "Wrong email or password!"})
@@ -86,18 +93,16 @@ router.get("/getUserProfile", verifyJWT, async (req, res) => {
 
 router.get("/getParticipatingPolls", verifyJWT, async (req, res) => {
     const polls = await users_polls_model.getParticipatingPolls(req.userId);
-    console.log(polls);
     res.json({auth: true, polls})
 });
 
 router.post("/getPollDetails", verifyJWT, async (req, res) => {
     console.log("FETCHING POLL DETAILS");
     const pollId = req.body.pollId;
-    console.log(pollId);
     const pollDetails = await users_polls_model.getPollDetails(pollId);
-    console.log(pollDetails);
     res.json({auth: true, pollDetails});
 });
+
 
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
@@ -108,9 +113,47 @@ router.post("/createPoll", verifyJWT, async (req, res) => {
     const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
     const authorId = decoded.id;
     const poll = req.body;
-    console.log(req.body);
-    const creation = await users_polls_model.createPoll(poll, authorId);
-    console.log(creation);
+    const query = await users_polls_model.createPoll(poll, authorId);
+    const pollId = query.id;
+    res.json({auth: true, pollId});
+});
+
+router.post("/getPollInvitation", verifyJWT, async (req, res) => {
+    const pollId = req.body.pollId;
+    const query = await users_polls_model.getPollInvitation(pollId);
+    if (query.invitation === null) {
+        const freshInv = nanoid(10);
+        const insertInv = await users_polls_model.setPollInvitation(freshInv, pollId);
+        res.json({auth: true, invitation: insertInv.invitation});
+    } else {
+        res.json({auth: true, invitation: query.invitation});
+    }
+});
+
+router.post("/getPollFromInvitation", verifyJWT, async (req, res) => {
+    const invitation = req.body.invitation;
+    const userId = GetUserId(req);
+
+    const poll = await users_polls_model.getPollFromInvitation(invitation);
+    const author = await users_polls_model.getPollAuthorFromInv(invitation)
+    if (author === userId)
+        res.json({auth: true, userIsAuthor: true, poll})
+
+    else {
+
+        res.json({auth: true, userIsAuthor: false, poll: poll});
+    }
+});
+
+router.post("/redeemInvitation", verifyJWT, async (req, res) => {
+    const userId = await GetUserId(req);
+    const invitation = req.body.invitation;
+
+    //check is user is trying to invite themselves
+    if (await users_polls_model.getPollAuthorFromInv(invitation) === userId)
+        res.json({auth: true, message: "Sorry, but you can't invite yourself."})
+
+
 });
 
 router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
@@ -123,9 +166,7 @@ router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
 
 router.post("/getPollOptions", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
-    console.log("poll ID: " + pollId);
     const options = await users_polls_model.getPollOptions(pollId);
-    console.log(options);
     res.json({auth: true, options});
 })
 
@@ -133,8 +174,9 @@ router.post("/addPollOption", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
     const title = req.body.title;
     const description = req.body.description;
+    console.log("poll ID: " + pollId + "\ntitle: " + title + "\n description: " + description);
     const insertion = await users_polls_model.addPollOption(pollId, title, description);
-    console.log(insertion);
+    res.json({auth: true, success: true});
 })
 
 router.post("/updatePollOption", verifyJWT, async (req, res) => {
@@ -150,5 +192,17 @@ router.post("/deletePollOption", verifyJWT, async (req, res) => {
     const deletion = await users_polls_model.deletePollOption(id);
     console.log(deletion);
 })
+
+router.post("/vote", verifyJWT, async (req, res) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
+    const userId = decoded.id;
+
+    const chosenOptionId = req.body.pollOptionId;
+    const pollId = req.body.pollId;
+
+    const castVote = await users_polls_model.castVote(userId, chosenOptionId, pollId);
+    console.log(castVote);
+});
 
 module.exports = router;

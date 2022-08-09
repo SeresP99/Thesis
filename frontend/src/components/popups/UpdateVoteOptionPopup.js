@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Popup from 'reactjs-popup';
-import CreatePoll from "../CreatePoll";
 import PopupForm, {
     BackButton, ButtonRow,
     PopupSubmitButton,
@@ -8,17 +7,10 @@ import PopupForm, {
     TextInput,
     TextInputFieldName, DeleteButton
 } from './PopupFormStyle'
-import {AddButton, OptionListElement} from "../styles/EditVoteOptionsStyle";
-import Axios from "axios";
-import {useLocation} from "react-router-dom";
-import axios from "axios";
+import {OptionListElement} from "../styles/EditVoteOptionsStyle";
+import {DeleteOption, UpdateOption} from "../../assets/VoteOptionCrudRequests";
 
 function UpdatePopup(props) {
-
-    //require("./PopupModal.css")
-
-    const state = useLocation();
-    const {pollId} = state.state;
 
     const [title, setTitle] = useState(props.title);
     const [description, setDescription] = useState(props.description);
@@ -34,23 +26,12 @@ function UpdatePopup(props) {
 
     const FormSubmit = (e) => {
         e.preventDefault();
-        const obj = {id, title, description};
-        console.log(obj);
-        Axios.post("http://localhost:4000/updatePollOption", obj, {
-            headers: {
-                "x-access-token": localStorage.getItem("token")
-            }
-        })
+        UpdateOption(id, title, description);
         window.location.reload();
     }
 
     const DeletePollOption = () => {
-        const obj = {id};
-        Axios.post("http://localhost:4000/deletePollOption", obj, {
-            headers: {
-                "x-access-token": localStorage.getItem("token")
-            }
-        });
+        DeleteOption(id);
         window.location.reload();
     }
 

@@ -1,45 +1,40 @@
 import styled from "styled-components";
-import CreatePoll from "../CreatePoll";
+import CreatePoll from "../../pages/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
+import {Button} from "./Button/Button";
+import {BackButton} from "./Button/BackButton";
+import CustomScrollbars from "../global/Scrollbar";
 
-export const GenericPage = styled.div`
-  height: 100vh;
+export const OptionListContainer = styled.div`
+  width: 80%;
+  margin-bottom: 10px;
+`;
+
+export const Scrollbar = styled(CustomScrollbars)`
+  height: 350px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 5px;
 `;
 
-export const BaseCard = styled.div`
-  background-color: ${({theme}) => theme.elevation_1};
-  border-radius: 5px;
-  height: 500px;
-  width: 90%;
-  max-width: 1400px;
+export const FlexboxToScrollThrough = styled.div`
   display: flex;
+  position: relative;
+  right: 10px;
+  min-height: min-content;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-evenly;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: ${({theme}) => theme.shadow};
-  text-align: center;
 `;
 
-export const OptionListElement = styled.button`
-  display: flex;
-  justify-content: center;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
-  align-items: center;
-  align-content: center;
-  text-align: center;
-  height: 50px;
-  width: 150px;
+export const OptionListElement = styled(Button)`
+  min-height: 50px;
+  height: fit-content;
+  min-width: 150px;
+  width: fit-content;
+  font-size: 30px;
   border-radius: 5px;
-  margin: 1px;
+  margin: 10px;
   background-color: #333333;
   color: white;
 
@@ -51,41 +46,32 @@ export const OptionListElement = styled.button`
 export const ButtonRow = styled.div`
   display: flex;
   width: 80%;
+  margin-top: -18px;
+  height:60px;
   max-width: 1200px;
 `;
 
-export const AddButton = styled.button`
-  flex: 1;
-  font-family: "Montserrat", sans-serif;
+export const AddButton = styled(Button)`
+  flex: 2;
+  margin-left: 0.5%;
+  font-family: Courgette, sans-serif;
   justify-content: space-evenly;
-  height: 40px;
-  font-size: 1em;
-  appearance: none;
-  --moz-appearance: none;
-  --webkit-appearance: none;
-  --edge-appearance: none;
-  border: none;
-  outline: 0;
-  background-color: #47ab47;
+  height: 60px;
+  font-size: 40px;
+  background-color: ${({theme}) => theme.elevation_2};
   color: white;
-
-  &:focus,
-  &:hover {
-    appearance: none;
-    --moz-appearance: none;
-    --webkit-appearance: none;
-    --edge-appearance: none;
-    border: none;
-    outline: 0;
-  }
+  border-radius: 5px;
 
   &:hover {
-    background-color: green;
-  }
-
-  &:active {
-    transform: scale(0.98);
+    background-color: rgba(0, 128, 0, 0.4);
   }
 `
 
-export default BaseCard;
+export const BackFromEditingButton = styled(BackButton)`
+  flex: 1;
+  margin-right: 0.5%;
+  height: 60px;
+  font-family: Courgette, sans-serif;
+  font-size: 40px;
+  border-radius: 5px;
+`;

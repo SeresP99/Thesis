@@ -42,8 +42,43 @@ export const OptionListElement = styled.button`
   }
 `;
 
+export const LockInButton = styled.button`
+  font-family: Montserrat, sans-serif;
+  width: 30%;
+  height: 60px;
+  background-color: ${({theme}) => theme.primary};
+  display: flex;
+  justify-content: center;
+  appearance: none;
+  --moz-appearance: none;
+  --webkit-appearance: none;
+  --edge-appearance: none;
+  border: none;
+  outline: 0;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  margin: 1px;
+  color: white;
+  font-size: 40px;
+
+  &:hover {
+    background-color: ${({theme}) => theme.secondaryHover};
+  }
+  
+  &:disabled {
+    background-color: #808080;
+    color: #a2a2a2;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
 export const ButtonRow = styled.div`
   display: flex;
   width: 80%;
   max-width: 1200px;
+  justify-content: center;
 `;

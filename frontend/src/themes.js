@@ -5,7 +5,7 @@ export const darkTheme = {
     elevation_3: "#353535",
     text: "#f1f1f1",
     primary: "#6500ad",
-    primaryHover: "#500089",
+    primaryHover: "#6500AD66",
     secondary: "#00b7b7",
     secondaryHover: "#008080",
     back: "rgba(206,0,0,0.83)",

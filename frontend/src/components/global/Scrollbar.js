@@ -9,9 +9,10 @@ class CustomScrollbars extends Component {
         super(props, ...rest);
         this.state = {top: 0};
         this.handleUpdate = this.handleUpdate.bind(this);
-        this.renderView = this.renderView.bind(this);
+        this.renderView = this.renderView.bind(this, props);
         this.renderThumb = this.renderThumb.bind(this);
     }
+
 
     handleUpdate(values) {
         const {top} = values;
@@ -23,8 +24,10 @@ class CustomScrollbars extends Component {
         const {top} = this.state;
         const viewStyle = {
             padding: 15,
-            backgroundColor: darkTheme.elevation_2, //`#2f2f2f`,
-            color: `#f1f1f1`
+            //backgroundColor: darkTheme.elevation_2, //`#2f2f2f`,
+            //color: `#f1f1f1`,
+            backgroundColor: props.backgroundcolor === undefined ? darkTheme.elevation_2 : props.backgroundcolor,
+            overflowY: `auto`
         };
         return (
             <div

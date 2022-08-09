@@ -15,9 +15,10 @@ class users_polls_model {
     }
 
     static async getPollDetails(pollId) {
+        console.log("our id: " + pollId);
         const query = await pool.query(
             "SELECT * FROM polls WHERE id = $1", [pollId]
-        )
+        );
         return query.rows[0];
     }
 
@@ -30,10 +31,42 @@ class users_polls_model {
 
     static async createPoll(poll, authorId) {
         const query = await pool.query(
-            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date) VALUES ($1, $2, $3, $4, $5)", [poll.title, poll.description, authorId, poll.startDate, poll.endDate]
+            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date) VALUES ($1, $2, $3, $4, $5) RETURNING id", [poll.title, poll.description, authorId, poll.startDate, poll.endDate]
         )
         return query.rows[0];
     }
+
+    static async getPollInvitation(pollId) {
+        const query = await pool.query(
+            "SELECT invitation FROM polls WHERE polls.id = $1", [pollId]
+        );
+        return query.rows[0];
+    }
+
+    static async setPollInvitation(invitation, pollId) {
+        const query = await pool.query(
+            "UPDATE polls SET invitation = $1 WHERE id = $2 RETURNING invitation", [invitation, pollId]
+        );
+        return query.rows[0];
+    }
+
+    static async getPollFromInvitation(invitation) {
+        const query = await pool.query(
+            "SELECT id, title, description FROM polls WHERE invitation = $1", [invitation]
+        );
+        return query.rows[0];
+    }
+
+    static async getPollAuthorFromInv(invitation) {
+        const query = await pool.query(
+            "SELECT author_id FROM polls WHERE invitation = $1", [invitation]
+        );
+        return query.rows[0].author_id;
+    }
+
+    static async redeemInvitation(userId, invitation) {
+
+    };
 
     static async getPollOptions(pollId) {
         const query = await pool.query(
@@ -64,6 +97,18 @@ class users_polls_model {
             [id]
         );
         return query.rows[0];
+    }
+
+    static async castVote(userId, chosenOptionId, pollId) {
+        const querySetVoted = await pool.query(
+            "UPDATE participants_polls_relationship SET has_voted = true WHERE poll_id = $1 AND user_id = $2", [pollId, userId]
+        )
+
+        const queryAddVote = await pool.query(
+            "UPDATE poll_options SET vote_count = vote_count + 1 WHERE id = $1 AND poll_id = $2", [chosenOptionId, pollId]
+        )
+
+        return !querySetVoted && !queryAddVote;
     }
 }
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const GenericPage = styled.div`
+export const BasicPage = styled.div`
   height: 100vh;
   width: 100%;
   display: flex;
@@ -8,12 +8,14 @@ export const GenericPage = styled.div`
   align-items: center;
 `;
 
-export const BaseCard = styled.div`
+export const BasicContentCard = styled.div`
   background-color: ${({theme}) => theme.elevation_1};
   border-radius: 5px;
-  height: 500px;
+  min-height: 500px;
+  height: min-content + 3%;
   width: 90%;
-  max-width: 500px;
+  min-width: 250px;
+  max-width: 1400px;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
@@ -21,5 +23,3 @@ export const BaseCard = styled.div`
   box-shadow: ${({theme}) => theme.shadow};
   text-align: center;
 `;
-
-export default BaseCard;

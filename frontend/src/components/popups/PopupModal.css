@@ -22,28 +22,81 @@
     width: 100%;
 }
 
+.small-modal {
+    font-size: 12px;
+    background-color: #414141;
+    min-width: 260px;
+    width: 59%;
+    height: 180px;
+    border-radius: 5px;
+    -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
+
+.small-modal > .header {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.small-modal > .content {
+    position: relative;
+    right: 3px;
+}
+
+.small-modal > .actions {
+    width: 100%;
+
+    margin: auto;
+    text-align: center;
+}
+
+.small-modal > .closeButton {
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: 3px;
+    top: 3px;
+    font-size: 24px;
+    background: #949494;
+    border-radius: 5px;
+    border: 0;
+}
+
+
 .modal {
     font-size: 12px;
-    background-color: #606060;
+    background-color: #414141;
+    min-width: 260px;
     width: 75%;
     height: 420px;
     border-radius: 5px;
     -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
+
 .modal > .header {
     font-size: 30px;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 5px;
 }
+
 .modal > .content {
-    padding: 10px 5px;
+    position: relative;
+    right: 3px;
 }
+
 .modal > .actions {
     width: 100%;
-    padding: 10px 5px;
+
     margin: auto;
     text-align: center;
 }
+
 .modal > .closeButton {
     cursor: pointer;
     position: absolute;
