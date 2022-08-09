@@ -29,6 +29,12 @@ const verifyJWT = (req, res, next) => {
     }
 }
 
+const GetUserId = (req) => {
+    const token = req.headers["x-access-token"];
+    const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
+    return decoded.id;
+}
+
 router.get("/", (req, res) => {
     res.send("server home");
 });
@@ -126,8 +132,28 @@ router.post("/getPollInvitation", verifyJWT, async (req, res) => {
 
 router.post("/getPollFromInvitation", verifyJWT, async (req, res) => {
     const invitation = req.body.invitation;
-    const query = await users_polls_model.getPollFromInvitation(invitation);
-        res.json({auth: true, poll: query});
+    const userId = GetUserId(req);
+
+    const poll = await users_polls_model.getPollFromInvitation(invitation);
+    const author = await users_polls_model.getPollAuthorFromInv(invitation)
+    if (author === userId)
+        res.json({auth: true, userIsAuthor: true, poll})
+
+    else {
+
+        res.json({auth: true, userIsAuthor: false, poll: poll});
+    }
+});
+
+router.post("/redeemInvitation", verifyJWT, async (req, res) => {
+    const userId = await GetUserId(req);
+    const invitation = req.body.invitation;
+
+    //check is user is trying to invite themselves
+    if (await users_polls_model.getPollAuthorFromInv(invitation) === userId)
+        res.json({auth: true, message: "Sorry, but you can't invite yourself."})
+
+
 });
 
 router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
