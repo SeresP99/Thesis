@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
 import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
 import {BackToDashBoard, Error, Join, TakeToLogin, Title} from "../components/styles/Page/InviteStyle";
-import {GetPollFromInvitation} from "../assets/PollCrudRequests";
+import {GetPollFromInvitation, RedeemInvitation} from "../assets/PollCrudRequests";
 
 function InvitationAcceptPage() {
 
@@ -14,7 +14,13 @@ function InvitationAcceptPage() {
 
     useEffect(async () => {
         setLoggedIn(await CheckIfAuthenticated());
-        setPoll(await GetPollFromInvitation(invitation));
+        const request = await GetPollFromInvitation(invitation);
+        if (request.userIsAuthor) {
+            const pollId = request.poll.id;
+            navigate("/profile/poll", {state: {pollId: pollId, selfInvite: true}})
+        }
+        else
+        setPoll(request.poll);
     }, [])
 
     const AskForLogin = () => {
@@ -42,7 +48,7 @@ function InvitationAcceptPage() {
                     <h2>Poll you're about to join:</h2>
                     <Title>{poll.title}</Title>
                     <p>{poll.description}</p>
-                    <Join>Join</Join>
+                    <Join onClick={()=>{RedeemInvitation(invitation)}}   >Join</Join>
                 </>
             );
     }

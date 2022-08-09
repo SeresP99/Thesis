@@ -6,6 +6,7 @@ import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
 import {GetPollDetails, GetPollInvitation} from "../assets/PollCrudRequests";
 import {DataColumn, DataGrid, DataRow, TextData, TitleCard} from "../components/styles/PollDetailsStyle";
 import InvitationPopup from "../components/popups/InvitationPopup";
+import {toast, ToastContainer} from "react-toastify";
 
 function PollDetails() {
 
@@ -14,9 +15,13 @@ function PollDetails() {
 
     const state = useLocation();
     const {pollId} = state.state;
+    const {selfInvite} = true;
 
     const [pollDetails, setPollDetails] = useState({});
 
+    useEffect(() => {
+       toast.error("Sorry, you can't invite yourself.")
+    }, []);
 
     useEffect(async () => {
         console.log("poll id: " + pollId);
@@ -72,6 +77,7 @@ function PollDetails() {
 
                     </DataGrid>
                 </BasicContentCard>
+                <ToastContainer theme={"dark"}/>
             </BasicPage>
 
         )

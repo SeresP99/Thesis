@@ -46,6 +46,14 @@ export function GetPollFromInvitation(invitation) {
     return Axios.post(backend + "/getPollFromInvitation", {invitation}, {
         headers: {'x-access-token': localStorage.getItem("token")}
     }).then(res => {
-        return res.data.poll;
+        return {poll: res.data.poll, userIsAuthor: res.data.userIsAuthor} ;
     })
-};
+}
+
+export function RedeemInvitation(invitation) {
+    return Axios.post(backend + "/redeemInvitation", {invitation}, {
+        headers: {'x-access-token': localStorage.getItem("token")}
+    }).then(res => {
+        return res.data.success;
+    })
+}
