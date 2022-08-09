@@ -40,7 +40,6 @@ class users_polls_model {
         const query = await pool.query(
             "SELECT invitation FROM polls WHERE polls.id = $1", [pollId]
         );
-
         return query.rows[0];
     }
 
@@ -51,12 +50,23 @@ class users_polls_model {
         return query.rows[0];
     }
 
-    static async getPollFromInvitation(invitation){
+    static async getPollFromInvitation(invitation) {
         const query = await pool.query(
-            "SELECT title, description FROM polls WHERE invitation = $1", [invitation]
+            "SELECT id, title, description FROM polls WHERE invitation = $1", [invitation]
         );
         return query.rows[0];
     }
+
+    static async getPollAuthorFromInv(invitation) {
+        const query = await pool.query(
+            "SELECT author_id FROM polls WHERE invitation = $1", [invitation]
+        );
+        return query.rows[0].author_id;
+    }
+
+    static async redeemInvitation(userId, invitation) {
+
+    };
 
     static async getPollOptions(pollId) {
         const query = await pool.query(
