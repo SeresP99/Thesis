@@ -38,11 +38,11 @@ function Login() {
             <ElevatedDiv>
                 <StyledForm onSubmit={SignIn}>
                     <div>
-                        <h1 style={{fontSize: '50px'}}>Plum</h1>
+                        <h1 style={{fontSize: '50px'}}>Pollscape</h1>
                         <sub>Created by Peter Seres</sub>
                         <p style={{
                             visibility: error ? "visible" : "hidden",
-                            marginTop: "20px",
+                            //marginTop: "20px",
                             marginBottom: "-20px",
                             color: "#ff4b4b"
                         }}>Wrong username/password combination!</p>

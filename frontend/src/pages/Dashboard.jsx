@@ -19,11 +19,20 @@ function Dashboard() {
 
     const NavToCreatedPolls = () => {
         navigate("/createdPolls");
-    }
+    };
 
     const NavToProfile = () => {
         navigate("/profile");
     };
+
+    const NavToParticipate = () => {
+      navigate("/joinedPolls");
+    };
+
+    const Logout = async () => {
+        await localStorage.removeItem("token");
+        navigate("/login");
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -66,7 +75,7 @@ function Dashboard() {
                             </DashboardButtonDescription>
                         </DashboardButton>
 
-                        <DashboardButton>
+                        <DashboardButton onClick={NavToParticipate}>
                             <DashboardButtonTitle>
                                 <h1>Participate</h1>
                             </DashboardButtonTitle>
@@ -75,12 +84,12 @@ function Dashboard() {
                             </DashboardButtonDescription>
                         </DashboardButton>
 
-                        <DashboardButton>
+                        <DashboardButton onClick={Logout}>
                             <DashboardButtonTitle>
                                 <h1>Log out</h1>
                             </DashboardButtonTitle>
                             <DashboardButtonDescription>
-                                <p>Log out</p>
+                                <p>Hope to see you again soon!</p>
                             </DashboardButtonDescription>
                         </DashboardButton>
 

@@ -32,6 +32,10 @@ const CreatedPollList = () => {
         navigate('/dashboard');
     }
 
+    function NavToStandings(key) {
+        navigate("/participate/standings", {state: {pollId: key}})
+    }
+
     const PollListElements = () => {
         try {
             return (pollList.map((poll) => <Poll key={poll.id} title={poll.title} id={poll.id}/>));
@@ -59,6 +63,7 @@ const CreatedPollList = () => {
                 <ViewDetails onClick={() => goToPollDetails(highlightedPoll)}>View</ViewDetails>
                 <EditOptions onClick={()=>goToVoteOptionsEditor(highlightedPoll)}>Edit Options</EditOptions>
             </ButtonRow>
+            <ViewDetails style={{width: '100%', margin: '10px'}} onClick={() => NavToStandings(highlightedPoll)}>View Standings</ViewDetails>
         </PollListContainer>
     )
 }

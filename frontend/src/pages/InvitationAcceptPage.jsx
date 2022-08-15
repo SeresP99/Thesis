@@ -2,7 +2,7 @@ import {useParams, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
 import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
-import {BackToDashBoard, Error, Join, TakeToLogin, Title} from "../components/styles/Page/InviteStyle";
+import {BackToDashBoard, Error, JoinButton, TakeToLogin, Title} from "../components/styles/Page/InviteStyle";
 import {GetPollFromInvitation, RedeemInvitation} from "../assets/PollCrudRequests";
 
 function InvitationAcceptPage() {
@@ -22,6 +22,11 @@ function InvitationAcceptPage() {
         else
         setPoll(request.poll);
     }, [])
+
+    const Join = async () => {
+        const success = await RedeemInvitation(invitation);
+        console.log("success: " + success);
+    }
 
     const AskForLogin = () => {
         return (
@@ -48,7 +53,7 @@ function InvitationAcceptPage() {
                     <h2>Poll you're about to join:</h2>
                     <Title>{poll.title}</Title>
                     <p>{poll.description}</p>
-                    <Join onClick={()=>{RedeemInvitation(invitation)}}   >Join</Join>
+                    <JoinButton onClick={() => {Join()}}>Join</JoinButton>
                 </>
             );
     }

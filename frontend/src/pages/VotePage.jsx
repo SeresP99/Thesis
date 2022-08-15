@@ -2,10 +2,14 @@ import {Page, ContentPanel, OptionListElement, ButtonRow, LockInButton} from "..
 import CustomScrollbars from "../components/global/Scrollbar";
 import Axios from "axios";
 import {useEffect, useState, useRef, createRef} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import UpdatePopup from "../components/popups/UpdateVoteOptionPopup";
+import {Vote} from "../assets/VoteRequests";
+import {GetOptions} from "../assets/VoteOptionCrudRequests";
 
 function VotePage() {
+
+    const navigate = useNavigate();
 
     const state = useLocation();
     const {pollId} = state.state;
@@ -13,26 +17,14 @@ function VotePage() {
     const [optionList, setOptionList] = useState([]);
     const [selectedOption, setSelectedOption] = useState();
 
-    const GetVoteOptions = () => {
-        Axios.post("http://localhost:4000/getPollOptions", {"pollId": pollId}, {
-            headers:
-                {"x-access-token": localStorage.getItem("token")}
-        })
-            .then(
-                res => {
-                    setOptionList(res.data.options);
-                }
-            )
+    const GetVoteOptions = async () => {
+        setOptionList(await GetOptions(pollId));
     };
 
-    const Vote = () => {
-        const pollOptionId = selectedOption;
-        const obj = {pollOptionId, pollId};
-
-        Axios.post("http://localhost:4000/vote", obj, {
-            headers:
-                {"x-access-token": localStorage.getItem("token")}
-        })
+    const CastVote = async () => {
+        const success = await Vote(selectedOption, pollId);
+         if(success)
+             navigate("/participate/standings", {state: {pollId : pollId}})
     };
 
     useEffect(() => {
@@ -75,7 +67,7 @@ function VotePage() {
                     </div>
                 </CustomScrollbars>
                 <ButtonRow>
-                    <LockInButton onClick={Vote} disabled={!selectedOption}>Lock In</LockInButton>
+                    <LockInButton onClick={CastVote} disabled={!selectedOption}>Lock In</LockInButton>
                 </ButtonRow>
             </ContentPanel>
         </Page>

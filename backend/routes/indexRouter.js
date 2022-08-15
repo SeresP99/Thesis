@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
 
     try {
         const user = await user_model.getUserId(username, password);
-        console.log("User's credentials: " + JSON.stringify(user));
+        //console.log("User's credentials: " + JSON.stringify(user));
         const id = user.id;
         const token = jwt.sign({id}, process.env.COOKIE_SECRET, {expiresIn: '1h'});
         res.json({auth: true, token: token, user: user});
@@ -103,7 +103,6 @@ router.post("/getPollDetails", verifyJWT, async (req, res) => {
     res.json({auth: true, pollDetails});
 });
 
-
 router.get("/checkAuth", verifyJWT, (req, res) => {
     res.json({auth: true});
 });
@@ -149,11 +148,18 @@ router.post("/redeemInvitation", verifyJWT, async (req, res) => {
     const userId = await GetUserId(req);
     const invitation = req.body.invitation;
 
-    //check is user is trying to invite themselves
+    //check if user is trying to invite themselves
     if (await users_polls_model.getPollAuthorFromInv(invitation) === userId)
         res.json({auth: true, message: "Sorry, but you can't invite yourself."})
 
-
+    else {
+        try {
+            const redeem = await users_polls_model.redeemInvitation(userId, invitation);
+            res.json({auth: true, success: true})
+        } catch (e) {
+            res.json({auth: true, success: false})
+        }
+    }
 });
 
 router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
@@ -162,13 +168,13 @@ router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
     const authorId = decoded.id;
     const polls = await users_polls_model.getCreatedPolls(authorId);
     res.json({auth: true, polls})
-})
+});
 
 router.post("/getPollOptions", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
     const options = await users_polls_model.getPollOptions(pollId);
     res.json({auth: true, options});
-})
+});
 
 router.post("/addPollOption", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
@@ -201,8 +207,27 @@ router.post("/vote", verifyJWT, async (req, res) => {
     const chosenOptionId = req.body.pollOptionId;
     const pollId = req.body.pollId;
 
-    const castVote = await users_polls_model.castVote(userId, chosenOptionId, pollId);
-    console.log(castVote);
+    const checkAlreadyVoted = await users_polls_model.checkIfAlreadyVoted(userId, pollId);
+    if (checkAlreadyVoted)
+        res.json({auth: true, success: false})
+
+    else {
+        try {
+            const castVote = await users_polls_model.castVote(userId, chosenOptionId, pollId);
+            res.json({auth: true, success: true})
+        }
+        catch (e) {
+            res.json({auth: true, success: false})
+        }
+    }
+});
+
+router.post("/getStandings", verifyJWT, async (req, res) => {
+   const pollId = req.body.pollId;
+   const voteCount = await users_polls_model.getNumOfVotes(pollId);
+   const standings = await users_polls_model.getStandings(pollId);
+
+   res.json({auth: true, voteCount: voteCount, standings});
 });
 
 module.exports = router;

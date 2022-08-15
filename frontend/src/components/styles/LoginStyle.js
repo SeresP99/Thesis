@@ -61,7 +61,7 @@ export const TextInput = styled.input`
   font-family: "Montserrat", sans-serif;
   font-size: large;
   height: 50%;
-  width: 300px;
+  width: 250px;
   margin-bottom: 10px;
   border-radius: 3px;
 `;

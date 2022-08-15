@@ -42,3 +42,11 @@ export function UpdateOption(id, title, description) {
         }
     })
 }
+
+export function getStandings(pollId) {
+    return Axios.post(backend + "/getStandings", {pollId}, {
+        headers: {"x-access-token": localStorage.getItem("token")}
+    }).then(res => {
+        return res.data;
+    })
+}
