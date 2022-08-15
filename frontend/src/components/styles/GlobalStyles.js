@@ -5,6 +5,29 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
 }
 
+// Scrollbar
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6500AD #C2C2C2;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 20px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: #6500AD;
+}
+
+
 body {
   color: ${({theme}) => theme.text};
   margin: 0;
