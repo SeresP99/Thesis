@@ -13,15 +13,33 @@ export const PollListContainer = styled.div`
   align-items: center;
 `;
 
-export const Scrollbar = styled(CustomScrollbars)`
+export const ScrolledDiv = styled.div`
+  position: relative;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: min-content;
+`;
+
+export const Scrollbar = styled.div`
+  background-color: ${({theme}) => theme.elevation_2};
   border-radius: 5px;
   height: 400px;
   width: 100%;
+  overflow: auto;
+`;
+
+export const ElementContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
 `;
 
 export const PollListElement = styled.div`
-  position: relative;
-  right: 10px;
   width: 93%;
   height: 45px;
   font-size: 20px;
@@ -29,7 +47,8 @@ export const PollListElement = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-top: 7px;
+  margin-bottom: 7px;
   padding: 5px;
   border-radius: 5px;
 `

@@ -3,7 +3,14 @@ import CustomScrollbars from "../global/Scrollbar";
 import {useLocation, useNavigate} from "react-router-dom";
 import {GetAllCreatedPolls} from "../../assets/PollCrudRequests";
 import {BackButton} from "../popups/PopupFormStyle";
-import {MyProgressBar, StandingsListContainer, Scrollbar, ElementContainer, ListDiv} from "./PollStandingsListStyle";
+import {
+    MyProgressBar,
+    StandingsListContainer,
+    Scrollbar,
+    ElementContainer,
+    ListDiv,
+    Title, StandingsBackButton
+} from "./PollStandingsListStyle";
 import {getStandings} from "../../assets/VoteOptionCrudRequests";
 
 const PollStandingsList = () => {
@@ -24,6 +31,10 @@ const PollStandingsList = () => {
         setPollOptionList(data.standings);
         setVoteCount(data.voteCount);
     }, [data]);
+
+    const NavToParticipate = () => {
+        navigate("/joinedPolls");
+    }
 
     const ListElementMapper = () => {
         try {
@@ -64,10 +75,12 @@ const PollStandingsList = () => {
 
     return (
         <StandingsListContainer>
-            <p>Number of votes: {voteCount}</p>
+            <Title>Results</Title>
+            <p>Total number of votes: {voteCount}</p>
             <Scrollbar>
                 <ListElementMapper/>
             </Scrollbar>
+            <StandingsBackButton onClick={NavToParticipate}>Back</StandingsBackButton>
         </StandingsListContainer>
     )
 }

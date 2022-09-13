@@ -9,7 +9,14 @@ import {
     PollNameTag,
     EditButton,
     Scrollbar,
-    PollListContainer, BackToDash, ViewDetails, EditOptions, ButtonRow, ViewStandings
+    PollListContainer,
+    BackToDash,
+    ViewDetails,
+    EditOptions,
+    ButtonRow,
+    ViewStandings,
+    PollListElementContainer,
+    ScrolledDiv, ElementContainer
 } from "./PollListStyle";
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -58,20 +65,20 @@ const ParticipatedPollList = () => {
 
     function Poll(props) {
         return (
-            <PollListElement onClick={() => {
-                setHighlightedPoll(props.id);
-                setVotedOnHighlighted(props.voted)
-            }}
-                             style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
-                {props.title}
-            </PollListElement>
+                <PollListElement onClick={() => {
+                    setHighlightedPoll(props.id);
+                    setVotedOnHighlighted(props.voted)
+                }}
+                                 style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
+                    {props.title}
+                </PollListElement>
         )
     }
 
     return (
         <PollListContainer>
             <Scrollbar>
-                <PollListElements/>
+                    <PollListElements/>
             </Scrollbar>
             <ButtonRow>
                 <BackToDash onClick={NavToDash}>Back</BackToDash>

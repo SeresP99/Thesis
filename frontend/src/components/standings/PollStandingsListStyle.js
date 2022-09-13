@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import CustomScrollbars from "../global/Scrollbar";
 import ProgressBar from "@ramonak/react-progress-bar";
+import {BackButton} from "../styles/Button/BackButton"
+
 
 export const StandingsListContainer = styled.div`
   min-width: 270px;
@@ -10,6 +12,12 @@ export const StandingsListContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
   min-height: min-content;
+`;
+
+export const Title = styled.h1`
+  margin: 10px;
+  font-family: Courgette, sans-serif;
+  font-size: 50px
 `;
 
 export const Scrollbar = styled(CustomScrollbars)`
@@ -31,5 +39,11 @@ export const ElementContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   position: relative;
-  right: 11px;
+  right: 15px;
+`;
+
+export const StandingsBackButton = styled(BackButton)`
+  font-family: Courgette, sans-serif;
+  border-radius: 5px;
+  margin: 10px;
 `;

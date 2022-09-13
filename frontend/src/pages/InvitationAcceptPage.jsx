@@ -18,13 +18,15 @@ function InvitationAcceptPage() {
         if (request.userIsAuthor) {
             const pollId = request.poll.id;
             navigate("/profile/poll", {state: {pollId: pollId, selfInvite: true}})
-        }
-        else
-        setPoll(request.poll);
+        } else
+            setPoll(request.poll);
     }, [])
 
     const Join = async () => {
         const success = await RedeemInvitation(invitation);
+        if (success) {
+            navigate("/profile/poll/vote", {state: {pollId: poll.id}})
+        }
         console.log("success: " + success);
     }
 
@@ -53,7 +55,9 @@ function InvitationAcceptPage() {
                     <h2>Poll you're about to join:</h2>
                     <Title>{poll.title}</Title>
                     <p>{poll.description}</p>
-                    <JoinButton onClick={() => {Join()}}>Join</JoinButton>
+                    <JoinButton onClick={() => {
+                        Join()
+                    }}>Join</JoinButton>
                 </>
             );
     }

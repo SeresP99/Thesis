@@ -30,7 +30,7 @@ function InvitationPopup() {
     });
 
     useEffect(() => {
-        setInvLink("http://plummy.ddns.net:3000/invite/" + invitation);
+        setInvLink("http://pollscape.ddns.net:3000/invite/" + invitation);
     }, [invitation]);
 
     const Toast = () => {
