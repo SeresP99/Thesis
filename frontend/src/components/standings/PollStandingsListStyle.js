@@ -20,7 +20,7 @@ export const Title = styled.h1`
   font-size: 50px
 `;
 
-export const Scrollbar = styled(CustomScrollbars)`
+export const Scrollbar = styled.div`
   border-radius: 5px;
   height: 450px;
   overflow: auto;

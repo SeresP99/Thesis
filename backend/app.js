@@ -46,7 +46,19 @@ const indexRouter = require("./routes/indexRouter");
 app.use("/", indexRouter);
 
 const authRouter = require("./routes/authRouter");
-app.use("/auth", authRouter)
+app.use("/auth", authRouter);
+
+const pollRouter = require("./routes/pollRouter");
+app.use("/poll", pollRouter);
+
+const profileDataRouter = require("./routes/profileDataRouter");
+app.use("/profile", profileDataRouter);
+
+const voteOptionRouter = require("./routes/voteOptionRouter");
+app.use("/voteOptions", voteOptionRouter);
+
+const voteRouter = require("./routes/voteRouter");
+app.use("/vote", voteRouter);
 
 app.listen(process.env.PORT || 4000, () => {
     console.log("Server listening on port 4000.")
