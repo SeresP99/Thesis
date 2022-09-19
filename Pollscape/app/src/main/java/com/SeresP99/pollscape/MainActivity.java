@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     void PostLogin(String username, String password) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        String url = "http://plummy.ddns.net:4000/login";
+        String url = "http://pollscape.ddns.net:4000/login";
 
         JSONObject loginParams = new JSONObject();
         loginParams.put("username", username);
