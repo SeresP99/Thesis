@@ -2,7 +2,6 @@ package com.SeresP99.pollscape;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,14 +11,14 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
-        if (token != null)
-            JumpToDashBoard();
+
+        checkAuth(token);
     }
 
     public void buttonPress(View view) throws JSONException {
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     void PostLogin(String username, String password) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        String url = "http://pollscape.ddns.net:4000/login";
+        String url = "http://pollscape.ddns.net:4000/auth/login";
 
         JSONObject loginParams = new JSONObject();
         loginParams.put("username", username);
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     try {
                         if (response.getBoolean("auth")) {
-                            Toast.makeText(MainActivity.this, "You are now logged in.", Toast.LENGTH_LONG).show();
                             SaveToken(response.getString("token"));
                             JumpToDashBoard();
                         } else
@@ -83,10 +81,37 @@ public class MainActivity extends AppCompatActivity {
         myEdit.apply();
     }
 
-    void JumpToDashBoard(){
+    void JumpToDashBoard() {
         Intent intent = new Intent(this, Dashboard.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    private void checkAuth(String token) {
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+
+        String url = "http://pollscape.ddns.net:4000/auth/checkAuth";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        if (response.getBoolean("auth"))
+                            JumpToDashBoard();
+                    } catch (JSONException e) {
+                        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                },
+                error -> {
+                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("x-access-token", token);
+                return params;
+            }
+        };
+        queue.add(request);
     }
 
 }

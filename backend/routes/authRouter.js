@@ -7,7 +7,7 @@ const verifyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"];
     if (!token) {
         console.log("we got no token");
-        res.send("We need a token, please give it to us next time! - server");
+        res.json({auth: false, message: "We need a token, please give it to us next time! - server"});
     } else {
         jwt.verify(token, process.env.COOKIE_SECRET, (err, decoded) => {
             if (err) {
