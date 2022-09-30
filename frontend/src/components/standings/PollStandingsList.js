@@ -11,9 +11,9 @@ import {
     ListDiv,
     Title, StandingsBackButton
 } from "./PollStandingsListStyle";
-import {getStandings} from "../../assets/VoteOptionCrudRequests";
+import {getStandings} from "../../assets/PollCrudRequests";
 
-const PollStandingsList = () => {
+function PollStandingsList() {
 
     const navigate = useNavigate();
     const state = useLocation();
@@ -27,10 +27,14 @@ const PollStandingsList = () => {
         setData(await getStandings(pollId))
     }, []);
 
-    useEffect(() => {
-        setPollOptionList(data.standings);
-        setVoteCount(data.voteCount);
+    useEffect(async () => {
+        try {
+            setPollOptionList(data.standings.sort((a, b) => b.vote_count - a.vote_count));
+            setVoteCount(data.voteCount);
+        } catch (e) {
+        }
     }, [data]);
+
 
     const NavToParticipate = () => {
         navigate("/joinedPolls");
@@ -38,9 +42,8 @@ const PollStandingsList = () => {
 
     const ListElementMapper = () => {
         try {
-            setPollOptionList(pollOptionList.sort((a, b) => b.vote_count - a.vote_count));
             return (pollOptionList.map((poll) => <Poll key={poll.id} title={poll.title} voteCount={poll.vote_count}
-                                                       id={poll.id}/>));
+                                                       id={poll.id} />));
         } catch (e) {
             return null;
         }
@@ -50,7 +53,7 @@ const PollStandingsList = () => {
         const counter = props.voteCount / voteCount * 100;
 
         return (
-            <>
+            <div>
                 <ElementContainer>
                     <p style={{
                         position: 'relative',
@@ -69,7 +72,7 @@ const PollStandingsList = () => {
                         {props.title}
                     </MyProgressBar>
                 </ElementContainer>
-            </>
+            </div>
         )
     }
 

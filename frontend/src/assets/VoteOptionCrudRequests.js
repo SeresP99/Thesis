@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const backend = process.env.REACT_APP_SERVER;
+const backend = process.env.REACT_APP_SERVER + "/voteOptions";
 
 export function GetOptions(pollId) {
     return Axios.post(backend + "/getPollOptions", {"pollId": pollId}, {
@@ -43,10 +43,3 @@ export function UpdateOption(id, title, description) {
     })
 }
 
-export function getStandings(pollId) {
-    return Axios.post(backend + "/getStandings", {pollId}, {
-        headers: {"x-access-token": localStorage.getItem("token")}
-    }).then(res => {
-        return res.data;
-    })
-}

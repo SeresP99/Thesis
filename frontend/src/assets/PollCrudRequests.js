@@ -1,7 +1,7 @@
 import Axios from "axios";
 import axios from "axios";
 
-const backend = process.env.REACT_APP_SERVER;
+const backend = process.env.REACT_APP_SERVER + "/poll";
 
 export function PostCreatePoll(poll) {
     return Axios.post(backend + "/createPoll", poll, {
@@ -62,5 +62,13 @@ export function RedeemInvitation(invitation) {
         headers: {'x-access-token': localStorage.getItem("token")}
     }).then(res => {
         return res.data.success;
+    })
+}
+
+export function getStandings(pollId) {
+    return Axios.post(backend + "/getStandings", {pollId}, {
+        headers: {"x-access-token": localStorage.getItem("token")}
+    }).then(res => {
+        return res.data;
     })
 }
