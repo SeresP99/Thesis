@@ -58,9 +58,16 @@ public class Dashboard extends AppCompatActivity {
                 "Take part in polls and cast your vote!",
                 "Hope to see you again soon!"
         };
+        String[] urls = new String[]{
+                "http://pollscape.ddns.net:3000" + "/create",
+                "http://pollscape.ddns.net:3000" + "/createdPolls",
+                "http://pollscape.ddns.net:3000" + "/joinedPolls",
+                "http://pollscape.ddns.net:3000" + "/profile",
+                "http://pollscape.ddns.net:3000"
+        };
 
         for (int i = 0; i < titles.length; i++) {
-            dashboardButtonModels.add(new DashboardButtonModel(titles[i], descriptions[i]));
+            dashboardButtonModels.add(new DashboardButtonModel(titles[i], descriptions[i], urls[i]));
         }
     }
 

@@ -1,6 +1,7 @@
 package com.SeresP99.pollscape.recycleViews.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SeresP99.pollscape.ParticipatedPollList;
 import com.SeresP99.pollscape.R;
 import com.SeresP99.pollscape.recycleViews.models.DashboardButtonModel;
+import com.SeresP99.pollscape.webViewActivity;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,8 @@ public class DashboardButton_RecyclerViewAdapter extends RecyclerView.Adapter<Da
     public void onBindViewHolder(@NonNull DashboardButton_RecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.title.setText(dashboardButtonModels.get(position).getTitle());
         holder.description.setText(dashboardButtonModels.get(position).getDescription());
+        holder.url = dashboardButtonModels.get(position).getUrl();
+        holder.context = context;
     }
 
     @Override
@@ -48,6 +53,8 @@ public class DashboardButton_RecyclerViewAdapter extends RecyclerView.Adapter<Da
 
         TextView title;
         TextView description;
+        String url;
+        Context context;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,7 +65,10 @@ public class DashboardButton_RecyclerViewAdapter extends RecyclerView.Adapter<Da
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), title.getText(), Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(context, webViewActivity.class);
+                    intent.putExtra("URL", url);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 }
             });
         }
