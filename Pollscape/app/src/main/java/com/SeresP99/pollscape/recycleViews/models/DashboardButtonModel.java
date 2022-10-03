@@ -1,4 +1,4 @@
-package com.SeresP99.pollscape;
+package com.SeresP99.pollscape.recycleViews.models;
 
 public class DashboardButtonModel {
     public String getTitle() {

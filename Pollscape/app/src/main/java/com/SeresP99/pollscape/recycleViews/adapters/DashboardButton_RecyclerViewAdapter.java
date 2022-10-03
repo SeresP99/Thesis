@@ -1,4 +1,4 @@
-package com.SeresP99.pollscape;
+package com.SeresP99.pollscape.recycleViews.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.SeresP99.pollscape.R;
+import com.SeresP99.pollscape.recycleViews.models.DashboardButtonModel;
 
 import java.util.ArrayList;
 
