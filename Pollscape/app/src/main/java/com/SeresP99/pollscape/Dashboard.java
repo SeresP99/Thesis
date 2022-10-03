@@ -1,6 +1,8 @@
 package com.SeresP99.pollscape;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,14 +16,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Dashboard extends AppCompatActivity {
+
+    ArrayList<DashboardButtonModel> dashboardButtonModels = new ArrayList<DashboardButtonModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,27 @@ public class Dashboard extends AppCompatActivity {
         TextView tokenLbl = (TextView) findViewById(R.id.tokenLabel);
         tokenLbl.setText(token);
         //Toast.makeText(Dashboard.this, token, Toast.LENGTH_LONG).show();
+
+        RecyclerView recyclerView = findViewById(R.id.recycleView);
+        setUpDashboard();
+        DashboardButton_RecyclerViewAdapter adapter = new DashboardButton_RecyclerViewAdapter(this, dashboardButtonModels);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setUpDashboard() {
+        String[] titles = new String[]{"Create", "My Own", "Participate", "Profile", "Logout"};
+        String[] descriptions = new String[]{
+                "Create your own polls and invite others to participate!",
+                "Check how your polls are standing or edit them!",
+                "Look over your profile details!",
+                "Take part in polls and cast your vote!",
+                "Hope to see you again soon!"
+        };
+
+        for (int i = 0; i < titles.length; i++) {
+            dashboardButtonModels.add(new DashboardButtonModel(titles[i], descriptions[i]));
+        }
     }
 
     private void JumpToLogin() {
@@ -50,13 +74,13 @@ public class Dashboard extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void logOut(View view){
+    public void logOut(View view) {
         RemoveToken();
-       JumpToLogin();
+        JumpToLogin();
 
     }
 
-    private void RemoveToken(){
+    private void RemoveToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
