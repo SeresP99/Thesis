@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,6 +51,13 @@ public class DashboardButton_RecyclerViewAdapter extends RecyclerView.Adapter<Da
 
             title = itemView.findViewById(R.id.cardTitle);
             description = itemView.findViewById(R.id.cardDesc);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), title.getText(), Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }
