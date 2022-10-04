@@ -26,7 +26,7 @@ function Dashboard() {
     };
 
     const NavToParticipate = () => {
-      navigate("/joinedPolls");
+        navigate("/joinedPolls");
     };
 
     const Logout = async () => {
@@ -41,6 +41,10 @@ function Dashboard() {
         }, 2000);
         return () => clearInterval(interval);
     }, [])
+
+    console.log("checking platform");
+    if(localStorage.getItem("platform") === "android")
+        return null;
 
     return (
         <BasicPage>
