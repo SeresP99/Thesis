@@ -39,6 +39,7 @@ const ParticipatedPollList = () => {
     }
 
     function NavToVote(key) {
+        console.log("pollId:" + key);
         navigate("/profile/poll/vote", {state: {pollId: key}})
     }
 
@@ -82,10 +83,10 @@ const ParticipatedPollList = () => {
             </Scrollbar>
             <ButtonRow>
                 <BackToDash onClick={NavToDash}>Back</BackToDash>
-                <ViewDetails disabled={votedOnHighlighted} onClick={() => NavToVote(highlightedPoll)}>Vote</ViewDetails>
+                <ViewDetails disabled={votedOnHighlighted || !highlightedPoll} onClick={() => NavToVote(highlightedPoll)}>Vote</ViewDetails>
             </ButtonRow>
             <ButtonRow>
-                <ViewStandings onClick={() => NavToStandings(highlightedPoll)}>View Standings</ViewStandings>
+                <ViewStandings disabled={!highlightedPoll} onClick={() => NavToStandings(highlightedPoll)}>View Standings</ViewStandings>
             </ButtonRow>
             <p style={{visibility: votedOnHighlighted ? "visible" : "hidden", color: "rgba(255,0,0,0.84)"}}>You already
                 voted within this topic!</p>

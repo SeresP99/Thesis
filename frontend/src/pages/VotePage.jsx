@@ -57,6 +57,9 @@ function VotePage() {
         )
     }
 
+    if(localStorage.getItem('platform') === "android")
+        return null;
+
     return (
         <Page>
             <ContentPanel>
