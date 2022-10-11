@@ -3,6 +3,7 @@ package com.SeresP99.pollscape;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,7 +15,10 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
 import android.webkit.RenderProcessGoneDetail;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 public class webViewActivity extends AppCompatActivity {
 
     WebView webView;
+    Integer highlightedOption;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -36,12 +41,21 @@ public class webViewActivity extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.webview);
         webView.setBackgroundColor(Color.BLACK);
-        webView.setOnClickListener(new View.OnClickListener() {
+
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
-            public void onClick(View view) {
-                Log.i("", "CLICK");
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                String[] message = consoleMessage.message().split(":");
+                Log.i("POLL ID", consoleMessage.toString());
+                if (message[0].equals("pollId"))
+                    try {
+                        highlightedOption = Integer.parseInt(message[1]);
+                    } catch (Exception ignored) {
+                    }
+                return super.onConsoleMessage(consoleMessage);
             }
         });
+
         webView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView webView, String url) {
                 setLocalStorageToken(token);
@@ -53,6 +67,10 @@ public class webViewActivity extends AppCompatActivity {
                 if (currentMenu.equals("dashboard")) {
                     view.loadUrl("");
                     backToDash();
+                }
+                if (currentMenu.equals("vote")) {
+                    goToVote();
+                    view.loadUrl("http://pollscape.ddns.net:3000/joinedPolls");
                 }
             }
 
@@ -69,11 +87,19 @@ public class webViewActivity extends AppCompatActivity {
         return uriElements[uriElements.length - 1];
     }
 
+    private void goToVote() {
+        if (highlightedOption != null) {
+            Intent intent = new Intent(this, VoteActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("POLL_ID", highlightedOption);
+            startActivity(intent);
+        }
+    }
+
     private void backToDash() {
         Intent intent = new Intent(this, Dashboard.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
     }
 
     private void setLocalStorageToken(String token) {
@@ -82,6 +108,10 @@ public class webViewActivity extends AppCompatActivity {
         //localStorage.setItem("token", res.data.token);
         webView.evaluateJavascript(setLocalStorageToken, null);
         webView.evaluateJavascript(setLocalStoragePlatform, null);
+    }
+
+    private void Toast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     private void fadeIn(WebView webView) {
