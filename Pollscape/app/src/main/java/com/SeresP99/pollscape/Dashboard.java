@@ -38,9 +38,6 @@ public class Dashboard extends AppCompatActivity {
 
         checkAuth(token);
 
-        TextView tokenLbl = (TextView) findViewById(R.id.tokenLabel);
-        tokenLbl.setText(token);
-        //Toast.makeText(Dashboard.this, token, Toast.LENGTH_LONG).show();
 
         RecyclerView recyclerView = findViewById(R.id.recycleView);
         setUpDashboard();
