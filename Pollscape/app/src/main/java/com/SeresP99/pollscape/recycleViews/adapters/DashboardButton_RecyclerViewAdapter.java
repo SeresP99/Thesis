@@ -72,5 +72,20 @@ public class DashboardButton_RecyclerViewAdapter extends RecyclerView.Adapter<Da
                 }
             });
         }
+
+//        public MyViewHolder(@NonNull View itemView, boolean isVoteButton){
+//            super(itemView);
+//
+//            title = itemView.findViewById(R.id.cardTitle);
+//            description = itemView.findViewById(R.id.cardDesc);
+//
+//            itemView.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
+//        }
+//
     }
 }
