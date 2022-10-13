@@ -21,6 +21,9 @@
             android:name=".VoteActivity"
             android:exported="false" />
         <activity
+            android:name=".VoteOptionListActivity"
+            android:exported="false" />
+        <activity
             android:name=".webViewActivity"
             android:exported="false" />
         <activity

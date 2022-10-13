@@ -5,6 +5,8 @@ public class VoteOptionModel {
     String title;
     String description;
     int id;
+    int pollId;
+    boolean requiresFingerprint;
 
     public String getTitle() {
         return title;
@@ -18,9 +20,19 @@ public class VoteOptionModel {
         return id;
     }
 
-    public VoteOptionModel(String title, String description, int id) {
+    public int getPollId() {
+        return pollId;
+    }
+
+    public boolean getIsFingerprintRequired() {
+        return requiresFingerprint;
+    }
+
+    public VoteOptionModel(String title, String description, int id, int pollId, boolean requiresFingerprint) {
         this.title = title;
         this.description = description;
         this.id = id;
+        this.pollId = pollId;
+        this.requiresFingerprint = requiresFingerprint;
     }
 }

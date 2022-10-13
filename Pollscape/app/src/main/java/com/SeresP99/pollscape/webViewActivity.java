@@ -3,24 +3,15 @@ package com.SeresP99.pollscape;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
-import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -89,7 +80,7 @@ public class webViewActivity extends AppCompatActivity {
 
     private void goToVote() {
         if (highlightedOption != null) {
-            Intent intent = new Intent(this, VoteActivity.class);
+            Intent intent = new Intent(this, VoteOptionListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("POLL_ID", highlightedOption);
             startActivity(intent);

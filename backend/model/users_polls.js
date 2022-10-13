@@ -30,8 +30,9 @@ class users_polls_model {
     }
 
     static async createPoll(poll, authorId) {
+        console.log(poll)
         const query = await pool.query(
-            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date) VALUES ($1, $2, $3, $4, $5) RETURNING id", [poll.title, poll.description, authorId, poll.startDate, poll.endDate]
+            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date, requires_fingerprint) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id", [poll.title, poll.description, authorId, poll.startDate, poll.endDate, poll.verifiedOnly]
         )
         return query.rows[0];
     }
