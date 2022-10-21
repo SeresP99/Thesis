@@ -68,13 +68,12 @@ public class VoteOption_RecyclerViewAdapter extends RecyclerView.Adapter<VoteOpt
                 @Override
                 public void onClick(View view) {
                     if (fingerprintRequired) {
-                        FingerprintAuthenticator fingerprintAuthenticator = new FingerprintAuthenticator(context, pollId);
+                        FingerprintAuthenticator fingerprintAuthenticator = new FingerprintAuthenticator(context, pollId, id);
                         fingerprintAuthenticator.authenticate();
-                    }
-
-                    else {
+                    } else {
                         Intent intent = new Intent(context, VoteActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("VOTE_OPTION_ID", id);
                         intent.putExtra("POLL_ID", pollId);
                         context.startActivity(intent);
                     }

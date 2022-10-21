@@ -21,14 +21,16 @@ public class FingerprintAuthenticator {
 
     boolean AuthSuccess;
     int pollId;
+    int voteOptionId;
 
     public boolean isAuthSuccess() {
         return AuthSuccess;
     }
 
-    public FingerprintAuthenticator(Context context, int pollId) {
+    public FingerprintAuthenticator(Context context, int pollId, int voteOptionId) {
         this.context = context;
         this.pollId = pollId;
+        this.voteOptionId = voteOptionId;
     }
 
     public void authenticate(){
@@ -69,6 +71,7 @@ public class FingerprintAuthenticator {
                 Intent intent = new Intent(context, VoteActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("FINGERPRINT_AUTH_KEY","d1pqDLXYgkOmLcR7OJGjV8KmWu0ExSQOBI1aJvFEYy2W6NRWQ8");
+                intent.putExtra("VOTE_OPTION_ID", voteOptionId);
                 intent.putExtra("POLL_ID", pollId);
                 context.startActivity(intent);
             }
@@ -84,7 +87,6 @@ public class FingerprintAuthenticator {
                 .setTitle("Vote Authentication")
                 .setDescription("Use your fingerprint before voting.")
                 .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
-                .setDeviceCredentialAllowed(false)
                 .setNegativeButtonText("Cancel")
                 .build();
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.SeresP99.pollscape.recycleViews.adapters.VoteOption_RecyclerViewAdapter;
 import com.SeresP99.pollscape.recycleViews.models.VoteOptionModel;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -43,6 +44,7 @@ public class VoteOptionListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         PollId = intent.getIntExtra("POLL_ID", -1);
+        Log.i("POLL_ID", PollId.toString());
 
         try {
             getPollDetails();
@@ -57,6 +59,49 @@ public class VoteOptionListActivity extends AppCompatActivity {
         adapter = new VoteOption_RecyclerViewAdapter(this, voteOptionModels);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url = "http://pollscape.ddns.net:4000/vote/checkAlreadyVoted";
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put("pollId", PollId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("POLL_ID", requestJson.toString());
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, requestJson,
+                response -> {
+                    try {
+                        if (response.getString("alreadyVoted").equals("true")) {
+                            Toast.makeText(this, "Has already voted.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else
+                            Toast.makeText(this, "Hasn't voted yet.", Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                },
+                error -> {
+                    Log.e("CHECK", error.toString());
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("x-access-token", token);
+                return params;
+            }
+        };
+        queue.add(request);
     }
 
     private void updateRecyclerView() {
@@ -74,13 +119,12 @@ public class VoteOptionListActivity extends AppCompatActivity {
         pollId.put("pollId", Integer.toString(PollId));
 
         TextView titleTextView = findViewById(R.id.titleTextView);
-        
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, pollId,
                 response -> {
                     try {
                         JSONObject pollDetails = response.getJSONObject("pollDetails");
                         Title = pollDetails.getString("title");
-                        Toast.makeText(this, "Title", Toast.LENGTH_SHORT).show();
                         titleTextView.setText(Title);
                         requiresFingerprint = pollDetails.getString("requires_fingerprint").equals("true");
                         getVoteOptions();

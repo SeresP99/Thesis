@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -21,6 +22,7 @@ public class webViewActivity extends AppCompatActivity {
 
     WebView webView;
     Integer highlightedOption;
+    boolean firstTimeLoad;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -28,6 +30,7 @@ public class webViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
+        firstTimeLoad = true;
         String token = getSharedPreferences("MySharedPref", MODE_PRIVATE).getString("token", null);
 
         webView = (WebView) findViewById(R.id.webview);
@@ -50,7 +53,10 @@ public class webViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView webView, String url) {
                 setLocalStorageToken(token);
-                fadeIn(webView);
+                if (firstTimeLoad) {
+                    fadeIn(webView);
+                    firstTimeLoad = false;
+                }
             }
 
             public void onLoadResource(WebView view, String url) {
@@ -60,6 +66,7 @@ public class webViewActivity extends AppCompatActivity {
                     backToDash();
                 }
                 if (currentMenu.equals("vote")) {
+                    view.setVisibility(View.GONE);
                     goToVote();
                     view.loadUrl("http://pollscape.ddns.net:3000/joinedPolls");
                 }
@@ -71,6 +78,13 @@ public class webViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webView.loadUrl(getIntent().getStringExtra("URL"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.reload();
+        webView.setVisibility(View.VISIBLE);
     }
 
     private String getEndpointFromUrl(String url) {
@@ -101,26 +115,10 @@ public class webViewActivity extends AppCompatActivity {
         webView.evaluateJavascript(setLocalStoragePlatform, null);
     }
 
-    private void Toast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
     private void fadeIn(WebView webView) {
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new AccelerateInterpolator());
         fadeIn.setDuration(1000);
-
-        fadeIn.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationEnd(Animation animation) {
-                //imageView.setVisibility(View.GONE);
-            }
-
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            public void onAnimationStart(Animation animation) {
-            }
-        });
 
         webView.startAnimation(fadeIn);
     }
