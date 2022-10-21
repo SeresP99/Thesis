@@ -76,6 +76,13 @@ class users_polls_model {
         return insertParticipation.rows[0];
     };
 
+    static async getPollOption(optionId){
+        const query = await pool.query(
+            "SELECT * FROM poll_options WHERE id = $1", [optionId]
+        );
+        return query.rows[0];
+    }
+
     static async getPollOptions(pollId) {
         const query = await pool.query(
             "SELECT * FROM public.poll_options WHERE poll_id = $1", [pollId]

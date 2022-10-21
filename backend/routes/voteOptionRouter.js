@@ -21,6 +21,12 @@ const verifyJWT = (req, res, next) => {
     }
 }
 
+router.post("/getPollOption", verifyJWT, async (req, res) => {
+    const pollOptionId = req.body.optionId;
+    const option = await users_polls_model.getPollOption(pollOptionId);
+    res.json({auth: true, option})
+})
+
 router.post("/getPollOptions", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
     const options = await users_polls_model.getPollOptions(pollId);
