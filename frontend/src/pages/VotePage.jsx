@@ -16,15 +16,18 @@ function VotePage() {
 
     const [optionList, setOptionList] = useState([]);
     const [selectedOption, setSelectedOption] = useState();
+    const [errorText, setErrorText] = useState("");
 
     const GetVoteOptions = async () => {
         setOptionList(await GetOptions(pollId));
     };
 
     const CastVote = async () => {
-        const success = await Vote(selectedOption, pollId);
-         if(success)
-             navigate("/participate/standings", {state: {pollId : pollId}})
+        const voteRequest = await Vote(selectedOption, pollId);
+        if (voteRequest.success)
+            navigate("/participate/standings", {state: {pollId: pollId}})
+        else
+            setErrorText(voteRequest.message);
     };
 
     useEffect(() => {
@@ -57,7 +60,7 @@ function VotePage() {
         )
     }
 
-    if(localStorage.getItem('platform') === "android")
+    if (localStorage.getItem('platform') === "android")
         return null;
 
     return (
@@ -71,6 +74,8 @@ function VotePage() {
                 </CustomScrollbars>
                 <ButtonRow>
                     <LockInButton onClick={CastVote} disabled={!selectedOption}>Lock In</LockInButton>
+                    <br/>
+                    <p>{errorText}</p>
                 </ButtonRow>
             </ContentPanel>
         </Page>

@@ -8,6 +8,6 @@ export function Vote(pollOptionId, pollId) {
             headers: {"x-access-token": localStorage.getItem("token")},
         })
         .then(res => {
-            return res.data.success;
+            return res.data;
         })
 }

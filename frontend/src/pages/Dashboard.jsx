@@ -42,7 +42,6 @@ function Dashboard() {
         return () => clearInterval(interval);
     }, [])
 
-    console.log("checking platform");
     if(localStorage.getItem("platform") === "android")
         return null;
 
