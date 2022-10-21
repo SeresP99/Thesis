@@ -111,6 +111,7 @@ class users_polls_model {
         const query = await pool.query(
             "SELECT has_voted FROM participants_polls_relationship WHERE user_id = $1 AND poll_id = $2", [userId, pollId]
         )
+        console.log(query.rows);
         return query.rows[0].has_voted;
     }
 
@@ -141,6 +142,14 @@ class users_polls_model {
         return query.rows.length;
     }
 
+    static async checkVerificationRequired(pollId) {
+        const query = await pool.query(
+            "SELECT requires_fingerprint FROM polls WHERE polls.id = $1", [pollId]
+        );
+        return query.rows[0].requires_fingerprint;
+    }
 }
+
+
 
 module.exports = users_polls_model;
