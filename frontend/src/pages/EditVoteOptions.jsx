@@ -45,8 +45,8 @@ function EditVoteOptions() {
         )
     }
 
-    const NavToDash = () => {
-        navigate("/dashboard");
+    const NavToCreatedPolls = () => {
+        navigate("/createdPolls");
     }
 
     return (
@@ -61,7 +61,7 @@ function EditVoteOptions() {
                     </Scrollbar>
                 </OptionListContainer>
                 <ButtonRow>
-                    <BackFromEditingButton onClick={NavToDash}>Back</BackFromEditingButton>
+                    <BackFromEditingButton onClick={NavToCreatedPolls}>Back</BackFromEditingButton>
                     <CreatePopup/>
                 </ButtonRow>
 

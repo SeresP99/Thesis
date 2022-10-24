@@ -6,12 +6,13 @@ export const BasicPage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 export const BasicContentCard = styled.div`
   background-color: ${({theme}) => theme.elevation_1};
   border-radius: 5px;
-  min-height: 500px;
+  min-height: 600px;
   height: min-content + 3%;
   width: 90%;
   min-width: 250px;

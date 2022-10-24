@@ -15,12 +15,13 @@ function PollDetails() {
 
     const state = useLocation();
     const {pollId} = state.state;
-    const {selfInvite} = true;
+    const {selfInvite} = state.state;
 
     const [pollDetails, setPollDetails] = useState({});
 
     useEffect(() => {
-       toast.error("Sorry, you can't invite yourself.")
+        if (selfInvite)
+            toast.error("Sorry, you can't invite yourself.")
     }, []);
 
     useEffect(async () => {
@@ -77,7 +78,7 @@ function PollDetails() {
 
                     </DataGrid>
                 </BasicContentCard>
-                <ToastContainer theme={"dark"}/>
+                <ToastContainer theme={"dark"} position={toast.POSITION.TOP_CENTER}/>
             </BasicPage>
 
         )

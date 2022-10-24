@@ -4,18 +4,42 @@ import {BackButton} from "../styles/Button/BackButton";
 import CustomScrollbars from "../global/Scrollbar";
 
 export const PollListContainer = styled.div`
+  min-width: 270px;
   width: 80%;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
-export const Scrollbar = styled(CustomScrollbars)`
+export const ScrolledDiv = styled.div`
+  position: relative;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: min-content;
+`;
+
+export const Scrollbar = styled.div`
+  background-color: ${({theme}) => theme.elevation_2};
   border-radius: 5px;
-  height: 350px;
+  height: 400px;
   width: 100%;
+  overflow: auto;
+`;
+
+export const ElementContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
 `;
 
 export const PollListElement = styled.div`
-  position: relative;
-  right: 10px;
   width: 93%;
   height: 45px;
   font-size: 20px;
@@ -23,7 +47,8 @@ export const PollListElement = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-top: 7px;
+  margin-bottom: 7px;
   padding: 5px;
   border-radius: 5px;
 `
@@ -43,6 +68,7 @@ export const PollButtonPanel = styled.div`
 export const ButtonRow = styled.div`
   display: flex;
   height: 80px;
+  width: 100%;
   margin-top: 10px;
 `;
 
@@ -52,7 +78,7 @@ export const BackToDash = styled(BackButton)`
   height: 80px;
   border-radius: 5px;
   flex: 1;
-  margin-left: -2px;
+  margin-left: 0.5%;
   margin-right: 0.5%;
 `;
 
@@ -66,11 +92,20 @@ export const ViewDetails = styled(Button)`
   flex: 1;
   margin-left: 0.5%;
   margin-right: 0.5%;
+
+  &:disabled {
+    background-color: rgba(56, 56, 56, 0.35);
+    color: rgba(162, 162, 162, 0.66);
+  }
+`;
+
+export const ViewStandings = styled(ViewDetails)`
+  font-size: 35px;
 `;
 
 export const EditOptions = styled(Button)`
   margin-left: 0.5%;
-  margin-right: -2px;
+  margin-right: 0.5%;
   font-family: Courgette, sans-serif;
   height: 80px;
   font-size: 25px;

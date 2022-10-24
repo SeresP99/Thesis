@@ -11,7 +11,7 @@ export const TakeToLogin = styled(Button)`
 
 export const BackToDashBoard = styled(TakeToLogin)``;
 
-export const Join = styled(TakeToLogin)`
+export const JoinButton = styled(TakeToLogin)`
     font-size: 70px;
   height: fit-content;
   padding: 10px;

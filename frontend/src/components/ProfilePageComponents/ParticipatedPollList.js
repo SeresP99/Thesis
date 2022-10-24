@@ -2,60 +2,95 @@ import React, {useEffect, useState} from 'react';
 import ScrollableList from 'react-scrollable-list';
 import {Scrollbars} from "react-custom-scrollbars-2";
 import CustomScrollbars from "../global/Scrollbar";
-import {ViewPollButton, PollListElement, PollButtonPanel, PollNameTag, EditButton} from "./PollListStyle";
+import {
+    ViewPollButton,
+    PollListElement,
+    PollButtonPanel,
+    PollNameTag,
+    EditButton,
+    Scrollbar,
+    PollListContainer,
+    BackToDash,
+    ViewDetails,
+    EditOptions,
+    ButtonRow,
+    ViewStandings,
+    PollListElementContainer,
+    ScrolledDiv, ElementContainer
+} from "./PollListStyle";
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {GetAllParticipatingPolls} from "../../assets/PollCrudRequests";
 
 const ParticipatedPollList = () => {
 
     const navigate = useNavigate();
 
-    const [pollList, setPollList] = useState([]);
+    const [pollList, setPollList] = useState({});
+    const [highlightedPoll, setHighlightedPoll] = useState();
+    const [votedOnHighlighted, setVotedOnHighlighted] = useState(false);
 
-    const getPollList = () => {
-        Axios.get("http://localhost:4000/getParticipatingPolls", {
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-            }
-        }).then(
-            res => {
-                setPollList(res.data.polls);
-            })
-    }
-
-
-
-    function goToVote(key){
+    function goToVote(key) {
         navigate("/profile/poll/vote", {state: {pollId: key}});
     }
 
-    function goToPollDetails(key) {
-        navigate("/profile/poll", {state: {pollId: key}})
+    const NavToDash = () => {
+        navigate('/dashboard');
     }
 
-    useEffect(() => {
-        getPollList();
+    function NavToVote(key) {
+        console.log("pollId:" + key);
+        navigate("/profile/poll/vote", {state: {pollId: key}})
+    }
+
+    function NavToStandings(key) {
+        navigate("/participate/standings", {state: {pollId: key}})
+    }
+
+    useEffect(async () => {
+        setPollList(await GetAllParticipatingPolls());
     }, [])
 
+    useEffect(() => {
+        console.log(pollList);
+    }, [pollList])
 
-    function Poll(props) {
-        return <PollListElement>
-            <PollNameTag>{props.title}</PollNameTag>
-            <PollButtonPanel>
-                <ViewPollButton onClick={() => goToVote(props.id)}>Vote</ViewPollButton>
-            </PollButtonPanel>
-        </PollListElement>
+    const PollListElements = () => {
+        try {
+            return pollList.map((poll) => <Poll key={poll.poll_id} title={poll.title} voted={poll.has_voted}
+                                                id={poll.poll_id}/>)
+        } catch (e) {
+            return null;
+        }
     }
 
-    //const mainList = PollList.map(poll => <p>{poll}</p>);
-
+    function Poll(props) {
+        return (
+                <PollListElement onClick={() => {
+                    setHighlightedPoll(props.id);
+                    setVotedOnHighlighted(props.voted)
+                }}
+                                 style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
+                    {props.title}
+                </PollListElement>
+        )
+    }
 
     return (
-        <div style={{width: '80%'}}>
-            <CustomScrollbars style={{borderRadius: '5px', height: 300}}>
-                {pollList.map((poll) => <Poll key={poll.poll_id} title={poll.title} id={poll.poll_id}/>)}
-            </CustomScrollbars>
-        </div>
+        <PollListContainer>
+            <Scrollbar>
+                    <PollListElements/>
+            </Scrollbar>
+            <ButtonRow>
+                <BackToDash onClick={NavToDash}>Back</BackToDash>
+                <ViewDetails disabled={votedOnHighlighted || !highlightedPoll} onClick={() => NavToVote(highlightedPoll)}>Vote</ViewDetails>
+            </ButtonRow>
+            <ButtonRow>
+                <ViewStandings disabled={!highlightedPoll} onClick={() => NavToStandings(highlightedPoll)}>View Standings</ViewStandings>
+            </ButtonRow>
+            <p style={{visibility: votedOnHighlighted ? "visible" : "hidden", color: "rgba(255,0,0,0.84)"}}>You already
+                voted within this topic!</p>
+        </PollListContainer>
     )
 }
 

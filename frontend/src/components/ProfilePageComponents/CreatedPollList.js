@@ -3,7 +3,7 @@ import CustomScrollbars from "../global/Scrollbar";
 import {
     PollListElement,
     ViewDetails,
-    BackToDash, ButtonRow, Scrollbar, PollListContainer, EditOptions
+    BackToDash, ButtonRow, Scrollbar, PollListContainer, EditOptions, ScrolledDiv, ElementContainer
 } from "./PollListStyle";
 import {useNavigate} from "react-router-dom";
 import {GetAllCreatedPolls} from "../../assets/PollCrudRequests";
@@ -32,6 +32,10 @@ const CreatedPollList = () => {
         navigate('/dashboard');
     }
 
+    function NavToStandings(key) {
+        navigate("/participate/standings", {state: {pollId: key}})
+    }
+
     const PollListElements = () => {
         try {
             return (pollList.map((poll) => <Poll key={poll.id} title={poll.title} id={poll.id}/>));
@@ -42,10 +46,12 @@ const CreatedPollList = () => {
 
     function Poll(props) {
         return (
-            <PollListElement onClick={() => setHighlightedPoll(props.id)}
-                             style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
-                {props.title}
-            </PollListElement>
+            <ElementContainer>
+                <PollListElement onClick={() => setHighlightedPoll(props.id)}
+                                 style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
+                    {props.title}
+                </PollListElement>
+            </ElementContainer>
         )
     }
 
@@ -57,8 +63,10 @@ const CreatedPollList = () => {
             <ButtonRow>
                 <BackToDash onClick={NavToDash}>Back</BackToDash>
                 <ViewDetails onClick={() => goToPollDetails(highlightedPoll)}>View</ViewDetails>
-                <EditOptions onClick={()=>goToVoteOptionsEditor(highlightedPoll)}>Edit Options</EditOptions>
+                <EditOptions onClick={() => goToVoteOptionsEditor(highlightedPoll)}>Edit Options</EditOptions>
             </ButtonRow>
+            <ViewDetails style={{width: '100%', margin: '10px'}} onClick={() => NavToStandings(highlightedPoll)}>View
+                Standings</ViewDetails>
         </PollListContainer>
     )
 }

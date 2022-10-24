@@ -1,6 +1,7 @@
 import Axios from "axios";
+import axios from "axios";
 
-const backend = process.env.REACT_APP_SERVER;
+const backend = process.env.REACT_APP_SERVER + "/poll";
 
 export function PostCreatePoll(poll) {
     return Axios.post(backend + "/createPoll", poll, {
@@ -20,6 +21,12 @@ export function GetAllCreatedPolls() {
     }).then(res => {
         return res.data.polls;
     })
+}
+
+export function GetAllParticipatingPolls() {
+    return Axios.get(backend + "/getParticipatingPolls", {
+        headers: {'x-access-token': localStorage.getItem("token")}
+    }).then(res => {return res.data.polls})
 }
 
 export function GetPollDetails(pollId) {
@@ -46,7 +53,7 @@ export function GetPollFromInvitation(invitation) {
     return Axios.post(backend + "/getPollFromInvitation", {invitation}, {
         headers: {'x-access-token': localStorage.getItem("token")}
     }).then(res => {
-        return {poll: res.data.poll, userIsAuthor: res.data.userIsAuthor} ;
+        return {poll: res.data.poll, userIsAuthor: res.data.userIsAuthor};
     })
 }
 
@@ -55,5 +62,13 @@ export function RedeemInvitation(invitation) {
         headers: {'x-access-token': localStorage.getItem("token")}
     }).then(res => {
         return res.data.success;
+    })
+}
+
+export function getStandings(pollId) {
+    return Axios.post(backend + "/getStandings", {pollId}, {
+        headers: {"x-access-token": localStorage.getItem("token")}
+    }).then(res => {
+        return res.data;
     })
 }

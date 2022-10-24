@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const backend = process.env.REACT_APP_SERVER;
+const backend = process.env.REACT_APP_SERVER + "/profile";
 
 export function getAllUserData() {
     return Axios.get(backend+ "/getUserProfile", {

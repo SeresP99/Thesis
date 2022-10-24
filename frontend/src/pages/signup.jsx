@@ -1,7 +1,14 @@
 import React, {useState} from "react";
-import StyledSignup, {SignupButton, TextInput, StyledForm, ElevatedDiv, TakeToLoginButton} from "../components/styles/Signup.styled"
+import StyledSignup, {
+    SignupButton,
+    TextInput,
+    StyledForm,
+    ElevatedDiv,
+    TakeToLoginButton
+} from "../components/styles/Signup.styled"
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {SignUp} from "../assets/SignupRequests";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -12,23 +19,15 @@ const Signup = () => {
         password: ""
     });
 
-    const CreateAccount = (e) => {
+    const CreateAccount = async (e) => {
         e.preventDefault();
 
-        Axios.post("http://localhost:4000/register", {
-            email: data.email,
-            username: data.username,
-            password: data.password
-        }).then(
-            res => {
-                console.log(res.data);
-                if (res.data.success === true)
-                    navigate("/login");
-                else
-                    alert(res.data.message);
-            }
-        )
-    };
+        const signupSuccess = await SignUp(data.email, data.username, data.password);
+        if (signupSuccess === true)
+            navigate("/login");
+        else
+            alert("Error creating account.");
+    }
 
     function handleChange(e) {
         const newData = {...data};
@@ -36,7 +35,7 @@ const Signup = () => {
         setData(newData);
     }
 
-    function takeToLogin(){
+    function takeToLogin() {
         navigate("/")
     }
 

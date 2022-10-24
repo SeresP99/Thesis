@@ -9,8 +9,8 @@ class users_polls_model {
 
     static async getParticipatingPolls(userId) {
         const query = await pool.query(
-            "SELECT users.username as participant, polls.title, polls.id as poll_id FROM users JOIN participants_polls_relationship ON users.id = participants_polls_relationship.user_id JOIN polls ON participants_polls_relationship.poll_id = polls.id WHERE user_id = $1",
-            [userId])
+            "SELECT polls.title, participants_polls_relationship.poll_id, participants_polls_relationship.has_voted FROM participants_polls_relationship JOIN polls ON participants_polls_relationship.poll_id = polls.id WHERE user_id = $1",
+            [userId]);
         return query.rows;
     }
 
@@ -30,8 +30,9 @@ class users_polls_model {
     }
 
     static async createPoll(poll, authorId) {
+        console.log(poll)
         const query = await pool.query(
-            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date) VALUES ($1, $2, $3, $4, $5) RETURNING id", [poll.title, poll.description, authorId, poll.startDate, poll.endDate]
+            "INSERT INTO public.polls (title, description, author_id, opening_date, closure_date, requires_fingerprint) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id", [poll.title, poll.description, authorId, poll.startDate, poll.endDate, poll.verifiedOnly]
         )
         return query.rows[0];
     }
@@ -40,7 +41,7 @@ class users_polls_model {
         const query = await pool.query(
             "SELECT invitation FROM polls WHERE polls.id = $1", [pollId]
         );
-        return query.rows[0];
+        return query.rows[0].invitation;
     }
 
     static async setPollInvitation(invitation, pollId) {
@@ -65,8 +66,22 @@ class users_polls_model {
     }
 
     static async redeemInvitation(userId, invitation) {
-
+        const getPollId = await pool.query(
+            "SELECT id FROM polls WHERE invitation = $1", [invitation]
+        );
+        const pollId = getPollId.rows[0].id;
+        const insertParticipation = await pool.query(
+            "INSERT INTO participants_polls_relationship (poll_id, user_id) VALUES ($1, $2)", [pollId, userId]
+        )
+        return insertParticipation.rows[0];
     };
+
+    static async getPollOption(optionId){
+        const query = await pool.query(
+            "SELECT * FROM poll_options WHERE id = $1", [optionId]
+        );
+        return query.rows[0];
+    }
 
     static async getPollOptions(pollId) {
         const query = await pool.query(
@@ -99,6 +114,14 @@ class users_polls_model {
         return query.rows[0];
     }
 
+    static async checkIfAlreadyVoted(userId, pollId) {
+        const query = await pool.query(
+            "SELECT has_voted FROM participants_polls_relationship WHERE user_id = $1 AND poll_id = $2", [userId, pollId]
+        )
+        console.log(query.rows);
+        return query.rows[0].has_voted;
+    }
+
     static async castVote(userId, chosenOptionId, pollId) {
         const querySetVoted = await pool.query(
             "UPDATE participants_polls_relationship SET has_voted = true WHERE poll_id = $1 AND user_id = $2", [pollId, userId]
@@ -110,6 +133,30 @@ class users_polls_model {
 
         return !querySetVoted && !queryAddVote;
     }
+
+    static async getStandings(pollId) {
+        const query = await pool.query(
+            "SELECT title, description, vote_count FROM poll_options WHERE poll_id = $1", [pollId]
+        );
+
+        return query.rows;
+    }
+
+    static async getNumOfVotes(pollId) {
+        const query = await pool.query(
+            "SELECT * FROM participants_polls_relationship WHERE poll_id = $1 AND has_voted = TRUE", [pollId]
+        );
+        return query.rows.length;
+    }
+
+    static async checkVerificationRequired(pollId) {
+        const query = await pool.query(
+            "SELECT requires_fingerprint FROM polls WHERE polls.id = $1", [pollId]
+        );
+        return query.rows[0].requires_fingerprint;
+    }
 }
+
+
 
 module.exports = users_polls_model;
