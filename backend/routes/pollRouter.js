@@ -54,13 +54,13 @@ router.post("/getPollDetails", verifyJWT, async (req, res) => {
 
 router.post("/getPollInvitation", verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
-    const query = await users_polls_model.getPollInvitation(pollId);
-    if (query.invitation === null) {
+    const invitation = await users_polls_model.getPollInvitation(pollId);
+    if (invitation === undefined) {
         const freshInv = nanoid(10);
         const insertInv = await users_polls_model.setPollInvitation(freshInv, pollId);
         res.json({auth: true, invitation: insertInv.invitation});
     } else {
-        res.json({auth: true, invitation: query.invitation});
+        res.json({auth: true, invitation});
     }
 });
 
