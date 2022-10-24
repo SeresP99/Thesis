@@ -36,8 +36,8 @@ function PollStandingsList() {
     }, [data]);
 
 
-    const NavToParticipate = () => {
-        navigate("/joinedPolls");
+    const GoBack = () => {
+        window.history.go(-1)
     }
 
     const ListElementMapper = () => {
@@ -83,7 +83,7 @@ function PollStandingsList() {
             <Scrollbar>
                 <ListElementMapper/>
             </Scrollbar>
-            <StandingsBackButton onClick={NavToParticipate}>Back</StandingsBackButton>
+            <StandingsBackButton onClick={GoBack}>Back</StandingsBackButton>
         </StandingsListContainer>
     )
 }
