@@ -9,7 +9,7 @@ export const StandingsListContainer = styled.div`
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   min-height: min-content;
 `;
@@ -39,7 +39,6 @@ export const ElementContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   position: relative;
-  right: 15px;
 `;
 
 export const StandingsBackButton = styled(BackButton)`
