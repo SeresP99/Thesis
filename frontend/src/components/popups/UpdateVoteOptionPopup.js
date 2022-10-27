@@ -24,14 +24,14 @@ function UpdatePopup(props) {
             setFormChanged(true);
     }, [title, description])
 
-    const FormSubmit = (e) => {
+    const FormSubmit = async (e) => {
         e.preventDefault();
-        UpdateOption(id, title, description);
+        await UpdateOption(id, title, description);
         window.location.reload();
     }
 
-    const DeletePollOption = () => {
-        DeleteOption(id);
+    const DeletePollOption = async () => {
+        await DeleteOption(id);
         window.location.reload();
     }
 
