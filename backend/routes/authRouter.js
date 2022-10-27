@@ -1,25 +1,9 @@
 const express = require('express');
 const user_model = require("../model/user");
 const jwt = require("jsonwebtoken");
+const {verifyJWT} = require("./global/verifyJWT");
+const JWT_verifier = require("./global/verifyJWT");
 const router = express.Router();
-
-const verifyJWT = (req, res, next) => {
-    const token = req.headers["x-access-token"];
-    if (!token) {
-        console.log("we got no token");
-        res.json({auth: false, message: "We need a token, please give it to us next time! - server"});
-    } else {
-        jwt.verify(token, process.env.COOKIE_SECRET, (err, decoded) => {
-            if (err) {
-                console.log("bad token");
-                res.json({auth: false, message: "You failed to authenticate! - server"});
-            } else {
-                req.userId = decoded.id;
-                next();
-            }
-        });
-    }
-}
 
 router.post("/login", async (req, res) => {
     const username = req.body.username;
@@ -65,7 +49,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
-router.get("/checkAuth", verifyJWT, (req, res) => {
+router.get("/checkAuth", JWT_verifier.verifyJWT, (req, res) => {
     res.json({auth: true});
 });
 

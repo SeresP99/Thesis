@@ -1,75 +1,60 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
-const users_polls_model = require("../model/users_polls");
+const polls_model = require("../model/polls");
+const JWT_verifier = require("./global/verifyJWT");
 const {nanoid} = require("nanoid");
 const router = express.Router();
 
-const verifyJWT = (req, res, next) => {
-    const token = req.headers["x-access-token"];
-    if (!token) {
-        console.log("we got no token");
-        res.send("We need a token, please give it to us next time! - server");
-    } else {
-        jwt.verify(token, process.env.COOKIE_SECRET, (err, decoded) => {
-            if (err) {
-                console.log("bad token");
-                res.json({auth: false, message: "You failed to authenticate! - server"});
-            } else {
-                req.userId = decoded.id;
-                next();
-            }
-        });
-    }
-}
 
-router.get("/getParticipatingPolls", verifyJWT, async (req, res) => {
-    const polls = await users_polls_model.getParticipatingPolls(req.userId);
+
+router.get("/getParticipatingPolls", JWT_verifier.verifyJWT, async (req, res) => {
+    const polls = await polls_model.getParticipatingPolls(req.userId);
     res.json({auth: true, polls})
 });
 
-router.post("/createPoll", verifyJWT, async (req, res) => {
+router.post("/createPoll", JWT_verifier.verifyJWT, async (req, res) => {
     const token = req.headers["x-access-token"];
     const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
     const authorId = decoded.id;
     const poll = req.body;
-    const query = await users_polls_model.createPoll(poll, authorId);
+    const query = await polls_model.createPoll(poll, authorId);
     const pollId = query.id;
     res.json({auth: true, pollId});
 });
 
-router.get("/getCreatedPolls", verifyJWT, async (req, res) => {
+router.get("/getCreatedPolls", JWT_verifier.verifyJWT, async (req, res) => {
     const token = req.headers["x-access-token"];
     const decoded = jwt.verify(token, process.env.COOKIE_SECRET);
     const authorId = decoded.id;
-    const polls = await users_polls_model.getCreatedPolls(authorId);
+    const polls = await polls_model.getCreatedPolls(authorId);
     res.json({auth: true, polls})
 });
 
-router.post("/getPollDetails", verifyJWT, async (req, res) => {
+router.post("/getPollDetails", JWT_verifier.verifyJWT, async (req, res) => {
     console.log("FETCHING POLL DETAILS");
     const pollId = req.body.pollId;
-    const pollDetails = await users_polls_model.getPollDetails(pollId);
+    const pollDetails = await polls_model.getPollDetails(pollId);
     res.json({auth: true, pollDetails});
 });
 
-router.post("/getPollInvitation", verifyJWT, async (req, res) => {
+router.post("/getPollInvitation", JWT_verifier.verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
-    const invitation = await users_polls_model.getPollInvitation(pollId);
+    const invitation = await polls_model.getPollInvitation(pollId);
     if (invitation === undefined) {
         const freshInv = nanoid(10);
-        const insertInv = await users_polls_model.setPollInvitation(freshInv, pollId);
+        const insertInv = await polls_model.setPollInvitation(freshInv, pollId);
         res.json({auth: true, invitation: insertInv.invitation});
     } else {
         res.json({auth: true, invitation});
     }
 });
 
-router.post("/getPollFromInvitation", verifyJWT, async (req, res) => {
+router.post("/getPollFromInvitation", JWT_verifier.verifyJWT, async (req, res) => {
     const invitation = req.body.invitation;
     const userId = req.userId;
 
-    const poll = await users_polls_model.getPollFromInvitation(invitation);
-    const author = await users_polls_model.getPollAuthorFromInv(invitation)
+    const poll = await polls_model.getPollFromInvitation(invitation);
+    const author = await polls_model.getPollAuthorFromInv(invitation)
     if (author === userId)
         res.json({auth: true, userIsAuthor: true, poll})
 
@@ -79,17 +64,17 @@ router.post("/getPollFromInvitation", verifyJWT, async (req, res) => {
     }
 });
 
-router.post("/redeemInvitation", verifyJWT, async (req, res) => {
+router.post("/redeemInvitation", JWT_verifier.verifyJWT, async (req, res) => {
     const userId = req.userId;
     const invitation = req.body.invitation;
 
     //check if user is trying to invite themselves
-    if (await users_polls_model.getPollAuthorFromInv(invitation) === userId)
+    if (await polls_model.getPollAuthorFromInv(invitation) === userId)
         res.json({auth: true, message: "Sorry, but you can't invite yourself."})
 
     else {
         try {
-            const redeem = await users_polls_model.redeemInvitation(userId, invitation);
+            const redeem = await polls_model.redeemInvitation(userId, invitation);
             res.json({auth: true, success: true})
         } catch (e) {
             res.json({auth: true, success: false})
@@ -97,10 +82,10 @@ router.post("/redeemInvitation", verifyJWT, async (req, res) => {
     }
 });
 
-router.post("/getStandings", verifyJWT, async (req, res) => {
+router.post("/getStandings", JWT_verifier.verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
-    const voteCount = await users_polls_model.getNumOfVotes(pollId);
-    const standings = await users_polls_model.getStandings(pollId);
+    const voteCount = await polls_model.getNumOfVotes(pollId);
+    const standings = await polls_model.getStandings(pollId);
 
     res.json({auth: true, voteCount: voteCount, standings});
 });
