@@ -2,9 +2,9 @@ import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyl
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {GetOptions} from "../../assets/VoteOptionCrudRequests";
-import PollStandingsList from "../../components/standings/PollStandingsList";
+import PollStandingsList from "../../components/ListComponents/PollStandingsList";
 
-function ParticipantPollDetails() {
+function StandingsPage() {
 
     const state = useLocation();
     const {pollId} = state.state;
@@ -18,4 +18,4 @@ function ParticipantPollDetails() {
     )
 }
 
-export default ParticipantPollDetails;
+export default StandingsPage;

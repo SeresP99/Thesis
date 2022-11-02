@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CreatePoll from "../../pages/CreatePoll";
+import CreatePoll from "../../pages/polls/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
 import {Button} from "./Button/Button";
 import {BackButton} from "./Button/BackButton";

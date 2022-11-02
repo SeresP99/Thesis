@@ -5,11 +5,11 @@ import StyledProfile, {
     DataDiv,
     DataGrid,
     DataRow
-} from "../components/styles/profilePageStyle"
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker"
+} from "../../components/styles/profilePageStyle"
+import {CheckIfAuthenticated} from "../../assets/loginSessionChecker"
 import {useNavigate} from "react-router-dom";
-import {getAllUserData} from "../assets/ProfileDataRequests";
-import {BackButton} from "../components/popups/PopupFormStyle";
+import {getAllUserData} from "../../assets/ProfileDataRequests";
+import {BackButton} from "../../components/popups/PopupFormStyle";
 
 function ProfilePage() {
 

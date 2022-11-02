@@ -1,5 +1,5 @@
-import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
-import ParticipatedPollList from "../components/ProfilePageComponents/ParticipatedPollList";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
+import ParticipatedPollList from "../../components/ListComponents/ParticipatedPollList";
 
 function JoinedPolls() {
     return (

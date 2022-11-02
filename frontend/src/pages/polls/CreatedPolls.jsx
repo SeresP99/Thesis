@@ -1,7 +1,7 @@
-import CreatedPollList, {GetHighlightedPoll} from "../components/ProfilePageComponents/CreatedPollList";
-import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
+import CreatedPollList, {GetHighlightedPoll} from "../../components/ListComponents/CreatedPollList";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
 import {useNavigate} from "react-router-dom";
-import {BackButton} from "../components/popups/PopupFormStyle";
+import {BackButton} from "../../components/popups/PopupFormStyle";
 
 function CreatedPolls() {
 

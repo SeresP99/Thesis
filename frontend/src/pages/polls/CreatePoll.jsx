@@ -12,20 +12,20 @@ import {
     InputContainerByType,
     FormDateElement,
     DateInputFieldName
-} from "../components/styles/CreatePollStyle";
-import {BasicPage, BasicContentCard} from "../components/styles/Page/PageStyle";
+} from "../../components/styles/CreatePollStyle";
+import {BasicPage, BasicContentCard} from "../../components/styles/Page/PageStyle";
 import {useNavigate} from "react-router-dom";
 import React, {useState} from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import Switch from 'react-switch';
-import {PostCreatePoll} from "../assets/PollCrudRequests";
+import {PostCreatePoll} from "../../assets/PollCrudRequests";
 import {ToastContainer, toast} from 'react-toastify'
-import '../components/notification/ToastStyle.css';
+import '../../components/notification/ToastStyle.css';
 
 function CreatePoll() {
 
-    require("../components/datetimepicker/calendar.css");
-    require("../components/datetimepicker/DateTimePicker.css");
+    require("../../components/datetimepicker/calendar.css");
+    require("../../components/datetimepicker/DateTimePicker.css");
 
     const navigate = useNavigate();
 

@@ -1,11 +1,11 @@
-import {Page, ContentPanel, OptionListElement, ButtonRow, LockInButton} from "../components/styles/VotePageSyle"
-import CustomScrollbars from "../components/global/Scrollbar";
+import {Page, ContentPanel, OptionListElement, ButtonRow, LockInButton} from "../../components/styles/VotePageSyle"
+import CustomScrollbars from "../../components/global/Scrollbar";
 import Axios from "axios";
 import {useEffect, useState, useRef, createRef} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import UpdatePopup from "../components/popups/UpdateVoteOptionPopup";
-import {Vote} from "../assets/VoteRequests";
-import {GetOptions} from "../assets/VoteOptionCrudRequests";
+import UpdatePopup from "../../components/popups/UpdateVoteOptionPopup";
+import {Vote} from "../../assets/VoteRequests";
+import {GetOptions} from "../../assets/VoteOptionCrudRequests";
 
 function VotePage() {
 

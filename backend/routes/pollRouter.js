@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const polls_model = require("../model/polls");
 const JWT_verifier = require("./global/verifyJWT");
 const {nanoid} = require("nanoid");
+const votes_model = require("../model/votes");
 const router = express.Router();
 
 
@@ -84,8 +85,8 @@ router.post("/redeemInvitation", JWT_verifier.verifyJWT, async (req, res) => {
 
 router.post("/getStandings", JWT_verifier.verifyJWT, async (req, res) => {
     const pollId = req.body.pollId;
-    const voteCount = await polls_model.getNumOfVotes(pollId);
-    const standings = await polls_model.getStandings(pollId);
+    const voteCount = await votes_model.getNumOfVotes(pollId);
+    const standings = await votes_model.getStandings(pollId);
 
     res.json({auth: true, voteCount: voteCount, standings});
 });

@@ -3,17 +3,17 @@ import {
     ButtonRow,
     FlexboxToScrollThrough, OptionListContainer,
     Scrollbar
-} from "../components/styles/EditVoteOptionsStyle";
-import CustomScrollbars from "../components/global/Scrollbar"
+} from "../../components/styles/EditVoteOptionsStyle";
+import CustomScrollbars from "../../components/global/Scrollbar"
 import Axios from "axios";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
-import CreatePopup from "../components/popups/CreateVoteOptionPopup";
-import UpdatePopup from "../components/popups/UpdateVoteOptionPopup";
-import {GetOptions} from "../assets/VoteOptionCrudRequests";
-import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
+import CreatePopup from "../../components/popups/CreateVoteOptionPopup";
+import UpdatePopup from "../../components/popups/UpdateVoteOptionPopup";
+import {GetOptions} from "../../assets/VoteOptionCrudRequests";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
 import {useNavigate} from "react-router-dom";
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
+import {CheckIfAuthenticated} from "../../assets/loginSessionChecker";
 import {toast, ToastContainer} from "react-toastify";
 
 
