@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.SeresP99.pollscape.ParticipatedPollList;
 import com.SeresP99.pollscape.R;
 import com.SeresP99.pollscape.recycleViews.models.DashboardButtonModel;
 import com.SeresP99.pollscape.webViewActivity;

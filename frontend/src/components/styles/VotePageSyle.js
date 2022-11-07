@@ -78,7 +78,10 @@ export const LockInButton = styled.button`
 
 export const ButtonRow = styled.div`
   display: flex;
+  flex-direction: column;
+  height: 200px;
   width: 80%;
   max-width: 1200px;
   justify-content: center;
+  align-items: center;
 `;

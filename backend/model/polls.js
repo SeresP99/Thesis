@@ -41,6 +41,7 @@ class polls_model {
         const query = await pool.query(
             "SELECT invitation FROM polls WHERE polls.id = $1", [pollId]
         );
+        console.log(query);
         return query.rows[0].invitation;
     }
 

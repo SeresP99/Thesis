@@ -2,7 +2,7 @@ import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {ButtonFlexbox, DashboardCard, Scrollbar} from "../components/styles/Page/DashboardStyle";
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
+import {CheckIfAuthenticated} from "../assets/API/loginSessionChecker";
 import {
     DashboardButton,
     DashboardButtonDescription,

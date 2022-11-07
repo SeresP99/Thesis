@@ -18,9 +18,10 @@ import {useNavigate} from "react-router-dom";
 import React, {useState} from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import Switch from 'react-switch';
-import {PostCreatePoll} from "../../assets/PollCrudRequests";
+import {PostCreatePoll} from "../../assets/API/PollCrudRequests";
 import {ToastContainer, toast} from 'react-toastify'
 import '../../components/notification/ToastStyle.css';
+import {TitleCard} from "../../components/styles/Page/MenuTitle";
 
 function CreatePoll() {
 
@@ -65,6 +66,7 @@ function CreatePoll() {
     return (
         <BasicPage>
             <BasicContentCard>
+                <TitleCard>Create a Poll</TitleCard>
                 <CreatePollForm onSubmit={FormSubmit}>
                     <FormBodyDiv>
 

@@ -2,8 +2,8 @@ import {BasicPage, BasicContentCard} from "../components/styles/Page/PageStyle"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
-import {GetPollDetails, GetPollInvitation} from "../assets/PollCrudRequests";
+import {CheckIfAuthenticated} from "../assets/API/loginSessionChecker";
+import {GetPollDetails, GetPollInvitation} from "../assets/API/PollCrudRequests";
 import {DataColumn, DataGrid, DataRow, TextData, TitleCard} from "../components/styles/PollDetailsStyle";
 import InvitationPopup from "../components/popups/InvitationPopup";
 import {toast, ToastContainer} from "react-toastify";

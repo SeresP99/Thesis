@@ -8,7 +8,7 @@ import PopupForm, {
     TextInputFieldName, DeleteButton
 } from './PopupFormStyle'
 import {OptionListElement} from "../styles/EditVoteOptionsStyle";
-import {DeleteOption, UpdateOption} from "../../assets/VoteOptionCrudRequests";
+import {DeleteOption, UpdateOption} from "../../assets/API/VoteOptionCrudRequests";
 
 function UpdatePopup(props) {
 
@@ -24,14 +24,14 @@ function UpdatePopup(props) {
             setFormChanged(true);
     }, [title, description])
 
-    const FormSubmit = async (e) => {
+    const FormSubmit = (e) => {
         e.preventDefault();
-        await UpdateOption(id, title, description);
+        UpdateOption(id, title, description);
         window.location.reload();
     }
 
-    const DeletePollOption = async () => {
-        await DeleteOption(id);
+    const DeletePollOption = () => {
+        DeleteOption(id);
         window.location.reload();
     }
 
@@ -56,7 +56,7 @@ function UpdatePopup(props) {
                             <ButtonRow>
                                 <BackButton onClick={() => close}>Back</BackButton>
                                 <DeleteButton onClick={() => DeletePollOption()}>Delete</DeleteButton>
-                                <PopupSubmitButton type="submit" disabled={!formChanged}>Save</PopupSubmitButton>
+                                <PopupSubmitButton onClick={FormSubmit} disabled={!formChanged}>Save</PopupSubmitButton>
                             </ButtonRow>
                         </PopupForm>
                     </div>

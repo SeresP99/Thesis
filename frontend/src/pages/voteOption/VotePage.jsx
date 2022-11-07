@@ -1,11 +1,19 @@
 import {Page, ContentPanel, OptionListElement, ButtonRow, LockInButton} from "../../components/styles/VotePageSyle"
 import CustomScrollbars from "../../components/global/Scrollbar";
 import Axios from "axios";
-import {useEffect, useState, useRef, createRef} from "react";
+import React, {useEffect, useState, useRef, createRef} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import UpdatePopup from "../../components/popups/UpdateVoteOptionPopup";
-import {Vote} from "../../assets/VoteRequests";
-import {GetOptions} from "../../assets/VoteOptionCrudRequests";
+import {Vote} from "../../assets/API/VoteRequests";
+import {GetOptions} from "../../assets/API/VoteOptionCrudRequests";
+import {
+    ElementContainer,
+    PollListContainer,
+    ListElement,
+    Scrollbar
+} from "../../components/ListComponents/PollListStyle";
+import {TitleCard} from "../../components/styles/Page/MenuTitle";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
 
 function VotePage() {
 
@@ -31,32 +39,17 @@ function VotePage() {
     };
 
     useEffect(() => {
-            GetVoteOptions();
-        },
-        []
-    );
-
-    const scrollStyle = {
-        borderRadius: '5px',
-        height: 320,
-        width: "80%",
-        minWidth: "300px"
-    }
-
-    const divStyle = {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-evenly",
-        alignContent: "space-around",
-        height: 290
-    }
+        GetVoteOptions();
+    }, []);
 
     function VoteOption(props) {
         return (
-            <OptionListElement
-                style={{backgroundColor: selectedOption === props.id ? '#6500ad' : '#333333'}}
-                onClick={() => setSelectedOption(props.id)}>{props.title}</OptionListElement>
+            <ElementContainer>
+                <ListElement onClick={() => setSelectedOption(props.id)}
+                             style={{backgroundColor: selectedOption === props.id ? '#6500AD66' : '#242424'}}>
+                    {props.title}
+                </ListElement>
+            </ElementContainer>
         )
     }
 
@@ -64,21 +57,22 @@ function VotePage() {
         return null;
 
     return (
-        <Page>
-            <ContentPanel>
-                <CustomScrollbars style={scrollStyle}>
-                    <div style={divStyle}>
+        <BasicPage>
+            <TitleCard>Vote</TitleCard>
+            <BasicContentCard>
+                <PollListContainer>
+                    <Scrollbar>
                         {optionList.map((option) => <VoteOption key={option.id} title={option.title} id={option.id}
                                                                 description={option.description}/>)}
-                    </div>
-                </CustomScrollbars>
+                    </Scrollbar>
                 <ButtonRow>
                     <LockInButton onClick={CastVote} disabled={!selectedOption}>Lock In</LockInButton>
                     <br/>
                     <p>{errorText}</p>
                 </ButtonRow>
-            </ContentPanel>
-        </Page>
+                </PollListContainer>
+            </BasicContentCard>
+        </BasicPage>
     )
 }
 

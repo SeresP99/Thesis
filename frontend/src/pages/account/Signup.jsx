@@ -8,7 +8,7 @@ import StyledSignup, {
 } from "../../components/styles/Signup.styled"
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {SignUp} from "../../assets/SignupRequests";
+import {SignUp} from "../../assets/API/SignupRequests";
 
 const Signup = () => {
     const navigate = useNavigate();

@@ -30,9 +30,8 @@ export const DataParagraph = styled.p`
 
 
 export const DataGrid = styled.div`
-  height: 100%;
+  height: 400px;
   width: 100%;
-  
 `;
 
 export const DataRow = styled.div`
@@ -48,7 +47,8 @@ export const DataColumn = styled.div`
 
 export const ButtonDiv = styled.div`
     display: flex;
-    
+    justify-content: center;
+  align-items: center;
 `;
 
 export const CreatePollButton = styled.button`

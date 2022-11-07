@@ -9,7 +9,7 @@ import PopupForm, {
 } from './PopupFormStyle'
 import {AddButton} from "../styles/EditVoteOptionsStyle";
 import {useLocation} from "react-router-dom";
-import {CreateOption} from "../../assets/VoteOptionCrudRequests";
+import {CreateOption} from "../../assets/API/VoteOptionCrudRequests";
 
 function CreatePopup() {
 

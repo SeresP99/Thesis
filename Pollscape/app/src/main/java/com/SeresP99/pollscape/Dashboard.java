@@ -7,26 +7,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SeresP99.pollscape.recycleViews.adapters.DashboardButton_RecyclerViewAdapter;
+import com.SeresP99.pollscape.recycleViews.adapters.VoteOption_RecyclerViewAdapter;
 import com.SeresP99.pollscape.recycleViews.models.DashboardButtonModel;
+import com.SeresP99.pollscape.recycleViews.models.VoteOptionModel;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Dashboard extends AppCompatActivity {
 
+    String token;
     ArrayList<DashboardButtonModel> dashboardButtonModels = new ArrayList<DashboardButtonModel>();
+    RecyclerView recyclerView;
+    DashboardButton_RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,49 +43,16 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", null);
+        token = sharedPreferences.getString("token", null);
 
         checkAuth(token);
 
-
-        RecyclerView recyclerView = findViewById(R.id.recycleView);
-        setUpDashboard();
-        DashboardButton_RecyclerViewAdapter adapter = new DashboardButton_RecyclerViewAdapter(this, dashboardButtonModels);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void setUpDashboard() {
-        String[] titles = new String[]{"Create", "My Own", "Participate", "Profile", "Logout"};
-        String[] descriptions = new String[]{
-                "Create your own polls and invite others to participate!",
-                "Check how your polls are standing or edit them!",
-                "Look over your profile details!",
-                "Take part in polls and cast your vote!",
-                "Hope to see you again soon!"
-        };
-        String[] urls = new String[]{
-                "http://pollscape.ddns.net:3000" + "/create",
-                "http://pollscape.ddns.net:3000" + "/createdPolls",
-                "http://pollscape.ddns.net:3000" + "/joinedPolls",
-                "http://pollscape.ddns.net:3000" + "/profile",
-                "http://pollscape.ddns.net:3000"
-        };
-
-        for (int i = 0; i < titles.length; i++) {
-            dashboardButtonModels.add(new DashboardButtonModel(titles[i], descriptions[i], urls[i]));
-        }
+        getButtons();
     }
 
     private void JumpToLogin() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-
-    public void participateBtnPress(View view) {
-        Intent intent = new Intent(this, ParticipatedPollList.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -120,5 +96,48 @@ public class Dashboard extends AppCompatActivity {
             }
         };
         queue.add(request);
+    }
+
+    private void updateRecyclerView() {
+        recyclerView = findViewById(R.id.recycleView);
+        adapter = new DashboardButton_RecyclerViewAdapter(this, dashboardButtonModels);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void getButtons() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://pollscape.ddns.net:4000/dashboard/getDashboardMenu";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    Log.i("REQUEST", "ERROR " + response.toString());
+
+                    JSONObject responseObject;
+                    try {
+                        responseObject = new JSONObject(response.toString());
+                        JSONArray buttonJsonArray = responseObject.getJSONArray("buttons");
+                        for (int i = 0; i < buttonJsonArray.length(); i++) {
+                            JSONObject buttonJson = buttonJsonArray.getJSONObject(i);
+                            String title = buttonJson.getString("title");
+                            String description = buttonJson.getString("description");
+                            String URL = buttonJson.getString("url");
+                            Log.i("MYNOTE", "title: " + title + " desc: " + description + " URL: " + URL);
+                            dashboardButtonModels.add(new DashboardButtonModel(title, description, URL));
+                        }
+                        updateRecyclerView();
+                    } catch (JSONException e) {
+                        Log.i("REQUEST", "ERROR " + e);
+                    }
+                }, error -> Log.i("REQUEST", "ERROR " + error.toString())) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("x-access-token", token);
+                return params;
+            }
+        };
+        queue.add(request);
+
     }
 }

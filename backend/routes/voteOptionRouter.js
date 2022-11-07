@@ -29,15 +29,16 @@ router.post("/updatePollOption", JWT_verifier.verifyJWT, async (req, res) => {
     const id = req.body.id;
     const title = req.body.title;
     const description = req.body.description;
-    console.log("id: " + id + "\n title: " + title + "\n description: " + description);
+    console.log("updating vote option")
+    //console.log("id: " + id + "\n title: " + title + "\n description: " + description);
     const update = await poll_options_model.updatePollOption(id, title, description);
     res.json({auth: true, success: true});
 })
 
 router.post("/deletePollOption", JWT_verifier.verifyJWT, async (req, res) => {
     const id = req.body.id;
+    console.log("deleting vote option")
     const deletion = await poll_options_model.deletePollOption(id);
-    console.log(deletion);
     res.json({auth: true, success: true});
 })
 

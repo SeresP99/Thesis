@@ -32,4 +32,9 @@ export const Button = styled.button`
   &:active {
     transform: scale(0.98);
   }
+
+  &:disabled {
+    background-color: rgba(56, 56, 56, 0.35);
+    color: rgba(162, 162, 162, 0.66);
+  }
 `;

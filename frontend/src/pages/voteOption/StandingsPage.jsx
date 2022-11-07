@@ -1,7 +1,7 @@
 import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {GetOptions} from "../../assets/VoteOptionCrudRequests";
+import {GetOptions} from "../../assets/API/VoteOptionCrudRequests";
 import PollStandingsList from "../../components/ListComponents/PollStandingsList";
 
 function StandingsPage() {

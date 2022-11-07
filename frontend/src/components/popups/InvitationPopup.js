@@ -1,6 +1,6 @@
 import {useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {CreateOption} from "../../assets/VoteOptionCrudRequests";
+import {CreateOption} from "../../assets/API/VoteOptionCrudRequests";
 import Popup from "reactjs-popup";
 import {AddButton} from "../styles/EditVoteOptionsStyle";
 import PopupForm, {
@@ -14,19 +14,22 @@ import PopupForm, {
 import {ToastContainer, toast} from 'react-toastify'
 import {CopyButton, InvitationInput, InvitePopup, PopupBody} from "./InvitationPopupStyle";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import {GetPollInvitation} from "../../assets/PollCrudRequests";
+import {GetPollInvitation} from "../../assets/API/PollCrudRequests";
 
-function InvitationPopup() {
+function InvitationPopup(props) {
     require("./PopupModal.css")
 
     const [invitation, setInvitation] = useState("");
     const [invLink, setInvLink] = useState("");
 
     const state = useLocation();
-    const {pollId} = state.state;
+    //const {pollId} = state.state;
+    const pollId = props.highlightedPoll;
+
 
     useEffect(async () => {
-        setInvitation(await GetPollInvitation(pollId));
+        if (pollId !== -1)
+            setInvitation(await GetPollInvitation(pollId));
     });
 
     useEffect(() => {
@@ -39,7 +42,7 @@ function InvitationPopup() {
 
     return (
         <div>
-            <Popup trigger={<InvitePopup>Invite</InvitePopup>} modal nested>
+            <Popup trigger={<InvitePopup disabled={pollId === -1}>Invite</InvitePopup>} modal nested>
                 {close => (
                     <div className="small-modal">
                         <button className="closeButton" onClick={close}>
