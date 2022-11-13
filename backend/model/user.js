@@ -9,7 +9,7 @@ class user_model {
     }
 
     static async getUserProfile(id){
-        const credentials = await pool.query("SELECT id, email, username, password FROM users WHERE id = $1", [id])
+        const credentials = await pool.query("SELECT id, email, username FROM users WHERE id = $1", [id])
         return credentials.rows[0];
     }
 

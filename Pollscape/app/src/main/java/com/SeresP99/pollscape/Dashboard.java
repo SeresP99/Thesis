@@ -106,11 +106,11 @@ public class Dashboard extends AppCompatActivity {
                         if (!response.getBoolean("auth"))
                             JumpToLogin();
                     } catch (JSONException e) {
-                        Toast.makeText(Dashboard.this, e.toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Dashboard.this, e.toString(), Toast.LENGTH_LONG).show();
                     }
                 },
                 error -> {
-                    Toast.makeText(Dashboard.this, error.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Dashboard.this, error.toString(), Toast.LENGTH_LONG).show();
                 }) {
             @Override
             public Map<String, String> getHeaders() {

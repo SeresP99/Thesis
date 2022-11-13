@@ -22,18 +22,16 @@ function EditVoteOptions() {
     const navigate = useNavigate();
     const state = useLocation();
     const {pollId} = state.state;
-    let {freshPoll} = state.state;
 
     const [optionList, setOptionList] = useState([]);
 
     useEffect(async () => {
             if (!CheckIfAuthenticated)
                 navigate("/login");
-            if (freshPoll) {
+            if (localStorage.getItem('freshPoll') === "true") {
                 toast.success("Your poll has been successfully created. Now start adding options!", {position: toast.POSITION.TOP_CENTER});
-                freshPoll = false;
+                localStorage.removeItem("freshPoll");
             }
-            console.log(state.state);
             setOptionList(await GetOptions(pollId));
         },
         []

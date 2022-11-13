@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 },
-                error -> Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show());
+                error -> {});//Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show());
 
         queue.add(request);
     }
@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
                         if (response.getBoolean("auth"))
                             JumpToDashBoard();
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                     }
                 },
                 error -> {
-                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 }) {
             @Override
             public Map<String, String> getHeaders() {

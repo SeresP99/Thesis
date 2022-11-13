@@ -52,6 +52,7 @@ function CreatePoll() {
             toast.error("Title must not be left empty.", {position: toast.POSITION.TOP_CENTER});
         }
         if (formIsValid) {
+            localStorage.setItem("freshPoll", "true");
             const poll = {title, description, startDate, endDate, verifiedOnly};
             const createdId = await PostCreatePoll(poll);
             navigate("/profile/poll/editVoteOptions", {state: {pollId: createdId, freshPoll: true}});

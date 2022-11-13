@@ -81,11 +81,8 @@ public class VoteOptionListActivity extends AppCompatActivity {
                 response -> {
                     try {
                         if (response.getString("alreadyVoted").equals("true")) {
-                            Toast.makeText(this, "Has already voted.", Toast.LENGTH_SHORT).show();
                             finish();
                         }
-                        else
-                            Toast.makeText(this, "Hasn't voted yet.", Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                     }
