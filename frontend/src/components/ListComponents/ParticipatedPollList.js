@@ -4,7 +4,7 @@ import {Scrollbars} from "react-custom-scrollbars-2";
 import CustomScrollbars from "../global/Scrollbar";
 import {
     ViewPollButton,
-    PollListElement,
+    ListElement,
     PollButtonPanel,
     PollNameTag,
     EditButton,
@@ -20,7 +20,7 @@ import {
 } from "./PollListStyle";
 import Axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {GetAllParticipatingPolls} from "../../assets/PollCrudRequests";
+import {GetAllParticipatingPolls} from "../../assets/API/PollCrudRequests";
 
 const ParticipatedPollList = () => {
 
@@ -66,13 +66,15 @@ const ParticipatedPollList = () => {
 
     function Poll(props) {
         return (
-                <PollListElement onClick={() => {
+            <ElementContainer>
+                <ListElement onClick={() => {
                     setHighlightedPoll(props.id);
                     setVotedOnHighlighted(props.voted)
                 }}
-                                 style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
+                             style={{backgroundColor: highlightedPoll === props.id ? '#6500AD66' : '#242424'}}>
                     {props.title}
-                </PollListElement>
+                </ListElement>
+            </ElementContainer>
         )
     }
 

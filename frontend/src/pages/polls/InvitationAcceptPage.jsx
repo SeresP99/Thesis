@@ -1,9 +1,9 @@
 import {useParams, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from "react";
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
-import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
-import {BackToDashBoard, Error, JoinButton, TakeToLogin, Title} from "../components/styles/Page/InviteStyle";
-import {GetPollFromInvitation, RedeemInvitation} from "../assets/PollCrudRequests";
+import {CheckIfAuthenticated} from "../../assets/API/loginSessionChecker";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
+import {BackToDashBoard, Error, JoinButton, TakeToLogin, Title} from "../../components/styles/Page/InviteStyle";
+import {GetPollFromInvitation, RedeemInvitation} from "../../assets/API/PollCrudRequests";
 
 function InvitationAcceptPage() {
 

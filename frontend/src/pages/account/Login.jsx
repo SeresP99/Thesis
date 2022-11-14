@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {CheckLoginStatus, SendCredentials} from "../assets/LoginRequests";
-import StyledLogin, {LoginButton, TakeToSignupButton, TextInput, ElevatedDiv, StyledForm} from "../components/styles/LoginStyle";
+import {CheckLoginStatus, SendCredentials} from "../../assets/API/LoginRequests";
+import StyledLogin, {LoginButton, TakeToSignupButton, TextInput, ElevatedDiv, StyledForm} from "../../components/styles/LoginStyle";
 import Axios from "axios";
 import {Navigate, useNavigate} from "react-router-dom";
 

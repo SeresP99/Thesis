@@ -3,18 +3,19 @@ import {
     ButtonRow,
     FlexboxToScrollThrough, OptionListContainer,
     Scrollbar
-} from "../components/styles/EditVoteOptionsStyle";
-import CustomScrollbars from "../components/global/Scrollbar"
+} from "../../components/styles/EditVoteOptionsStyle";
+import CustomScrollbars from "../../components/global/Scrollbar"
 import Axios from "axios";
 import {useLocation} from "react-router-dom";
-import {useEffect, useState} from "react";
-import CreatePopup from "../components/popups/CreateVoteOptionPopup";
-import UpdatePopup from "../components/popups/UpdateVoteOptionPopup";
-import {GetOptions} from "../assets/VoteOptionCrudRequests";
-import {BasicContentCard, BasicPage} from "../components/styles/Page/PageStyle";
+import React, {useEffect, useState} from "react";
+import CreatePopup from "../../components/popups/CreateVoteOptionPopup";
+import UpdatePopup from "../../components/popups/UpdateVoteOptionPopup";
+import {GetOptions} from "../../assets/API/VoteOptionCrudRequests";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
 import {useNavigate} from "react-router-dom";
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker";
+import {CheckIfAuthenticated} from "../../assets/API/loginSessionChecker";
 import {toast, ToastContainer} from "react-toastify";
+import {TitleCard} from "../../components/styles/Page/MenuTitle";
 
 
 function EditVoteOptions() {
@@ -49,6 +50,7 @@ function EditVoteOptions() {
 
     return (
         <BasicPage>
+            <TitleCard>Edit Votable Options</TitleCard>
             <BasicContentCard>
                 <OptionListContainer>
                     <Scrollbar>
@@ -58,6 +60,7 @@ function EditVoteOptions() {
                         </FlexboxToScrollThrough>
                     </Scrollbar>
                 </OptionListContainer>
+
                 <ButtonRow>
                     <BackFromEditingButton onClick={NavToCreatedPolls}>Back</BackFromEditingButton>
                     <CreatePopup/>

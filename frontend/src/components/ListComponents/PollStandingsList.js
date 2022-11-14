@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import CustomScrollbars from "../global/Scrollbar";
 import {useLocation, useNavigate} from "react-router-dom";
-import {GetAllCreatedPolls} from "../../assets/PollCrudRequests";
+import {GetAllCreatedPolls} from "../../assets/API/PollCrudRequests";
 import {BackButton} from "../popups/PopupFormStyle";
 import {
     MyProgressBar,
@@ -11,7 +11,7 @@ import {
     ListDiv,
     Title, StandingsBackButton
 } from "./PollStandingsListStyle";
-import {getStandings} from "../../assets/PollCrudRequests";
+import {getStandings} from "../../assets/API/PollCrudRequests";
 
 function PollStandingsList() {
 
@@ -37,7 +37,7 @@ function PollStandingsList() {
 
 
     const GoBack = () => {
-        window.history.go(-1)
+        navigate('/dashboard');
     }
 
     const ListElementMapper = () => {

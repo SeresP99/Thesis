@@ -1,16 +1,16 @@
 import {Route, Routes} from "react-router-dom";
-import SignUp from "../pages/signup";
-import Login from "../pages/Login";
-import CreatedPolls from "../pages/CreatedPolls";
-import JoinedPolls from "../pages/JoinedPolls";
-import ProfilePage from "../pages/profilePage"
-import PollDetails from "../pages/pollDetails";
-import CreatePoll from "../pages/CreatePoll";
-import EditVoteOptions from "../pages/EditVoteOptions";
+import SignUp from "../pages/account/Signup";
+import Login from "../pages/account/Login";
+import CreatedPolls from "../pages/polls/CreatedPolls";
+import JoinedPolls from "../pages/polls/JoinedPolls";
+import ProfilePage from "../pages/account/ProfilePage"
+import PollDetails from "../pages/PollDetails";
+import CreatePoll from "../pages/polls/CreatePoll";
+import EditVoteOptions from "../pages/voteOption/EditVoteOptions";
 import Dashboard from "../pages/Dashboard"
-import VotePage from "../pages/VotePage";
-import InvitationAcceptPage from "../pages/InvitationAcceptPage";
-import ParticipantPollDetails from "../pages/Participant/ParticipantPollDetails";
+import VotePage from "../pages/voteOption/VotePage";
+import InvitationAcceptPage from "../pages/polls/InvitationAcceptPage";
+import StandingsPage from "../pages/voteOption/StandingsPage";
 
 
 const Views = () => {
@@ -24,7 +24,7 @@ const Views = () => {
             <Route path="/profile/poll" element={<PollDetails/>}/>
             <Route path="/profile/poll/editVoteOptions" element={<EditVoteOptions/>}/>
             <Route path="/profile/poll/vote" element={<VotePage/>}/>
-            <Route path="/participate/standings" element={<ParticipantPollDetails/>}/>
+            <Route path="/participate/standings" element={<StandingsPage/>}/>
             <Route path="/register" element={<SignUp/>}/>
             <Route path="/create" element={<CreatePoll/>}/>
             <Route path="/invite/:invitation" element={<InvitationAcceptPage/>}/>

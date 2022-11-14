@@ -5,10 +5,10 @@ export const DashboardButton = styled(Button)`
   text-align: left;
   width: 45%;
   min-width: 300px;
-  height: 25%;
+  height: 165px;
   padding: 25px;
   background-color: ${({theme}) => theme.elevation_2};
-  margin: 5px;
+  margin: 5px 5px 5px 20px;
 
   &:hover {
     background-color: ${({theme}) => theme.primaryHover};

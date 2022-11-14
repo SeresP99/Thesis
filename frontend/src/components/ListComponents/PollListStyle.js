@@ -5,12 +5,13 @@ import CustomScrollbars from "../global/Scrollbar";
 
 export const PollListContainer = styled.div`
   min-width: 270px;
-  width: 80%;
-  height: 550px;
+  width: 95%;
+  height: 700px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: 10px;
 `;
 
 export const ScrolledDiv = styled.div`
@@ -26,7 +27,7 @@ export const ScrolledDiv = styled.div`
 export const Scrollbar = styled.div`
   background-color: ${({theme}) => theme.elevation_2};
   border-radius: 5px;
-  height: 400px;
+  height: 500px;
   width: 100%;
   overflow: auto;
 `;
@@ -39,7 +40,7 @@ export const ElementContainer = styled.div`
   height: 60px;
 `;
 
-export const PollListElement = styled.div`
+export const ListElement = styled.div`
   width: 93%;
   height: 45px;
   font-size: 20px;
@@ -47,8 +48,8 @@ export const PollListElement = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-top: 7px;
-  margin-bottom: 7px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 5px;
   border-radius: 5px;
 `
@@ -78,8 +79,6 @@ export const BackToDash = styled(BackButton)`
   height: 80px;
   border-radius: 5px;
   flex: 1;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
 `;
 
 export const ViewDetails = styled(Button)`
@@ -88,15 +87,8 @@ export const ViewDetails = styled(Button)`
   border-radius: 5px;
   font-size: 40px;
   height: 80px;
-  width: 120px;
+  //width: 120px;
   flex: 1;
-  margin-left: 0.5%;
-  margin-right: 0.5%;
-
-  &:disabled {
-    background-color: rgba(56, 56, 56, 0.35);
-    color: rgba(162, 162, 162, 0.66);
-  }
 `;
 
 export const ViewStandings = styled(ViewDetails)`

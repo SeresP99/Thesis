@@ -1,19 +1,22 @@
 import styled from "styled-components";
-import CreatePoll from "../../pages/CreatePoll";
+import CreatePoll from "../../pages/polls/CreatePoll";
 import CreatePopup from "../popups/CreateVoteOptionPopup";
 import {Button} from "./Button/Button";
 import {BackButton} from "./Button/BackButton";
 import CustomScrollbars from "../global/Scrollbar";
 
 export const OptionListContainer = styled.div`
-  width: 80%;
-  margin-bottom: 10px;
+  width: 95%;
+  height: 100%;
+  margin: 15px 10px 10px 10px;
 `;
 
-export const Scrollbar = styled(CustomScrollbars)`
-  height: 350px;
+export const Scrollbar = styled.div`
+  overflow: auto;
+  height: 500px;
   width: 100%;
   border-radius: 5px;
+  background-color: ${({theme}) => theme.elevation_2};
 `;
 
 export const FlexboxToScrollThrough = styled.div`
@@ -34,7 +37,7 @@ export const OptionListElement = styled(Button)`
   width: fit-content;
   font-size: 30px;
   border-radius: 5px;
-  margin: 10px;
+  margin: 10px 10px 10px 22px;
   background-color: #333333;
   color: white;
 
@@ -45,15 +48,18 @@ export const OptionListElement = styled(Button)`
 
 export const ButtonRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   width: 80%;
-  margin-top: -18px;
-  height:60px;
+  height: min-content;
   max-width: 1200px;
+  margin-bottom: 10px;
 `;
 
 export const AddButton = styled(Button)`
   flex: 2;
-  margin-left: 0.5%;
+  min-width: 212px;
+  margin: 3px;
   font-family: Courgette, sans-serif;
   justify-content: space-evenly;
   height: 60px;
@@ -69,7 +75,7 @@ export const AddButton = styled(Button)`
 
 export const BackFromEditingButton = styled(BackButton)`
   flex: 1;
-  margin-right: 0.5%;
+  margin: 3px;
   height: 60px;
   font-family: Courgette, sans-serif;
   font-size: 40px;

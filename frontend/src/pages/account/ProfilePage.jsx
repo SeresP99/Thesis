@@ -5,11 +5,13 @@ import StyledProfile, {
     DataDiv,
     DataGrid,
     DataRow
-} from "../components/styles/profilePageStyle"
-import {CheckIfAuthenticated} from "../assets/loginSessionChecker"
+} from "../../components/styles/profilePageStyle"
+import {CheckIfAuthenticated} from "../../assets/API/loginSessionChecker"
 import {useNavigate} from "react-router-dom";
-import {getAllUserData} from "../assets/ProfileDataRequests";
-import {BackButton} from "../components/popups/PopupFormStyle";
+import {getAllUserData} from "../../assets/API/ProfileDataRequests";
+import {BackButton} from "../../components/styles/Button/BackButton";
+import {BasicContentCard, BasicPage} from "../../components/styles/Page/PageStyle";
+import under_construction from "../../assets/pictures/under_construction.png"
 
 function ProfilePage() {
 
@@ -17,8 +19,8 @@ function ProfilePage() {
     const [profileData, setProfileData] = useState({});
 
     useEffect(() => {
-            if (!CheckIfAuthenticated())
-                navigate('/login');
+            /*if (!CheckIfAuthenticated())
+                navigate('/login');*/
         }
     );
 
@@ -31,28 +33,29 @@ function ProfilePage() {
     };
 
     return (
-        <StyledProfile>
-            <DataDiv>
+        <BasicPage>
+            <BasicContentCard>
                 <DataGrid>
                     <DataRow>
                         <DataColumn size={1}>Your Username:</DataColumn>
-                        <DataColumn size={1}>{profileData.username}</DataColumn>
+                        <DataColumn size={1}>{/*profileData.username*/}</DataColumn>
                     </DataRow>
                     <DataRow>
                         <DataColumn size={1}>Your email:</DataColumn>
-                        <DataColumn size={1}>{profileData.email}</DataColumn>
+                        <DataColumn size={1}>{/*profileData.email*/}</DataColumn>
                     </DataRow>
                     <DataRow>
                         <DataColumn size={1}>Your ID:</DataColumn>
-                        <DataColumn size={1}>{profileData.id}</DataColumn>
+                        <DataColumn size={1}>{/*profileData.id*/}</DataColumn>
                     </DataRow>
                 </DataGrid>
                 <ButtonDiv style={{width: "80%"}}>
                     <BackButton onClick={NavToDash}>Back</BackButton>
-                    <button style={{background: "red", height: 40, flex: 1}}></button>
                 </ButtonDiv>
-            </DataDiv>
-        </StyledProfile>
+                {/*http://clipart-library.com/clipart/1467080.htm*/}
+                <img src={under_construction} alt={""} width={'90%'} height={'50%'} style={{position: "absolute", top: '22%', maxWidth: 1400}}/>
+            </BasicContentCard>
+        </BasicPage>
     );
 }
 

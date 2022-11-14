@@ -17,8 +17,6 @@
 `DATABASE_USER="postgres"`  
 `DATABASE_PASSWORD="postgres"`
 
-`BUTTON ANIMATIONS:` https://dev.to/webdeasy/top-20-css-buttons-animations-f41
-
 
 dependencies:
 "cors": "^2.8.5",  
@@ -31,3 +29,5 @@ dependencies:
 "passport": "^0.5.2",  
 "passport-google-oauth20": "^2.0.0",  
 "pg": "^8.7.1"  
+
+Note: `DO NOT TEST ON LOCALHOST`

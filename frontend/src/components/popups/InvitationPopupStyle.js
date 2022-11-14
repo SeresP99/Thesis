@@ -5,8 +5,16 @@ import {Button} from "../styles/Button/Button";
 export const InvitePopup = styled(Button)`
   font-family: Courgette, sans-serif;
   border-radius: 5px;
-  width: 20%;
-  min-width: 125px;
+  height: 80px;
+  width: 110px;
+
+  margin-left: 1px;
+  margin-right: 1px;
+  
+  &:disabled {
+    background-color: rgba(56, 56, 56, 0.35);
+    color: rgba(162, 162, 162, 0.66);
+  }
 `;
 
 export const CopyButton = styled(Button)`

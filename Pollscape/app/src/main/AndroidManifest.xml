@@ -27,9 +27,6 @@
             android:name=".webViewActivity"
             android:exported="false" />
         <activity
-            android:name=".ParticipatedPollList"
-            android:exported="false" />
-        <activity
             android:name=".Dashboard"
             android:exported="false" />
         <activity
